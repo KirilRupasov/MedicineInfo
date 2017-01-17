@@ -13,19 +13,19 @@
 
         <ion-item>
           <ion-label floating>Email</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input type="text" [(ngModel)]="email_value"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label floating>Password</ion-label>
-          <ion-input type="password"></ion-input>
+          <ion-input type="password" [(ngModel)]="password_value"></ion-input>
         </ion-item>
 
       </ion-list>
 
     </ion-row>
     <ion-row>
-        <button ion-button block full>Log In</button>
+        <button (click)="login()" ion-button block full>Log In</button>
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -2,10 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
+
 import { MainMenu } from '../pages/mainmenu/mainmenu';
 import { Page2 } from '../pages/page2/page2';
 import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
+import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class MyApp {
       { title: 'Main Menu', component: MainMenu },
       { title: 'Log In', component: Login },
       { title: 'Sign Up', component: Signup },
-      { title: 'Page Two', component: Page2 }
+      { title: 'Medicine Info', component: MedicineInfo }
     ];
 
   }
