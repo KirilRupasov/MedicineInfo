@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Edit Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+        <ion-item>
+          <ion-label floating>Date of Birth:</ion-label>
+          <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="date_of_birth"></ion-datetime>
+        </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-list radio-group [(ngModel)]="gender_value">
+        <ion-list-header>
+          Gender
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Male</ion-label>
+          <ion-radio value="male"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Female</ion-label>
+          <ion-radio value="female"></ion-radio>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+    <ion-row>
+      <ion-list radio-group [(ngModel)]="smoker_value">
+        <ion-list-header>
+          Smoker
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Yes</ion-label>
+          <ion-radio value="yes"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>No</ion-label>
+          <ion-radio value="no"></ion-radio>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label floating>Additional Info</ion-label>
+        <ion-input type="text" [(ngModel)]="add_info_value"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <button (click)="save()" ion-button block full>Save</button>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -9,33 +9,34 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
-      <ion-list>
         <ion-item>
           <ion-label floating>Username</ion-label>
           <ion-input type="text" name="username" id="username" [(ngModel)]="username_value"></ion-input>
         </ion-item>
-
-        <ion-item>
-          <ion-label floating>Email</ion-label>
-          <ion-input #email type="text" name="email" id="email" [(ngModel)]="email_value"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label floating>Confirm Email</ion-label>
-          <ion-input type="text" name="email_confirm" id="email_confirm"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" name="password" id="password" [(ngModel)]="password_value"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label floating>Confirm Password</ion-label>
-          <ion-input type="password" name="password_confirm" id="password_confirm" ></ion-input>
-        </ion-item>
-      </ion-list>
-
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input #email type="text" name="email" id="email" [(ngModel)]="email_value"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label floating>Confirm Email</ion-label>
+        <ion-input type="text" name="email_confirm" id="email_confirm"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" name="password" id="password" [(ngModel)]="password_value"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label floating>Confirm Password</ion-label>
+        <ion-input type="password" name="password_confirm" id="password_confirm" block full></ion-input>
+      </ion-item>
     </ion-row>
     <ion-row>
       <button id="signup" (click)="register()" ion-button block full>Sign Up</button>

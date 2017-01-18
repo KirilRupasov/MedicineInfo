@@ -2,13 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-
+import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
 import { MainMenu } from '../pages/mainmenu/mainmenu';
 import { Page2 } from '../pages/page2/page2';
 import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
 import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
-
+import { MyProfile } from '../pages/myprofile/myprofile';
+import { EditProfile } from '../pages/editprofile/editprofile';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,16 +21,28 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform, public auth: Auth) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
+    if(this.auth.isAuthenticated()) {
+        this.pages = [
+              { title: 'Main Menu', component: MainMenu },
+              { title: 'Log Out', component: Login },
+              { title: 'My Profile', component: MyProfile },
+              { title: 'Edit Profile', component: EditProfile },
+              { title: 'Medicine Info', component: MedicineInfo }
+      ];
+    } else {
     this.pages = [
-      { title: 'Main Menu', component: MainMenu },
-      { title: 'Log In', component: Login },
-      { title: 'Sign Up', component: Signup },
-      { title: 'Medicine Info', component: MedicineInfo }
-    ];
+          { title: 'Main Menu', component: MainMenu },
+          { title: 'Log In', component: Login },
+          { title: 'Sign Up', component: Signup },
+          { title: 'Medicine Info', component: MedicineInfo }
+        ];
+    }
+
+    // used for an example of ngFor and navigation
+
 
   }
 

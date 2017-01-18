@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-
-import { NavController } from 'ionic-angular';
-
-
+import { NavController, ViewController } from 'ionic-angular';
+import { MainMenu } from '../mainmenu/mainmenu';
 import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-login',
@@ -13,17 +12,26 @@ export class Login {
   email_value: any;
   password_value: any;
 
-  constructor(public auth: Auth, public user: User) {
+  constructor(private navCtrl: NavController, private viewCtrl: ViewController, public alertCtrl: AlertController, public auth: Auth, public user: User) {
+    if(this.auth.isAuthenticated()) {
+      this.auth.logout();
+      this.navCtrl.push(MainMenu);
 
+    }
   }
 
   public login(ev: any) {
     let details: UserDetails = {'email': this.email_value, 'password': this.password_value};
 
     this.auth.login('basic', details).then(() => {
-      alert("success");
+      this.navCtrl.push(MainMenu);
     }, () => {
-      alert("fail");
+      let alert = this.alertCtrl.create({
+          title: 'Error!',
+          subTitle: "Incorrect email/password combination!",
+          buttons: ['OK']
+        });
+      alert.present();
     });
   }
 

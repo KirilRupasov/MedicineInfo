@@ -7,7 +7,8 @@ import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
 
 import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
-
+import { EditProfile } from '../pages/editprofile/editprofile';
+import { MyProfile } from '../pages/myprofile/myprofile';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
 const cloudSettings: CloudSettings = {
@@ -25,7 +26,8 @@ const cloudSettings: CloudSettings = {
     Login,
     Signup,
     MedicineInfo,
-    Page2
+    EditProfile,
+    MyProfile
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -38,7 +40,8 @@ const cloudSettings: CloudSettings = {
     Login,
     Signup,
     MedicineInfo,
-    Page2
+    EditProfile,
+    MyProfile
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

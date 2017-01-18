@@ -19,7 +19,11 @@
   background-color: #4E4F4F !important;
 }
 
-button {
+.item-label-floating {
+  padding-left: 0 !important;
+}
+
+.button-default {
  background-color: #5b5f66 !important;
 }
 
@@ -39,11 +43,11 @@ body {
   color: white !important;
 }
 
-h1, h2, h3, h4, b, p {
+h1, h2, h3, h4, b, p, pre {
   color: white;
 }
 
-p {
+p, pre {
  font-size: 150%;
 }
 

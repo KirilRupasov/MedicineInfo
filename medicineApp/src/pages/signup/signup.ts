@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-
 import { NavController } from 'ionic-angular';
-
 import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
 import { MainMenu } from '../mainmenu/mainmenu';
-
 import { AlertController } from 'ionic-angular';
 
 @Component({
