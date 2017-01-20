@@ -19,11 +19,7 @@ export class MainMenu {
     }
 
   initializeItems() {
-    this.items = [
-      'Amsterdam',
-      'Bogota',
-      'adasdsa'
-    ];
+    this.items = [];
   }
 
   getItems(ev: any) {
@@ -32,6 +28,15 @@ export class MainMenu {
 
     // set val to the value of the searchbar
     let val = ev.target.value;
+
+    //fetch results from the db
+    const messages = this.db.collection('messages');
+
+    messages.fetch().subscribe(
+        result => console.log('Result:', result),
+        err => console.error(err),
+        () => console.log('Results fetched')
+    );
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
