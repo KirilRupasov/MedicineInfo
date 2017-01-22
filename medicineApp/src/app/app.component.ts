@@ -10,6 +10,7 @@ import { Signup } from '../pages/signup/signup';
 import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { EditProfile } from '../pages/editprofile/editprofile';
+import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
 
 @Component({
   templateUrl: 'app.html'

@@ -6,42 +6,29 @@
     <ion-title>Medicine Info</ion-title>
   </ion-navbar>
 </ion-header>
-
-<!-- <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-</ion-content>
--->
 <ion-content padding>
   <ion-grid>
     <ion-row>
       <img src="images/mockMedicine.jpg">
     </ion-row>
     <ion-row class="ion-row-bordered">
-      <div style="text-align: center; width: 100%;"><h1>Ibuprofen</h1></div>
+      <div style="text-align: center; width: 100%;"><h1>{{ title }}</h1></div>
     </ion-row>
     <ion-row class="ion-row-bordered">
       <div class="div-card">
         <div style="text-align: center; width: 100%;"><h2>Overview</h2></div>
-        <p>Some basic description goes here.. Such as the general effect, when is it suitable, etc.</p>
+        <p>{{ description }}</p>
       </div>
     </ion-row>
     <ion-row class="ion-row-bordered">
       <div class="div-card">
         <div style="text-align: center; width: 100%;"><h2>Side Effects</h2></div>
-        <p>Possible side effects include headache, etc.</p>
+        <p>{{ side_effects }}</p>
       </div>
     </ion-row>
-    <ion-row>
-      <ion-content>
+    <!--<ion-row class="ion-row-bordered">
         <div #map id="map"></div>
-      </ion-content>
-    </ion-row>
+    </ion-row>-->
 
   </ion-grid>
 </ion-content>

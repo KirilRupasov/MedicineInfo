@@ -2,5 +2,11 @@
   "name": "medicineApp",
   "app_id": "c9dcf35e",
   "v2": true,
-  "typescript": true
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://localhost/public_html/medicineInfoBackEnd/public/title/a"
+    }
+  ]
 }

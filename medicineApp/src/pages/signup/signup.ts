@@ -24,6 +24,7 @@ export class Signup {
 
 
   public register(ev: any) {
+    alert("innit");
 
     let errors : string = "";
 
@@ -31,8 +32,11 @@ export class Signup {
     let details: UserDetails = { 'username' : this.username_value, 'email': this.email_value, 'password': this.password_value};
 
     this.auth.signup(details).then(() => {
+        alert("success");
         this.navCtrl.push(MainMenu);
+
     }, (err: IDetailedError<string[]>) => {
+      alert("fail");
       for (let e of err.details) {
         if (e === 'required_password') {
           errors = "Password is required!<br>";

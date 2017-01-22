@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import {
  GoogleMap,
@@ -18,14 +18,19 @@ import {
   templateUrl: 'medicineinfo.html'
 })
 export class MedicineInfo {
+  title: any;
+  description: any;
+  side_effects: any;
 
-  constructor(public navCtrl: NavController) {
-
+  constructor(private navCtrl: NavController, navParams: NavParams) {
+    this.title = navParams.get("title");
+    this.description = navParams.get("description");
+    this.side_effects = navParams.get("side_effects");
   }
 
   // Load map only after view is initialize
   ngAfterViewInit() {
-   this.loadMap();
+   //this.loadMap();
   }
 
   loadMap() {
@@ -40,7 +45,7 @@ export class MedicineInfo {
    let map = new GoogleMap(element);
 
    // listen to MAP_READY event
-   map.one(GoogleMapsEvent.MAP_READY).then(() => alert("Awesome!"));
+   map.one(GoogleMapsEvent.MAP_READY).then(() => console.log("map ready!"));
 
    // create LatLng object
    let ionic: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904,-89.3809802);
@@ -55,15 +60,22 @@ export class MedicineInfo {
    // move the map's camera to position
    map.moveCamera(position);
 
+
+
    // create new marker
    let markerOptions: GoogleMapsMarkerOptions = {
      position: ionic,
      title: 'Ionic'
    };
 
+
+
    map.addMarker(markerOptions)
      .then((marker: GoogleMapsMarker) => {
         marker.showInfoWindow();
+
       });
+
   }
+
 }

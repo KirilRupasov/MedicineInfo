@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { MainMenu } from '../pages/mainmenu/mainmenu';
-import { Page2 } from '../pages/page2/page2';
 import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
 
@@ -10,6 +9,7 @@ import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 import { EditProfile } from '../pages/editprofile/editprofile';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -27,7 +27,8 @@ const cloudSettings: CloudSettings = {
     Signup,
     MedicineInfo,
     EditProfile,
-    MyProfile
+    MyProfile,
+    Barcodescanner
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -41,7 +42,8 @@ const cloudSettings: CloudSettings = {
     Signup,
     MedicineInfo,
     EditProfile,
-    MyProfile
+    MyProfile,
+    Barcodescanner
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
