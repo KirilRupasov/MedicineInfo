@@ -30,15 +30,13 @@ export class MyApp {
               { title: 'Main Menu', component: MainMenu },
               { title: 'Log Out', component: Login },
               { title: 'My Profile', component: MyProfile },
-              { title: 'Edit Profile', component: EditProfile },
-              { title: 'Medicine Info', component: MedicineInfo }
+              { title: 'Edit Profile', component: EditProfile }
       ];
     } else {
     this.pages = [
           { title: 'Main Menu', component: MainMenu },
           { title: 'Log In', component: Login },
-          { title: 'Sign Up', component: Signup },
-          { title: 'Medicine Info', component: MedicineInfo }
+          { title: 'Sign Up', component: Signup }
         ];
     }
 

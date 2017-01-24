@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
         // Generate some dummy data
         for($i=0; $i<30; $i++) {
             \App\Medicine::create([
-                'title' => join(',', $faker->words(2)),
+                'title' => $faker->firstName,
                 'side_effects' => $faker->sentence(1),
                 'description' => $faker->sentence(1),
-
+                'barcode' => $faker->bankAccountNumber
             ]);
         }
     }

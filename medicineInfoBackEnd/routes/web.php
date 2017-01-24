@@ -14,3 +14,4 @@ Route::get('/',  function () {
     return 'Hello World';
 });
 Route::get('/title/{query}', "SearchController@searchByTitle");
+Route::get('/barcode/{query}', "SearchController@searchByBarcode");

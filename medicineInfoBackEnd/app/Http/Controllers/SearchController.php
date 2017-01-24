@@ -16,7 +16,7 @@ class SearchController extends Controller
 
     public function searchByTitle($query) {
 
-        if($query != "aa") {
+        if($query != "") {
 
             $posts = \App\Medicine::searchByQuery([
                 "query" => [
@@ -27,12 +27,29 @@ class SearchController extends Controller
                     ]
                 ]], null, null, 5, null, null);
 
-            return view('test', ["info" => $posts]);
+            return $posts;
         }
 
-        return view('test', ["info" => "James"]);
+        return null;
+    }
 
+    public function searchByBarcode($query) {
 
+        if($query != "") {
+
+            $posts = \App\Medicine::searchByQuery([
+                "query" => [
+                    "multi_match" => [
+                        "fields" => ["title"],
+                        "query" => $query,
+                        "type" => "phrase_prefix"
+                    ]
+                ]], null, null, 5, null, null);
+
+            return $posts;
+        }
+
+        return null;
     }
 
 }

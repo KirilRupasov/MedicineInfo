@@ -24,7 +24,6 @@ export class Signup {
 
 
   public register(ev: any) {
-    alert("innit");
 
     let errors : string = "";
 
@@ -34,7 +33,6 @@ export class Signup {
     this.auth.signup(details).then(() => {
         alert("success");
         this.navCtrl.push(MainMenu);
-
     }, (err: IDetailedError<string[]>) => {
       alert("fail");
       for (let e of err.details) {
@@ -62,10 +60,6 @@ export class Signup {
        alert.present();
       }
     });
-
-
   }
-
-
 }
 
