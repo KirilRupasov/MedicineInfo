@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Medicine;
 use Illuminate\Support\Facades\Log;
 
 class SearchController extends Controller
@@ -34,19 +35,12 @@ class SearchController extends Controller
     }
 
     public function searchByBarcode($query) {
-
         if($query != "") {
 
-            $posts = \App\Medicine::searchByQuery([
-                "query" => [
-                    "multi_match" => [
-                        "fields" => ["title"],
-                        "query" => $query,
-                        "type" => "phrase_prefix"
-                    ]
-                ]], null, null, 5, null, null);
+            $result = Medicine::where('barcode', $query)->first();
 
-            return $posts;
+            return $result;
+
         }
 
         return null;

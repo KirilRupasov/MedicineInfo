@@ -29,7 +29,7 @@ export class Barcodescanner {
 
       if (code && code.trim() != '') {
       $.ajax({
-          url: 'http://localhost/public_html/medicineInfoBackEnd/public/title/'+ code,
+          url: 'http://medicineappbackend.me/title/'+ code,
           type: 'get',
           dataType: 'json',
           success: function (return_data)

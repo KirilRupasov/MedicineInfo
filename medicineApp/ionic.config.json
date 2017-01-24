@@ -5,8 +5,8 @@
   "typescript": true,
   "proxies": [
     {
-      "path": "/api",
-      "proxyUrl": "http://localhost/public_html/medicineInfoBackEnd/public/title/a"
+      "path": "/api/",
+      "proxyUrl": "http://medicineappbackend.me/title/"
     }
   ]
 }

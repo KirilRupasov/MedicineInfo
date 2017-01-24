@@ -26,7 +26,7 @@ class Medicine extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'side_effects'
+        'title', 'description', 'side_effects', 'barcode'
     ];
 
     /**
@@ -51,6 +51,10 @@ class Medicine extends Model
             'type' => 'string',
             "analyzer" => "standard",
         ],
+        'barcode' => [
+            'type' => 'integer',
+            "analyzer" => "standard",
+        ]
     );
 
     /**

@@ -3,6 +3,8 @@ import { Barcodescanner } from '../barcodescanner/barcodescanner';
 import { NavController } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import * as $ from 'jquery';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-mainmenu',
@@ -16,7 +18,7 @@ export class MainMenu {
   searchQuery: string = '';
   items: string[];
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController, private http: Http) {
     this.initializeItems();
   }
 
@@ -49,24 +51,10 @@ export class MainMenu {
     // set val to the value of the searchbar
     let val = ev.target.value;
     if (val && val.trim() != '') {
-    $.ajax({
-        url: 'http://localhost/public_html/medicineInfoBackEnd/public/title/'+ val,
-        //url: '/api',
-        type: 'get',
-        dataType: 'json',
-        success: function (return_data)
-        {
-          new_item = return_data[0];
-          return new_item;
-        },
-        error: function (xhr, status, error)
-        {
-            var err = eval("(" + xhr.responseText + ")");
-            console.log(err.Message);
-            return err.Message;
-        },
-        async: false
-      });
+          this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
+                  new_item = return_data[0];
+                  return new_item;
+              });
 
       return new_item;
     }
@@ -82,17 +70,14 @@ export class MainMenu {
     // set val to the value of the searchbar
     let val = ev.target.value;
     if (val && val.trim() != '') {
-    $.ajax({
-        url: 'http://localhost/public_html/medicineInfoBackEnd/public/title/'+ val,
-        //url: '/api',
+    /*$.ajax({
+        //url: 'http://medicineappbackend.me/title/'+ val,
+        url: '/api/' + val,
         type: 'get',
-        dataType: 'json',
+        //dataType: 'json',
         success: function (return_data)
         {
-        // if the value is an empty string don't filter the items
-          /*this.items = this.items.filter((item) => {
-            return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-          })*/
+          alert(return_data);
 
           this.items = [];
 
@@ -103,6 +88,7 @@ export class MainMenu {
         },
         error: function (xhr, status, error)
         {
+            alert(status + ":::" + error);
             var err = eval("(" + xhr.responseText + ")");
             console.log(err.Message);
             return err.Message;
@@ -111,7 +97,17 @@ export class MainMenu {
       });
 
       this.items = new_items;
-    }
+    }*/
+
+    this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
+            this.items = [];
+                      for (let entry of data) {
+                          this.items.push(entry.title);
+                      }
+                      return new_items = this.items;
+        });
+
+     }
 
 
 
