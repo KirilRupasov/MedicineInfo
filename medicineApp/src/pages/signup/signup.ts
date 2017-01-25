@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { ViewController, NavController } from 'ionic-angular';
 import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
-import { MainMenu } from '../mainmenu/mainmenu';
 import { AlertController } from 'ionic-angular';
 
 @Component({
@@ -17,7 +16,7 @@ export class Signup {
   username_value: any;
   password_value: any;
 
-  constructor(private navCtrl: NavController, public alertCtrl: AlertController, public auth: Auth, public user: User) {
+  constructor(private navCtrl: NavController, public alertCtrl: AlertController, public auth: Auth, public user: User, private viewCtrl: ViewController) {
 
   }
 
@@ -31,8 +30,7 @@ export class Signup {
     let details: UserDetails = { 'username' : this.username_value, 'email': this.email_value, 'password': this.password_value};
 
     this.auth.signup(details).then(() => {
-        alert("success");
-        this.navCtrl.push(MainMenu);
+        location.reload();
     }, (err: IDetailedError<string[]>) => {
       alert("fail");
       for (let e of err.details) {

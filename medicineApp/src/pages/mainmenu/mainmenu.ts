@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Barcodescanner } from '../barcodescanner/barcodescanner';
-import { NavController } from 'ionic-angular';
+import { ViewController, NavController } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
@@ -18,7 +18,7 @@ export class MainMenu {
   searchQuery: string = '';
   items: string[];
 
-  constructor(private navCtrl: NavController, private http: Http) {
+  constructor(private navCtrl: NavController, private http: Http, private viewCtrl: ViewController) {
     this.initializeItems();
   }
 
@@ -37,11 +37,7 @@ export class MainMenu {
   searchItem(ev : any) {
     let new_item : any;
     new_item = this.getItem(ev);
-    this.navCtrl.push(MedicineInfo, {
-     "title":  new_item.title,
-      "description": new_item.description,
-       "side_effects": new_item.side_effects
-      } );
+
   }
 
 
@@ -53,7 +49,16 @@ export class MainMenu {
     if (val && val.trim() != '') {
           this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
                   new_item = data[0];
-                  return new_item;
+                  this.navCtrl.push(MedicineInfo, {
+                       "title":  new_item.title,
+                        "description": new_item.description,
+                         "side_effects": new_item.side_effects
+                        } ).then(() => {
+                                                                          // first we find the index of the current view controller:
+                                                                          const index = this.viewCtrl.index;
+                                                                          // then we remove it from the navigation stack
+                                                                          this.navCtrl.remove(index);
+                                                                        });
               });
 
       return new_item;
@@ -88,7 +93,6 @@ export class MainMenu {
         },
         error: function (xhr, status, error)
         {
-            alert(status + ":::" + error);
             var err = eval("(" + xhr.responseText + ")");
             console.log(err.Message);
             return err.Message;

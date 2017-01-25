@@ -33,8 +33,14 @@ export class MyProfile {
       }
 
       this.gender = this.user.get("gender", 0);
+
       if(this.gender !== 0) {
         this.content += "Gender: " + this.gender + "\n";
+      }
+
+      this.add_info = this.user.get("add_info", 0);
+      if(this.add_info !== 0) {
+        this.content += "Additional: " + this.add_info;
       }
     }
   }

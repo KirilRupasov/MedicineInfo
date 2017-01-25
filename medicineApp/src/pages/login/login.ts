@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
-import { MainMenu } from '../mainmenu/mainmenu';
-import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
+import { Auth, User, UserDetails } from '@ionic/cloud-angular';
 import { AlertController } from 'ionic-angular';
 
 @Component({
@@ -15,8 +14,7 @@ export class Login {
   constructor(private navCtrl: NavController, private viewCtrl: ViewController, public alertCtrl: AlertController, public auth: Auth, public user: User) {
     if(this.auth.isAuthenticated()) {
       this.auth.logout();
-      this.navCtrl.push(MainMenu);
-
+      location.reload();
     }
   }
 
@@ -24,7 +22,9 @@ export class Login {
     let details: UserDetails = {'email': this.email_value, 'password': this.password_value};
 
     this.auth.login('basic', details).then(() => {
-      this.navCtrl.push(MainMenu);
+      location.reload();
+
+
     }, () => {
       let alert = this.alertCtrl.create({
           title: 'Error!',

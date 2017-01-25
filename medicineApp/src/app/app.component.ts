@@ -11,6 +11,7 @@ import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { EditProfile } from '../pages/editprofile/editprofile';
 import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
+import { Logout } from '../pages/logout/logout';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +29,7 @@ export class MyApp {
     if(this.auth.isAuthenticated()) {
         this.pages = [
               { title: 'Main Menu', component: MainMenu },
-              { title: 'Log Out', component: Login },
+              { title: 'Log Out', component: Logout },
               { title: 'My Profile', component: MyProfile },
               { title: 'Edit Profile', component: EditProfile }
       ];

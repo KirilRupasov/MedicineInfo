@@ -10,6 +10,7 @@ import { EditProfile } from '../pages/editprofile/editprofile';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
+import { Logout } from '../pages/logout/logout';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -28,7 +29,8 @@ const cloudSettings: CloudSettings = {
     MedicineInfo,
     EditProfile,
     MyProfile,
-    Barcodescanner
+    Barcodescanner,
+    Logout
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -43,7 +45,8 @@ const cloudSettings: CloudSettings = {
     MedicineInfo,
     EditProfile,
     MyProfile,
-    Barcodescanner
+    Barcodescanner,
+    Logout
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
