@@ -2,6 +2,8 @@ import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { BarcodeScanner } from 'ionic-native';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-barcodescanner',
@@ -9,7 +11,7 @@ import { MedicineInfo } from '../medicineinfo/medicineinfo';
 })
 export class Barcodescanner {
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController, private http: Http) {
     BarcodeScanner.scan().then((barcodeData) => {
       let new_item: any;
       alert(barcodeData.text);
@@ -28,7 +30,7 @@ export class Barcodescanner {
       let new_item: any;
 
       if (code && code.trim() != '') {
-      $.ajax({
+      /*$.ajax({
           url: 'http://medicineappbackend.me/title/'+ code,
           type: 'get',
           dataType: 'json',
@@ -44,7 +46,12 @@ export class Barcodescanner {
               return err.Message;
           },
           async: false
-        });
+        });*/
+
+        this.http.get('http://medicineappbackend.me/barcode/'+ code).map(res => res.json()).subscribe(data => {
+                          new_item = data[0];
+                          return new_item;
+                      });
 
         return new_item;
       }

@@ -52,7 +52,7 @@ export class MainMenu {
     let val = ev.target.value;
     if (val && val.trim() != '') {
           this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
-                  new_item = return_data[0];
+                  new_item = data[0];
                   return new_item;
               });
 
