@@ -51,8 +51,8 @@ class Medicine extends Model
             'type' => 'string',
             "analyzer" => "standard",
         ],
-        'barcode' => [
-            'type' => 'integer',
+        'barcodes' => [
+            'type' => 'string',
             "analyzer" => "standard",
         ]
     );
