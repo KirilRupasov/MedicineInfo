@@ -31,11 +31,10 @@ class CrawlerController extends Controller
 
         $request = $client->get('www.ema.europa.eu/ema/'.$link);
         $content = $request -> getBody() -> getContents();
-        $title = $this->get_string_between($content, "=\"_blank\">", "</a>");
         preg_match("/docs\/en_GB\/document_library\/EPAR_-_Product_Information\/human\/[0-9]+\/WC[0-9]+/", $content, $matches);
 
         $link = $matches[0].".pdf";
-        return $this -> fetchRecord($link, $title);
+        return $this -> fetchRecord($link, $query);
     }
 
     public function fetchRecord($link, $title) {
@@ -55,7 +54,8 @@ class CrawlerController extends Controller
         return response()->json([
             'title' => $title,
             'side_effects' => $this->fetchSideEffects($text),
-            'description' => $this->fetchBenefits($text)
+            'description' => $this->fetchBenefits($text),
+            'barcodes' => implode(",", $this->fetchBarcodes($title))
         ]);
 
     }
@@ -70,9 +70,9 @@ class CrawlerController extends Controller
         return $benefits;
     }
 
-    public function fetchBarcodes() {
+    public function fetchBarcodes($query) {
         $client = new Client(['base_url' => "http://www.itembarcode.com"]);
-        $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext=mabthera');
+        $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
 
         $body = $request->getBody()->getContents();
         $results = $this->get_tagged_strings($body, "<td class=\"views-field views-field-title\" >", "</td>");
