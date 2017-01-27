@@ -15,15 +15,18 @@ use GuzzleHttp\Client;
 
 class CrawlerController extends Controller
 {
+    public function fetchDataByBarcode($query) {
+        $client = new Client(['base_url' => "http://www.itembarcode.com"]);
+        $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
+    }
 
     public function fetchData($query) {
-        $title = strtolower($query);
-
-        //let's try to fetch something
-        $letters = [];
+        $title = strtolower(trim($query));
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
 
         $request = $client->get('www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');
+        //return 'www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics';
+
         if($request->getStatusCode() == 200) {
             $content = $request->getBody()->getContents();
             $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
@@ -48,14 +51,13 @@ class CrawlerController extends Controller
                         break;
                     }
                 }
-
                 //return $headers;
 
                 return response()->json([
                     'title' => $query,
                     'description' => $this->get_string_between($content, "<dd>", "</dd>"),
                     'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos+1),
-                    'barcodes' => implode(",", $this->fetchBarcodes($title))
+                    'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
                 ]);
 
 
@@ -74,17 +76,7 @@ class CrawlerController extends Controller
 
     }
 
-    public function RemoveBS($Str) {
-        $StrArr = str_split($Str); $NewStr = '';
-        foreach ($StrArr as $Char) {
-            $CharNo = ord($Char);
-            if ($CharNo == 163) { $NewStr .= $Char; continue; } // keep £
-            if ($CharNo > 31 && $CharNo < 127) {
-                $NewStr .= $Char;
-            }
-        }
-        return $NewStr;
-    }
+
 
     public function fetchRecord($link, $title) {
         // Parse pdf file and build necessary objects.
@@ -125,11 +117,7 @@ class CrawlerController extends Controller
         return $benefits;
     }
 
-    public function fetchBarcodes($query) {
-        $client = new Client(['base_url' => "http://www.itembarcode.com"]);
-        $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
-
-        $body = $request->getBody()->getContents();
+    public function fetchBarcodesByTitle($body) {
         $results = $this->get_tagged_strings($body, "<td class=\"views-field views-field-title\" >", "</td>");
         $results_formatted = [];
 
@@ -140,6 +128,39 @@ class CrawlerController extends Controller
 
 
         return $results_formatted;
+    }
+
+    public function fetchTitleByBarcode($body) {
+        $result = $this->get_string_between($body, "<td class=\"views-field views-field-body\" >", "</td>");
+
+
+        $first_num = -1;
+        $num_loc = 0;
+
+        $result2 = str_split($result);
+
+        foreach ($result2 AS $a_char) {
+            if (is_numeric($a_char)) {
+                $first_num = $num_loc;
+                break;
+            }
+            $num_loc++;
+        }
+
+        $title = substr($result, 0, $first_num-1);
+
+        return trim($title);
+    }
+
+    public function fetchBarcodes($query) {
+        $client = new Client(['base_url' => "http://www.itembarcode.com"]);
+        $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
+
+        $body = $request->getBody()->getContents();
+
+        return $body;
+
+
 
     }
 

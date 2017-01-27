@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
                 'title' => $faker->firstName,
                 'side_effects' => $faker->sentence(1),
                 'description' => $faker->sentence(1),
-                'barcode' => $faker->bankAccountNumber
+                'barcode' => $faker->bankAccountNumber . "," . $faker->bankAccountNumber
             ]);
         }
     }

@@ -45,8 +45,16 @@ class SearchController extends Controller
     public function searchByBarcode($query) {
         if($query != "") {
             $result = Medicine::where('barcode', $query)->first();
-            return $result;
+
+            if($result != "") {
+                return $result;
+            }
+
+            $cc = new CrawlerController();
+            return $cc -> fetchData($cc -> fetchTitleByBarcode($cc -> fetchBarcodes($query))) ;
         }
+
+
 
         return null;
     }
