@@ -24,32 +24,87 @@ class CrawlerController extends Controller
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
 
         $request = $client->get('www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');
-        $content = $request->getBody()->getContents();
-        $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
-        $links = [];
-        $link = $this->get_string_between($results[0], "href=\"", "\">");
+        if($request->getStatusCode() == 200) {
+            $content = $request->getBody()->getContents();
+            $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
+            //return $results;
+            if(sizeof($results) > 0) {
+                $links = [];
+                $link = $this->get_string_between($results[0], "href=\"", "\">");
 
-        $request = $client->get('www.ema.europa.eu/ema/'.$link);
-        $content = $request -> getBody() -> getContents();
-        preg_match("/docs\/en_GB\/document_library\/EPAR_-_Product_Information\/human\/[0-9]+\/WC[0-9]+/", $content, $matches);
+                $request = $client->get('www.ema.europa.eu/ema/'.$link);
+                $content = $request -> getBody() -> getContents();
+                $text = $this->get_string_between($content, "<dl class=\"toggle-list\">", "</dl>");
 
-        $link = $matches[0].".pdf";
-        return $this -> fetchRecord($link, $query);
+                $headers = $this->get_tagged_strings($text, "<a title=\"Link title\" href=\"#\">", "</a>");
+
+                $side_effect_pos = 0;
+
+                foreach($headers as $key=>$header) {
+
+
+                    if ((strpos($header, 'What is the risk associated') !== false) || (strpos($header, 'What are the risks associated') !== false)) {
+                        $side_effect_pos = $key;
+                        break;
+                    }
+                }
+
+                //return $headers;
+
+                return response()->json([
+                    'title' => $query,
+                    'description' => $this->get_string_between($content, "<dd>", "</dd>"),
+                    'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos+1),
+                    'barcodes' => implode(",", $this->fetchBarcodes($title))
+                ]);
+
+
+
+                //preg_match("/docs\/en_GB\/document_library\/EPAR_-_Product_Information\/human\/[0-9]+\/WC[0-9]+/", $content, $matches);
+
+                //$link = $matches[0].".pdf";
+                //return $this -> fetchRecord($link, $query);
+            } else {
+                return "Wrong request";
+            }
+
+        }
+
+        return "Wrong request";
+
+    }
+
+    public function RemoveBS($Str) {
+        $StrArr = str_split($Str); $NewStr = '';
+        foreach ($StrArr as $Char) {
+            $CharNo = ord($Char);
+            if ($CharNo == 163) { $NewStr .= $Char; continue; } // keep £
+            if ($CharNo > 31 && $CharNo < 127) {
+                $NewStr .= $Char;
+            }
+        }
+        return $NewStr;
     }
 
     public function fetchRecord($link, $title) {
         // Parse pdf file and build necessary objects.
         $parser = new \Smalot\PdfParser\Parser();
         $pdf = $parser->parseFile("http://www.ema.europa.eu/".$link);
-        //$text = $pdf->getText();
-        $pages = $pdf->getPages();
-        $text = "";
 
-        foreach ($pages as $page) {
-            $text .= $page->getText();
+        if($pdf->getPages() == 0) {
+            return "Wrong request";
         }
 
-        $text = nl2br($text, false);
+        $text = $pdf->getText();
+
+        //$text = nl2br($text, false);
+        //$text = trim(preg_replace('/\t+/', ' ', $text));
+
+        $text = str_replace("  ", " ", $text);
+        $text = str_replace("4.  Possible side effects", "4.Possible side effects", $text);
+        $text = str_replace("4. Possible side effects", "4.Possible side effects", $text);
+        $text = str_replace("2.  What you need to know before you", "2.What you need to know before you", $text);
+        $text = str_replace("2. What you need to know before you", "2.What you need to know before you", $text);
 
         return response()->json([
             'title' => $title,
@@ -61,12 +116,12 @@ class CrawlerController extends Controller
     }
 
     public function fetchSideEffects($text) {
-        $side_effects = $this->get_string_between($text, "4.  Possible side effects ", "Reporting of side effects", 2);
+        $side_effects = $this->get_string_between($text, "4.Possible side effects", "Reporting of side effects", 2);
         return $side_effects;
     }
 
     public function fetchBenefits($text) {
-        $benefits = $this->get_string_between($text, "is and what it is used for", "2.  What you need to know before you", 2);
+        $benefits = $this->get_string_between($text, "what it is used for", "2.What you need to know before you", 2);
         return $benefits;
     }
 
@@ -93,22 +148,39 @@ class CrawlerController extends Controller
         $results = [];
         $ini = 0;
 
-        while(strpos($string, $start_tag, $ini + strlen($start_tag)) != false) {
-            $ini = strpos($string, $start_tag, $ini + strlen($start_tag));
+        while(strpos($string, $start_tag, $ini) != false) {
+            $ini = strpos($string, $start_tag, $ini) + strlen($start_tag);
             $len = strpos($string, $end_tag, $ini) - $ini;
-            $result = substr($string, $ini + strlen($start_tag), $len);
+            //$result = $len;
+            $result = substr($string, $ini, $len);
             $results[] = $result;
         }
 
         return $results;
+
+        /*$string = " ".$string;
+        $ini = strpos($string,$start);
+        if ($ini == 0) return "";
+        $ini += strlen($start);
+        $len = strpos($string,$end,$ini) - $ini;
+        return substr($string,$ini,$len);*/
+
     }
+
 
     public function get_string_between($string, $start, $end, $occurence=1){
         $string = ' ' . $string;
         $ini = strpos($string, $start);
 
+        if($ini === false) {
+            return "Start tag not found";
+        }
+
         for($i=1; $i<$occurence; $i++) {
             $ini = strpos($string, $start, $ini + strlen($start));
+            if($ini === false) {
+                return "Start tag not found";
+            }
         }
 
         if ($ini == 0) return '';
