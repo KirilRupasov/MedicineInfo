@@ -28,7 +28,15 @@ class SearchController extends Controller
                     ]
                 ]], null, null, 5, null, null);
 
-            return $posts;
+            if(sizeof($posts) > 0) {
+
+                return $posts;
+
+            } else {
+                $cc = new CrawlerController();
+                return $cc -> fetchData($query);
+            }
+
         }
 
         return null;
@@ -36,11 +44,8 @@ class SearchController extends Controller
 
     public function searchByBarcode($query) {
         if($query != "") {
-
             $result = Medicine::where('barcode', $query)->first();
-
             return $result;
-
         }
 
         return null;
