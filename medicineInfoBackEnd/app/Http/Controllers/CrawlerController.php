@@ -69,7 +69,7 @@ class CrawlerController extends Controller
             } else if(sizeof($results) > 0) {
                 $final_results = [];
                 foreach ($results as $value) {
-                    $final_results[] = $this->get_string_between($value, "href=\"", "\">");
+                    $final_results[] = $this->get_string_between($value, "\">", "</a>");
                 }
 
                 return $final_results;
