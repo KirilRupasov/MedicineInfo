@@ -67,7 +67,12 @@ class CrawlerController extends Controller
                 //$link = $matches[0].".pdf";
                 //return $this -> fetchRecord($link, $query);
             } else if(sizeof($results) > 0) {
-                return $results;
+                $final_results = [];
+                foreach ($results as $value) {
+                    $final_results[] = $this->get_string_between($value, "href=\"", "\">");
+                }
+
+                return $final_results;
             } else {
                 return "Wrong request";
             }
