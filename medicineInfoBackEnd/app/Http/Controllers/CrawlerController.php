@@ -31,7 +31,7 @@ class CrawlerController extends Controller
             $content = $request->getBody()->getContents();
             $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
             //return $results;
-            if(sizeof($results) > 0) {
+            if(sizeof($results) == 1) {
                 $links = [];
                 $link = $this->get_string_between($results[0], "href=\"", "\">");
 
@@ -66,6 +66,8 @@ class CrawlerController extends Controller
 
                 //$link = $matches[0].".pdf";
                 //return $this -> fetchRecord($link, $query);
+            } else if(sizeof($results) > 0) {
+                return $results;
             } else {
                 return "Wrong request";
             }

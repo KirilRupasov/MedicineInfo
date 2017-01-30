@@ -50,6 +50,7 @@ class SearchController extends Controller
                 return $result;
             }
 
+
             $cc = new CrawlerController();
             return $cc -> fetchData($cc -> fetchTitleByBarcode($cc -> fetchBarcodes($query))) ;
         }
