@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Medicine;
 use GuzzleHttp\Client;
 
 
@@ -15,12 +16,47 @@ use GuzzleHttp\Client;
 
 class CrawlerController extends Controller
 {
+    public function fetchBestSellingDrugs() {
+
+        $client = new Client(['base_url' => "https://www.drugs.com"]);
+        $request = $client->get('https://www.drugs.com/stats/top100/sales');
+
+        if($request->getStatusCode() == 200) {
+            $content = $request->getBody()->getContents();
+            $results = $this -> get_tagged_strings($content, "<b>", "</b>");
+            $formatted_results = [];
+            foreach($results as $result) {
+                $formatted = $this->get_string_between($result, "'>", "</a>");
+                if ($formatted != "Start tag not found") {
+                    $data = $this->fetchData($formatted, false);
+                    return $data;
+                    if ($data != "Wrong request" && sizeof($data) == 1) {
+                        return $data;
+                        $medicine = Medicine::create([
+                            'title' => $data['title'],
+                            'description' => $data['description'],
+                            'barcodes' => $data['barcodes'],
+                            'side_effects' => $data['side_effects']
+                        ]);
+                        $medicine->addToIndex();
+
+                    }
+                }
+            }
+
+            return $formatted_results;
+
+        } else {
+            return "Resource is down";
+        }
+    }
+
     public function fetchDataByBarcode($query) {
         $client = new Client(['base_url' => "http://www.itembarcode.com"]);
         $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
     }
 
-    public function fetchData($query) {
+    public function fetchData($query, $isJson) {
         $title = strtolower(trim($query));
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
 
@@ -30,7 +66,6 @@ class CrawlerController extends Controller
         if($request->getStatusCode() == 200) {
             $content = $request->getBody()->getContents();
             $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
-            //return $results;
             if(sizeof($results) == 1) {
                 $links = [];
                 $link = $this->get_string_between($results[0], "href=\"", "\">");
@@ -53,12 +88,23 @@ class CrawlerController extends Controller
                 }
                 //return $headers;
 
-                return response()->json([
-                    'title' => $query,
-                    'description' => $this->get_string_between($content, "<dd>", "</dd>"),
-                    'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos+1),
-                    'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
-                ]);
+                if($isJson) {
+                    return response()->json([
+                        'title' => $query,
+                        'description' => $this->get_string_between($content, "<dd>", "</dd>"),
+                        'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos+1),
+                        'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
+                    ]);
+                } else {
+                    return [
+                        'title' => $query,
+                        'description' => $this->get_string_between($content, "<dd>", "</dd>"),
+                        'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos+1),
+                        'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
+                    ];
+                }
+
+
 
 
 

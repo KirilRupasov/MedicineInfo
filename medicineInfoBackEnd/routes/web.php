@@ -17,3 +17,4 @@ Route::get('/title/{query}', "SearchController@searchByTitle");
 
 Route::get('/barcode/{query}', "SearchController@searchByBarcode");
 Route::get('/crawler/fetch/{query}', "CrawlerController@fetchData");
+Route::get('/crawler/fetchBestSellingDrugs', 'CrawlerController@fetchBestSellingDrugs');

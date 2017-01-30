@@ -19,6 +19,8 @@ class CreateMedicinesTable extends Migration
             $table->text('barcode')->nullable();
             $table->text('description')->nullable();
             $table->text('side_effects')->nullable();
+            $table->text('benefits')->nullable();
+            $table->text('how_does_it')->nullable();
         });
     }
 
