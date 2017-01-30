@@ -28,10 +28,9 @@ class CrawlerController extends Controller
             foreach($results as $result) {
                 $formatted = $this->get_string_between($result, "'>", "</a>");
                 if ($formatted != "Start tag not found") {
-                    $data = $this->fetchData($formatted, false);
-                    return $data;
-                    if ($data != "Wrong request" && sizeof($data) == 1) {
-                        return $data;
+                    $data = $this->fetchData($formatted, false, true);
+                    if ($data != "Wrong request" && (array_keys($data) !== range(0, count($data) - 1))) {
+                        //return $data;
                         $medicine = Medicine::create([
                             'title' => $data['title'],
                             'description' => $data['description'],
@@ -40,11 +39,21 @@ class CrawlerController extends Controller
                         ]);
                         $medicine->addToIndex();
 
-                    }
+                    }/* else if($data != "Wrong request" && !(array_keys($data) !== range(0, count($data) - 1))) {
+                        $data = $this->fetchData($data[0]['title'], false);
+                        return $data;
+                        $medicine = Medicine::create([
+                            'title' => $data['title'],
+                            'description' => $data['description'],
+                            'barcodes' => $data['barcodes'],
+                            'side_effects' => $data['side_effects']
+                        ]);
+                        $medicine->addToIndex();
+                    }*/
                 }
             }
 
-            return $formatted_results;
+            return "Success!";
 
         } else {
             return "Resource is down";
@@ -56,20 +65,17 @@ class CrawlerController extends Controller
         $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
     }
 
-    public function fetchData($query, $isJson) {
+    public function fetchData($query, $isJson, $limitOne) {
         $title = strtolower(trim($query));
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
 
         $request = $client->get('www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');
-        //return 'www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics';
 
         if($request->getStatusCode() == 200) {
             $content = $request->getBody()->getContents();
             $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
-            if(sizeof($results) == 1) {
-                $links = [];
+            if(sizeof($results) == 1 || ($limitOne && sizeof($results) > 1)) {
                 $link = $this->get_string_between($results[0], "href=\"", "\">");
-
                 $request = $client->get('www.ema.europa.eu/ema/'.$link);
                 $content = $request -> getBody() -> getContents();
                 $text = $this->get_string_between($content, "<dl class=\"toggle-list\">", "</dl>");
