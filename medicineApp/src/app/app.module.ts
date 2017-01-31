@@ -10,6 +10,7 @@ import { EditProfile } from '../pages/editprofile/editprofile';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
+import { ModalContentPage } from '../pages/modal/modalcontentpage';
 import { Logout } from '../pages/logout/logout';
 
 const cloudSettings: CloudSettings = {
@@ -30,6 +31,7 @@ const cloudSettings: CloudSettings = {
     EditProfile,
     MyProfile,
     Barcodescanner,
+    ModalContentPage,
     Logout
   ],
   imports: [
@@ -45,6 +47,7 @@ const cloudSettings: CloudSettings = {
     MedicineInfo,
     EditProfile,
     MyProfile,
+    ModalContentPage,
     Barcodescanner,
     Logout
   ],

@@ -48,7 +48,12 @@ body {
 }
 
 h1, h2, h3, h4, b, p, pre {
-  color: white;
+  color: white !important;
+}
+
+.drug-title {
+  text-align: center;
+  width: 100%;
 }
 
 p, pre {
@@ -60,6 +65,7 @@ p, pre {
 }
 
 .div-card {
+  height: 100% !important;
   width: 100%;
   margin: 5px;
   background-color: #5b5f66 !important;

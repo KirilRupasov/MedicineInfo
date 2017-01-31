@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { Barcodescanner } from '../barcodescanner/barcodescanner';
-import { ViewController, NavController } from 'ionic-angular';
+import { ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { ModalContentPage } from '../modal/modalcontentpage';
 
 @Component({
   selector: 'page-mainmenu',
@@ -13,108 +14,64 @@ import 'rxjs/add/operator/map';
 
 
 export class MainMenu {
+  suggestions: string[];
+  intro_sugg: string;
 
+  constructor(public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
+  private http: Http, public viewCtrl: ViewController, public elementRef: ElementRef) {
+    let new_suggestions = navParams.get("suggestions");
+    let new_suggestions_formatted: string[];
 
-  searchQuery: string = '';
-  items: string[];
+    if(new_suggestions == null) {
+      this.suggestions = [];
+      this.intro_sugg = "";
+    } else {
+      this.intro_sugg = "Where you looking for...";
+      new_suggestions_formatted = [];
+      for(let entry of new_suggestions) {
+        entry.description = entry.description.substr(0, 45) + "...";
+        entry.description = entry.description.replace('<p>', '');
+        entry.description = entry.description.replace('</p>', '');
+        entry.description = entry.title + ' - ' + entry.description;
 
-  constructor(private navCtrl: NavController, private http: Http, private viewCtrl: ViewController) {
-    this.initializeItems();
+        new_suggestions_formatted.push(entry);
+      }
+      this.suggestions = new_suggestions_formatted;
+    }
   }
 
-  initializeItems() {
-    this.items = [];
-  }
+      getItem(val: any) {
+        let new_item: any;
 
-  setItems(new_items : any) {
-    this.items = new_items;
+        if (val && val.trim() != '') {
+              this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
+                      if(data.title) {
+                        new_item = data;
+                        this.navCtrl.push(MedicineInfo, {
+                             "title":  new_item.title,
+                              "description": new_item.description,
+                               "side_effects": new_item.side_effects
+                              } ).then(() => {
+                                // first we find the index of the current view controller:
+                                const index = this.viewCtrl.index;
+                                // then we remove it from the navigation stack
+                                this.navCtrl.remove(index);
+                              });
+                      }
+                  });
+        }
+
+      }
+
+  openModal() {
+    let modal = this.modalCtrl.create(ModalContentPage);
+    modal.present();
   }
 
   barcodescan(ev: any) {
     this.navCtrl.push(Barcodescanner);
   }
 
-  searchItem(ev : any) {
-    let new_item : any;
-    new_item = this.getItem(ev);
-
-  }
-
-
-  getItem(ev : any) {
-    let new_item: any;
-
-    // set val to the value of the searchbar
-    let val = ev.target.value;
-    if (val && val.trim() != '') {
-          this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
-                  new_item = data[0];
-                  this.navCtrl.push(MedicineInfo, {
-                       "title":  new_item.title,
-                        "description": new_item.description,
-                         "side_effects": new_item.side_effects
-                        } ).then(() => {
-                                                                          // first we find the index of the current view controller:
-                                                                          const index = this.viewCtrl.index;
-                                                                          // then we remove it from the navigation stack
-                                                                          this.navCtrl.remove(index);
-                                                                        });
-              });
-
-      return new_item;
-    }
-  }
-
-  getItems(ev: any) {
-    // Reset items back to all of the items
-    this.initializeItems();
-
-    let new_items: string[];
-
-
-    // set val to the value of the searchbar
-    let val = ev.target.value;
-    if (val && val.trim() != '') {
-    /*$.ajax({
-        //url: 'http://medicineappbackend.me/title/'+ val,
-        url: '/api/' + val,
-        type: 'get',
-        //dataType: 'json',
-        success: function (return_data)
-        {
-          alert(return_data);
-
-          this.items = [];
-
-          for (let entry of return_data) {
-              this.items.push(entry.title);
-          }
-          return new_items = this.items;
-        },
-        error: function (xhr, status, error)
-        {
-            var err = eval("(" + xhr.responseText + ")");
-            console.log(err.Message);
-            return err.Message;
-        },
-        async: false
-      });
-
-      this.items = new_items;
-    }*/
-
-    this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
-            this.items = [];
-                      for (let entry of data) {
-                          this.items.push(entry.title);
-                      }
-                      return new_items = this.items;
-        });
-
-     }
-
-
-
-  }
-
 }
+
+

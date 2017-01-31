@@ -17,13 +17,13 @@
     <ion-row class="ion-row-bordered">
       <div class="div-card">
         <div style="text-align: center; width: 100%;"><h2>Overview</h2></div>
-        <p>{{ description }}</p>
+        <span class="large" [innerHTML]="description"></span>
       </div>
     </ion-row>
     <ion-row class="ion-row-bordered">
       <div class="div-card">
-        <div style="text-align: center; width: 100%;"><h2>Side Effects</h2></div>
-        <p>{{ side_effects }}</p>
+        <div class="drug-title"><h2>Side Effects</h2></div>
+        <span class="large" [innerHTML]="side_effects"></span>
       </div>
     </ion-row>
     <!--<ion-row class="ion-row-bordered">
@@ -32,3 +32,4 @@
 
   </ion-grid>
 </ion-content>
+

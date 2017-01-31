@@ -2,15 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
+import { Auth } from '@ionic/cloud-angular';
 import { MainMenu } from '../pages/mainmenu/mainmenu';
-import { Page2 } from '../pages/page2/page2';
 import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
-import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { EditProfile } from '../pages/editprofile/editprofile';
-import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
 import { Logout } from '../pages/logout/logout';
 
 @Component({
