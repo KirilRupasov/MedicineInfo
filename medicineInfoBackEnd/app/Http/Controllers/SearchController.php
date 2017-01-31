@@ -28,10 +28,12 @@ class SearchController extends Controller
                     ]
                 ]], null, null, 5, null, null);
 
-            if(sizeof($posts) > 0) {
+            if(sizeof($posts) == 1) {
 
+                return $posts[0];
+
+            } else if(sizeof($posts) > 0) {
                 return $posts;
-
             } else {
                 $cc = new CrawlerController();
                 return $cc -> fetchData($query, true, false);

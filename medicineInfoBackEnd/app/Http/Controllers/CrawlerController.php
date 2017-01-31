@@ -39,17 +39,7 @@ class CrawlerController extends Controller
                         ]);
                         $medicine->addToIndex();
 
-                    }/* else if($data != "Wrong request" && !(array_keys($data) !== range(0, count($data) - 1))) {
-                        $data = $this->fetchData($data[0]['title'], false);
-                        return $data;
-                        $medicine = Medicine::create([
-                            'title' => $data['title'],
-                            'description' => $data['description'],
-                            'barcodes' => $data['barcodes'],
-                            'side_effects' => $data['side_effects']
-                        ]);
-                        $medicine->addToIndex();
-                    }*/
+                    }
                 }
             }
 
@@ -109,15 +99,6 @@ class CrawlerController extends Controller
                         'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
                     ];
                 }
-
-
-
-
-
-                //preg_match("/docs\/en_GB\/document_library\/EPAR_-_Product_Information\/human\/[0-9]+\/WC[0-9]+/", $content, $matches);
-
-                //$link = $matches[0].".pdf";
-                //return $this -> fetchRecord($link, $query);
             } else if(sizeof($results) > 0) {
                 $final_results = [];
                 foreach ($results as $value) {
