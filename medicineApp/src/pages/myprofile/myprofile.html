@@ -8,10 +8,13 @@
 </ion-header>
 <ion-content padding>
   <ion-grid>
-    <ion-row class="ion-row-bordered">
-      <div class="div-card" id="myprofilecontent">
-        <pre>{{content}}</pre>
-      </div>
+    <ion-row>
+      <div class="div-card card" id="myprofilecontent"><div class="card-block">
+        <pre [innerHTML]="content" class="myprofile-font"></pre>
+      </div></div>
+    </ion-row>
+    <ion-row>
+      <button (click)="edit()" ion-button block full>Edit</button>
     </ion-row>
 
   </ion-grid>

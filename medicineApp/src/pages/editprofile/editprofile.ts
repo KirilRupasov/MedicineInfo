@@ -48,7 +48,7 @@ export class EditProfile {
       this.user.save();
     }
 
-    if(this.add_info_value !== "") {
+    if((this.add_info_value != "") && (this.add_info_value != null)) {
       this.user.set("add_info", this.add_info_value);
       this.user.save();
     }
