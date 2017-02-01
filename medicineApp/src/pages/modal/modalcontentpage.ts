@@ -1,25 +1,34 @@
-import { Component,Input, Output, AfterContentInit, ContentChild, AfterViewChecked, AfterViewInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, Input, Output, AfterContentInit, ContentChild, AfterViewChecked, AfterViewInit, ViewChild, ViewChildren, ElementRef, Directive, Renderer } from '@angular/core';
 import { Barcodescanner } from '../barcodescanner/barcodescanner';
-import { ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
+import { App, ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { MainMenu } from '../mainmenu/mainmenu';
+import { Searchbar } from 'ionic-angular';
+import { MyProfile } from '../myprofile/myprofile';
+
 
 
 @Component({
-  templateUrl: 'modal.html'
+  templateUrl: 'modal.html',
+
 })
 
 export class ModalContentPage {
 
   items: string[];
 
+  @ViewChild('searchbar') searchbar:Searchbar;
 
-  constructor(private navCtrl: NavController, private http: Http, public platform: Platform, public params: NavParams, public viewCtrl: ViewController) {
+
+  constructor(private navCtrl: NavController, private http: Http, public platform: Platform, public params: NavParams, public viewCtrl: ViewController, private _el: ElementRef, private renderer: Renderer, public appCtrl: App) {
     this.items = [];
+  }
 
+  ngAfterViewInit() {
+    this.searchbar.setFocus();
   }
 
   setItems(new_items : any) {
@@ -36,39 +45,13 @@ export class ModalContentPage {
 
 
     getItem(ev : any) {
-      let new_item: any;
-      let new_results: string[];
+
 
       // set val to the value of the searchbar
       let val = ev.target.value;
       if (val && val.trim() != '') {
-            this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
-                    if(data.title) {
-                      new_item = data;
-                      this.navCtrl.push(MedicineInfo, {
-                           "title":  new_item.title,
-                            "description": new_item.description,
-                             "side_effects": new_item.side_effects
-                            } ).then(() => {
-                              // first we find the index of the current view controller:
-                              const index = this.viewCtrl.index;
-                              // then we remove it from the navigation stack
-                              this.navCtrl.remove(index);
-                            });
-                    } else {
-                      new_item = data;
-                      this.navCtrl.push(MainMenu, {
-                        "suggestions": new_item
-                      } ).then(() => {
-                        // first we find the index of the current view controller:
-                        const index = this.viewCtrl.index;
-                        // then we remove it from the navigation stack
-                        this.navCtrl.remove(index);
-                      });
-                    }
-                });
-
-        return new_item;
+        this.params.get('root').search(val);
+        this.viewCtrl.dismiss();
       }
     }
 

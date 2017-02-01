@@ -22,10 +22,10 @@
     <ion-row>
       <ion-col width-100>
         <ion-searchbar (click)="openModal()" placeholder="Type Medicine Here..." disabled></ion-searchbar>
-        <h1>{{ intro_sugg }}</h1>
+        <div style="text-align: center;"><h1>{{ intro_sugg }}</h1></div>
         <ion-list>
           <ion-item *ngFor="let suggestion of suggestions">
-            <ion-row class="ion-row-bordered"><div class="div-card" (click)="getItem(suggestion.title)">
+            <ion-row><div (click)="getItem(suggestion.title)">
                 <div [innerHTML]="suggestion.description"></div>
               </div></ion-row>
           </ion-item>
@@ -34,7 +34,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <img (click)="barcodescan()" src="images/barcode-scanner.png">
+      <img align="middle" class="barcodeScanner" (click)="barcodescan()" src="images/barcode-scanner2.png">
     </ion-row>
   </ion-grid>
 </ion-content>

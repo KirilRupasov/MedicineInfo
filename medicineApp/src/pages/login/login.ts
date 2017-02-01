@@ -23,8 +23,6 @@ export class Login {
 
     this.auth.login('basic', details).then(() => {
       location.reload();
-
-
     }, () => {
       let alert = this.alertCtrl.create({
           title: 'Error!',

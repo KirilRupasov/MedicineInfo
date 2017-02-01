@@ -5,6 +5,7 @@ import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { MyProfile } from '../myprofile/myprofile';
 import { ModalContentPage } from '../modal/modalcontentpage';
 
 @Component({
@@ -19,6 +20,7 @@ export class MainMenu {
 
   constructor(public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
   private http: Http, public viewCtrl: ViewController, public elementRef: ElementRef) {
+
     let new_suggestions = navParams.get("suggestions");
     let new_suggestions_formatted: string[];
 
@@ -29,10 +31,10 @@ export class MainMenu {
       this.intro_sugg = "Where you looking for...";
       new_suggestions_formatted = [];
       for(let entry of new_suggestions) {
-        entry.description = entry.description.substr(0, 45) + "...";
+        entry.description = entry.description.substr(0, 40) + "...";
         entry.description = entry.description.replace('<p>', '');
         entry.description = entry.description.replace('</p>', '');
-        entry.description = entry.title + ' - ' + entry.description;
+        entry.description = entry.description.replace('is', '-');
 
         new_suggestions_formatted.push(entry);
       }
@@ -41,6 +43,7 @@ export class MainMenu {
   }
 
       getItem(val: any) {
+
         let new_item: any;
 
         if (val && val.trim() != '') {
@@ -57,14 +60,53 @@ export class MainMenu {
                                 // then we remove it from the navigation stack
                                 this.navCtrl.remove(index);
                               });
+
+
                       }
                   });
         }
 
       }
 
+  search(val: string) {
+      let new_item: any;
+      let new_results: string[];
+
+      this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
+            if(data.title) {
+              new_item = data;
+
+
+              this.navCtrl.push(MedicineInfo, {
+                  "title":  new_item.title,
+                  "description": new_item.description,
+                 "side_effects": new_item.side_effects
+                }).then(() => {
+                // first we find the index of the current view controller:
+                const index = this.viewCtrl.index;
+                // then we remove it from the navigation stack
+                this.navCtrl.remove(index);
+              });
+
+
+            } else {
+              new_item = data;
+              this.navCtrl.push(MainMenu, {
+                "suggestions": new_item
+              }).then(() => {
+                // first we find the index of the current view controller:
+                const index = this.viewCtrl.index;
+                // then we remove it from the navigation stack
+                this.navCtrl.remove(index);
+              });
+
+            }
+      });
+
+  }
+
   openModal() {
-    let modal = this.modalCtrl.create(ModalContentPage);
+    let modal = this.modalCtrl.create(ModalContentPage, {"root" : this});
     modal.present();
   }
 

@@ -68,7 +68,7 @@ export class EditProfile {
        const index = this.viewCtrl.index;
        // then we remove it from the navigation stack
        this.navCtrl.remove(index);
-     });;
+     });
   }
 
 }

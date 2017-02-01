@@ -9,6 +9,7 @@ import { Signup } from '../pages/signup/signup';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { EditProfile } from '../pages/editprofile/editprofile';
 import { Logout } from '../pages/logout/logout';
+import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 
 @Component({
   templateUrl: 'app.html'
