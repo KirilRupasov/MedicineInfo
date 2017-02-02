@@ -6,17 +6,6 @@
     <ion-title>Main Menu</ion-title>
   </ion-navbar>
 </ion-header>
-
-<!-- <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-</ion-content>
--->
 <ion-content padding>
   <ion-grid>
     <ion-row>
@@ -25,8 +14,8 @@
         <div style="text-align: center;"><h1>{{ intro_sugg }}</h1></div>
         <ion-list>
           <ion-item *ngFor="let suggestion of suggestions">
-            <ion-row><div (click)="getItem(suggestion.title)">
-                <div [innerHTML]="suggestion.description"></div>
+            <ion-row><div (click)="goToItem(suggestion)">
+                <div [innerHTML]="suggestion.description_short"></div>
               </div></ion-row>
           </ion-item>
         </ion-list>

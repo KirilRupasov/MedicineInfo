@@ -18,89 +18,50 @@ export class MainMenu {
   suggestions: string[];
   intro_sugg: string;
 
-  constructor(public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
-  private http: Http, public viewCtrl: ViewController, public elementRef: ElementRef) {
+  constructor(public modalCtrl: ModalController, public navCtrl: NavController, private http: Http, public viewCtrl: ViewController) {
+    this.suggestions = [];
+  }
 
-    let new_suggestions = navParams.get("suggestions");
-    let new_suggestions_formatted: string[];
+  getSuggestions() {
+    return this.suggestions;
+  }
 
-    if(new_suggestions == null) {
-      this.suggestions = [];
-      this.intro_sugg = "";
-    } else {
+  setSuggestions(suggestions: any[]) {
+    let new_suggestions_formatted: any[];
+    if(suggestions[0]) {
       this.intro_sugg = "Where you looking for...";
       new_suggestions_formatted = [];
-      for(let entry of new_suggestions) {
-        entry.description = entry.description.substr(0, 40) + "...";
-        entry.description = entry.description.replace('<p>', '');
-        entry.description = entry.description.replace('</p>', '');
-        entry.description = entry.description.replace('is', '-');
-
-        new_suggestions_formatted.push(entry);
+      for(let entry of suggestions) {
+        if(entry.title && entry.description && entry.side_effects) {
+          entry.description_short = entry.description.substr(0, 40) + "...";
+          entry.description_short = entry.description_short.replace('<p>', '');
+          entry.description_short = entry.description_short.replace('</p>', '');
+          entry.description_short = entry.description_short.replace('is', '-');
+          new_suggestions_formatted.push(entry);
+        }
       }
       this.suggestions = new_suggestions_formatted;
     }
   }
 
-      getItem(val: any) {
 
-        let new_item: any;
-
-        if (val && val.trim() != '') {
-              this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
-                      if(data.title) {
-                        new_item = data;
-                        this.navCtrl.push(MedicineInfo, {
-                             "title":  new_item.title,
-                              "description": new_item.description,
-                               "side_effects": new_item.side_effects
-                              } ).then(() => {
-                                // first we find the index of the current view controller:
-                                const index = this.viewCtrl.index;
-                                // then we remove it from the navigation stack
-                                this.navCtrl.remove(index);
-                              });
-
-
-                      }
-                  });
-        }
-
-      }
-
-  search(val: string) {
-      let new_item: any;
-      let new_results: string[];
-
-      this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
-            if(data.title) {
-              new_item = data;
-
-
-              this.navCtrl.push(MedicineInfo, {
-                  "title":  new_item.title,
-                  "description": new_item.description,
-                 "side_effects": new_item.side_effects
-                }).then(() => {
-                // first we find the index of the current view controller:
-                const index = this.viewCtrl.index;
-                // then we remove it from the navigation stack
-                this.navCtrl.remove(index);
-              });
-
-
-            } else {
-              new_item = data;
-              this.navCtrl.push(MainMenu, {
-                "suggestions": new_item
-              }).then(() => {
-                const index = this.viewCtrl.index;
-                this.navCtrl.remove(index);
-              });
-
-            }
+  goToItem(item: any) {
+    if((item.title && item.description) && item.side_effects) {
+      this.navCtrl.push(MedicineInfo, {
+        "title":  item.title,
+        "description": item.description,
+        "side_effects": item.side_effects
+      }).then(() => {
+        const index = this.viewCtrl.index;
+        this.navCtrl.remove(index);
       });
+    } else {
+      alert("Error! Product not provided!");
+    }
+  }
 
+  fetchItems(val: any) {
+    return this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json());
   }
 
   openModal() {

@@ -31,51 +31,46 @@ export class ModalContentPage {
     this.searchbar.setFocus();
   }
 
-  setItems(new_items : any) {
-    this.items = new_items;
-  }
-
   dismiss() {
     this.viewCtrl.dismiss();
   }
 
-   searchItem(ev : any) {
-      this.getItem(ev);
-    }
+  searchItem(ev: any) {
+    let val = ev.target.value;
 
-
-    getItem(ev : any) {
-
-
-      // set val to the value of the searchbar
-      let val = ev.target.value;
-      if (val && val.trim() != '') {
-        this.params.get('root').search(val);
-        this.viewCtrl.dismiss();
+    this.params.get('root').fetchItems(val).subscribe(
+      data => {
+        if(data != null && data.title) {
+          this.params.get('root').goToItem(data);
+        } else if(data != null) {
+          this.params.get('root').setSuggestions(data);
+        }
+      },
+      err => {
+          console.log(err);
       }
-    }
+    );
 
-    getItems(ev: any) {
-      // Reset items back to all of the items
-      this.items = [];
+    this.viewCtrl.dismiss();
+  }
 
-      let new_items: string[];
+  getItems(ev: any) {
+    let val = ev.target.value;
+    this.items = [];
 
-
-      // set val to the value of the searchbar
-      let val = ev.target.value;
-      if (val && val.trim() != '') {
-
-      this.http.get('http://medicineappbackend.me/title/'+ val).map(res => res.json()).subscribe(data => {
-              this.items = [];
-              if(data.title) {
-                this.items.push(data.title);
-              } else {
-                  for (let entry of data) {
-                      this.items.push(entry.title);
-                  }
-              }
-          });
+    this.params.get('root').fetchItems(val).subscribe(
+     data => {
+       if(data != null && data.title) {
+         this.items.push(data.title);
+       } else if(data != null) {
+         for (let data_item of data) {
+            this.items.push(data_item.title);
+         }
        }
-    }
+     },
+     err => {
+         console.log(err);
+     }
+   );
+  }
 }

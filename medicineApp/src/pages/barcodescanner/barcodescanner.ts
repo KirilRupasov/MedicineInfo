@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { BarcodeScanner } from 'ionic-native';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
+import { MainMenu } from '../mainmenu/mainmenu';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -13,16 +14,13 @@ export class Barcodescanner {
 
   constructor(private navCtrl: NavController, private http: Http, private viewCtrl: ViewController) {
     BarcodeScanner.scan().then((barcodeData) => {
-      let new_item: any;
-      new_item = this.getItem(barcodeData.text);
-
+      this.getItem(barcodeData.text);
     }, (err) => {
         alert(err.message);
     });
   }
 
   getItem(code: any) {
-      let new_item: any;
 
       if (code && code.trim() != '') {
 
@@ -35,19 +33,21 @@ export class Barcodescanner {
                                     "description": new_item.description,
                                      "side_effects": new_item.side_effects
                                     } ).then(() => {
-                                               // first we find the index of the current view controller:
                                                const index = this.viewCtrl.index;
-                                               // then we remove it from the navigation stack
                                                this.navCtrl.remove(index);
                                              });
             } else {
-              alert("barcode not recognized!");
+              alert("Barcode not recognized!");
+              this.navCtrl.push(MainMenu).then(() => {
+                const index = this.viewCtrl.index;
+                this.navCtrl.remove(index);
+              });
             }
 
 
         });
-
-        return new_item;
+      } else {
+        alert("No barcode provided!");
       }
     }
 }

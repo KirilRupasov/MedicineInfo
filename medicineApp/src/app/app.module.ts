@@ -12,6 +12,9 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
 import { ModalContentPage } from '../pages/modal/modalcontentpage';
 import { Logout } from '../pages/logout/logout';
+import { Auth, User, UserDetails } from '@ionic/cloud-angular';
+import { HttpModule } from '@angular/http';
+import { MagicBall } from '../providers/magic-ball';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -36,7 +39,8 @@ const cloudSettings: CloudSettings = {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    CloudModule.forRoot(cloudSettings)
+    CloudModule.forRoot(cloudSettings),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -51,6 +55,6 @@ const cloudSettings: CloudSettings = {
     Barcodescanner,
     Logout
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]
 })
 export class AppModule {}
