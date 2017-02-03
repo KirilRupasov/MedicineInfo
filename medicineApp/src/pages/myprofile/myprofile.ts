@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
 import { MainMenu } from '../mainmenu/mainmenu';
-import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
+import { Auth, User } from '@ionic/cloud-angular';
 import { AlertController } from 'ionic-angular';
 import { EditProfile } from '../editprofile/editprofile';
 

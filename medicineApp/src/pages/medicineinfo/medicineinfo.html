@@ -14,21 +14,41 @@
     <ion-row class="ion-row-bordered">
       <div style="text-align: center; width: 100%;"><h1>{{ title }}</h1></div>
     </ion-row>
+    <ion-row>
+      <div class="div-card card"><div class="card-block">
+        <span class="large" [innerHTML]="elderly"></span>
+      </div></div>
+    </ion-row>
+
     <ion-row class="ion-row-bordered">
       <div class="div-card card"><div class="card-block">
         <div style="text-align: center; width: 100%;"><h2>Overview</h2></div>
         <span class="large" [innerHTML]="description"></span>
       </div>
     </div></ion-row>
+
+    <ion-row class="ion-row-bordered">
+      <div class="div-card card"><div class="card-block">
+        <div class="drug-title"><h2>How does it</h2></div>
+        <span class="large" [innerHTML]="how_does_it"></span>
+      </div>
+      </div></ion-row>
+
+    <ion-row class="ion-row-bordered">
+      <div class="div-card card"><div class="card-block">
+        <div style="text-align: center; width: 100%;"><h2>Benefits</h2></div>
+        <span class="large" [innerHTML]="benefits"></span>
+      </div>
+      </div></ion-row>
+
     <ion-row class="ion-row-bordered">
       <div class="div-card card"><div class="card-block">
         <div class="drug-title"><h2>Side Effects</h2></div>
         <span class="large" [innerHTML]="side_effects"></span>
       </div>
     </div></ion-row>
-    <!--<ion-row class="ion-row-bordered">
-        <div #map id="map"></div>
-    </ion-row>-->
+
+
 
   </ion-grid>
 </ion-content>

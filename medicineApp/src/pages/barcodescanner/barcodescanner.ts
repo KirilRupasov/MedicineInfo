@@ -27,11 +27,10 @@ export class Barcodescanner {
 
         this.http.get('http://medicineappbackend.me/barcode/'+ code).map(res => res.json()).subscribe(data => {
             if(data.title) {
-            new_item = data;
                         this.navCtrl.push(MedicineInfo, {
-                                   "title":  new_item.title,
-                                    "description": new_item.description,
-                                     "side_effects": new_item.side_effects
+                                   "title":  data.title,
+                                    "description": data.description,
+                                     "side_effects": data.side_effects
                                     } ).then(() => {
                                                const index = this.viewCtrl.index;
                                                this.navCtrl.remove(index);

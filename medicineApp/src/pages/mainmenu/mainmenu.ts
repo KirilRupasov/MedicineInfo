@@ -32,7 +32,7 @@ export class MainMenu {
       this.intro_sugg = "Where you looking for...";
       new_suggestions_formatted = [];
       for(let entry of suggestions) {
-        if(entry.title && entry.description && entry.side_effects) {
+        if(entry.title && entry.description && entry.side_effects && entry.how_does_it && entry.benefits) {
           entry.description_short = entry.description.substr(0, 40) + "...";
           entry.description_short = entry.description_short.replace('<p>', '');
           entry.description_short = entry.description_short.replace('</p>', '');
@@ -50,7 +50,10 @@ export class MainMenu {
       this.navCtrl.push(MedicineInfo, {
         "title":  item.title,
         "description": item.description,
-        "side_effects": item.side_effects
+        "side_effects": item.side_effects,
+        "how_does_it": item.how_does_it,
+        "benefits": item.benefits,
+        "elderly": item.elderly
       }).then(() => {
         const index = this.viewCtrl.index;
         this.navCtrl.remove(index);

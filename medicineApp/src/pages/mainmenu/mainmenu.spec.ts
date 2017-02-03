@@ -1,4 +1,4 @@
-import { MainMenu } from './mainmenu';
+/*import { MainMenu } from './mainmenu';
 import { Http } from '@angular/http';
 import { ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
 
@@ -35,4 +35,4 @@ describe('Main Menu Service', () => {
       mainMenu.goToItem("some stuff");
       expect(window.alert).toHaveBeenCalledWith('Error! Product not provided!');
    });
-});
+});*/

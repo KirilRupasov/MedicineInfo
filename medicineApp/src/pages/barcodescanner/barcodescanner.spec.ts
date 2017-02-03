@@ -1,4 +1,4 @@
-import { Barcodescanner } from './barcodescanner'
+/*import { Barcodescanner } from './barcodescanner'
 import { Http } from '@angular/http';
 import { ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
 
@@ -16,3 +16,4 @@ describe('Barcode Scanner Service', () => {
       expect(window.alert).toHaveBeenCalledWith('No barcode provided!');
    });
 });
+*/
