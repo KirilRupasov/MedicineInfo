@@ -17,6 +17,7 @@ use GuzzleHttp\Client;
 class CrawlerController extends Controller
 {
     public function fetchBestSellingDrugs() {
+        set_time_limit(300);
 
         $client = new Client(['base_url' => "https://www.drugs.com"]);
         $request = $client->get('https://www.drugs.com/stats/top100/sales');
@@ -37,7 +38,9 @@ class CrawlerController extends Controller
                             'barcodes' => $data['barcodes'],
                             'side_effects' => $data['side_effects'],
                             'how_does_it' => $data['how_does_it'],
-                            'benefits' => $data['benefits']
+                            'benefits' => $data['benefits'],
+                            'elderly' => $data['elderly'],
+                            'status' => $data['status']
                         ]);
                         $medicine->addToIndex();
 
@@ -57,6 +60,10 @@ class CrawlerController extends Controller
         $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
     }
 
+    public function fetchSmoker($query) {
+        return $this->fetchData($query, true, true);
+    }
+
     public function fetchData($query, $isJson, $limitOne) {
         $title = strtolower(trim($query));
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
@@ -71,16 +78,28 @@ class CrawlerController extends Controller
                 $request = $client->get('www.ema.europa.eu/ema/'.$link);
                 $content = $request -> getBody() -> getContents();
                 $text = $this->get_string_between($content, "<dl class=\"toggle-list\">", "</dl>");
+                $approved = false;
+
+                if(strpos($content, "status Authorised") !== false) {
+                    $approved = true;
+                }
 
                 $headers = $this->get_tagged_strings($text, "<a title=\"Link title\" href=\"#\">", "</a>");
+                preg_match("/docs\/en_GB\/document_library\/EPAR_-_Product_Information\/human\/[0-9]+\/WC[0-9]+/", $content, $matches);
+                $link = $matches[0].".pdf";
+
+                if($approved) {
+                    $add_info =  $this -> fetchRecord($link, $title);
+                } else {
+                    $add_info = "Not available";
+                }
+
 
                 $side_effect_pos = 0;
                 $how_does_pos = 0;
                 $what_benefits_pos = 0;
 
                 foreach($headers as $key=>$header) {
-
-
                     if ((strpos($header, 'What is the risk associated') !== false) || (strpos($header, 'What are the risks associated') !== false)) {
                         $side_effect_pos = $key;
                     } else if(strpos($header, 'How does') !== false) {
@@ -90,8 +109,16 @@ class CrawlerController extends Controller
                     }
                 }
 
+                $status = "withdrawn";
+
+                if($approved) {
+                    $status = "approved";
+                }
+
                 $response = [
                     'title' => $query,
+                    'status' => $status,
+                    'elderly' => $add_info,
                     'description' => $this->get_string_between($content, "<dd>", "</dd>"),
                     'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos+1),
                     'how_does_it' => $this->get_string_between($content, "<dd>", "</dd>", $how_does_pos+1),
@@ -128,7 +155,7 @@ class CrawlerController extends Controller
         $parser = new \Smalot\PdfParser\Parser();
         $pdf = $parser->parseFile("http://www.ema.europa.eu/".$link);
 
-        if($pdf->getPages() == 0) {
+        if($pdf->getPages() == null || $pdf->getPages() == 0) {
             return "Wrong request";
         }
 
@@ -137,19 +164,29 @@ class CrawlerController extends Controller
         //$text = nl2br($text, false);
         //$text = trim(preg_replace('/\t+/', ' ', $text));
 
-        $text = str_replace("  ", " ", $text);
-        $text = str_replace("4.  Possible side effects", "4.Possible side effects", $text);
-        $text = str_replace("4. Possible side effects", "4.Possible side effects", $text);
-        $text = str_replace("2.  What you need to know before you", "2.What you need to know before you", $text);
-        $text = str_replace("2. What you need to know before you", "2.What you need to know before you", $text);
+        //$text = str_replace("  ", " ", $text);
+        //$text = str_replace("4.  Possible side effects", "4.Possible side effects", $text);
+        //$text = str_replace("4. Possible side effects", "4.Possible side effects", $text);
+        //$text = str_replace("2.  What you need to know before you", "2.What you need to know before you", $text);
+        //$text = str_replace("2. What you need to know before you", "2.What you need to know before you", $text);
 
-        return response()->json([
+        /*return response()->json([
             'title' => $title,
-            'side_effects' => $this->fetchSideEffects($text),
-            'description' => $this->fetchBenefits($text),
-            'barcodes' => implode(",", $this->fetchBarcodes($title))
-        ]);
+            'smoker' => $this->fetchSmokerStatus($text)
+            //'side_effects' => $this->fetchSideEffects($text),
+            //'description' => $this->fetchBenefits($text),
+            //'barcodes' => implode(",", $this->fetchBarcodes($title))
+        ]);*/
+        return $this->fetchElderlyStatus($text);
 
+    }
+
+    public function fetchElderlyStatus($text) {
+        $elderly = $this->get_string_between($text, "Elderly patients", ".");
+        if(strpos($elderly, "(see") != false) {
+            $elderly = substr($elderly, 0, strpos($elderly, "(see"));
+        }
+        return $elderly;
     }
 
     public function fetchSideEffects($text) {
@@ -204,10 +241,8 @@ class CrawlerController extends Controller
         $body = $request->getBody()->getContents();
 
         return $body;
-
-
-
     }
+
 
     public function get_tagged_strings($string, $start_tag, $end_tag) {
         $string = ' ' . $string;
@@ -217,20 +252,11 @@ class CrawlerController extends Controller
         while(strpos($string, $start_tag, $ini) != false) {
             $ini = strpos($string, $start_tag, $ini) + strlen($start_tag);
             $len = strpos($string, $end_tag, $ini) - $ini;
-            //$result = $len;
             $result = substr($string, $ini, $len);
             $results[] = $result;
         }
 
         return $results;
-
-        /*$string = " ".$string;
-        $ini = strpos($string,$start);
-        if ($ini == 0) return "";
-        $ini += strlen($start);
-        $len = strpos($string,$end,$ini) - $ini;
-        return substr($string,$ini,$len);*/
-
     }
 
 
@@ -239,13 +265,13 @@ class CrawlerController extends Controller
         $ini = strpos($string, $start);
 
         if($ini === false) {
-            return "Start tag not found";
+            return null;
         }
 
         for($i=1; $i<$occurence; $i++) {
             $ini = strpos($string, $start, $ini + strlen($start));
             if($ini === false) {
-                return "Start tag not found";
+                return null;
             }
         }
 

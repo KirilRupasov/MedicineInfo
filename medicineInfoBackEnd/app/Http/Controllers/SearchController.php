@@ -44,6 +44,8 @@ class SearchController extends Controller
         return null;
     }
 
+
+
     public function searchByBarcode($query) {
         if($query != "") {
             $result = Medicine::where('barcode', $query)->first();
