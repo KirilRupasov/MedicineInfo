@@ -36,7 +36,7 @@ class SearchController extends Controller
                 return $posts;
             } else {
                 $cc = new CrawlerController();
-                return $cc -> fetchData($query, true, false);
+                return response()->json($cc -> fetchData($query, false));
             }
 
         }
@@ -56,7 +56,7 @@ class SearchController extends Controller
 
 
             $cc = new CrawlerController();
-            return $cc -> fetchData($cc -> fetchTitleByBarcode($cc -> fetchBarcodes($query)), true, false) ;
+            return response()->json($cc -> fetchData($cc -> fetchTitleByBarcode($cc -> fetchBarcodes($query)), false));
         }
 
 

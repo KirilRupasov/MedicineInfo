@@ -9,9 +9,9 @@
 namespace App\Http\Controllers;
 
 use App\Medicine;
+use ClientException;
 use GuzzleHttp\Client;
-
-
+use League\Flysystem\Exception;
 
 
 class CrawlerController extends Controller
@@ -29,9 +29,8 @@ class CrawlerController extends Controller
             foreach($results as $result) {
                 $formatted = $this->get_string_between($result, "'>", "</a>");
                 if ($formatted != "Start tag not found") {
-                    $data = $this->fetchData($formatted, false, true);
+                    $data = $this->fetchData($formatted, true);
                     if ($data != "Wrong request" && (array_keys($data) !== range(0, count($data) - 1))) {
-                        //return $data;
                         $medicine = Medicine::create([
                             'title' => $data['title'],
                             'description' => $data['description'],
@@ -55,16 +54,75 @@ class CrawlerController extends Controller
         }
     }
 
+    public function fetchRandomDrugs() {
+        set_time_limit(300);
+        $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
+
+        $letters = range('A', 'Z');
+
+        foreach ($letters as $letter) {
+            $request = $client -> get('http://www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&startLetter='.$letter.'&keyword=Enter+keywords&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');
+
+            if($request->getStatusCode() == 200) {
+                $content = $request->getBody()->getContents();
+                $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
+
+                if(sizeof($results) > 5) {
+                    $number_to_reach = 6;
+                } else {
+                    $number_to_reach = sizeof($results);
+                }
+
+                $counter_to_complete = 0;
+
+                while($counter_to_complete < $number_to_reach) {
+                    $title = $this->get_string_between($results[$counter_to_complete], "\">", "</a>");
+                    if(Medicine::where('title', trim($title))->first() == null) {
+                        //return $title;
+                        $data = $this->fetchDrugsFromPage($results[$counter_to_complete], $client, $title);
+                        if ($data != "Wrong request" && (array_keys($data) !== range(0, count($data) - 1))) {
+                            //return $data;
+                            $medicine = Medicine::create([
+                                'title' => $data['title'],
+                                'description' => $data['description'],
+                                'barcodes' => $data['barcodes'],
+                                'side_effects' => $data['side_effects'],
+                                'how_does_it' => $data['how_does_it'],
+                                'benefits' => $data['benefits'],
+                                'elderly' => $data['elderly'],
+                                'status' => $data['status']
+                            ]);
+
+                            $medicine->addToIndex();
+                        }
+
+
+                    }
+                    $counter_to_complete++;
+                }
+            }
+        }
+
+        return "Success!";
+
+
+    }
+
     public function fetchDataByBarcode($query) {
-        $client = new Client(['base_url' => "http://www.itembarcode.com"]);
-        $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
+        try {
+            $client = new Client(['base_url' => "http://www.itembarcode.com"]);
+            $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
+        } catch(\Exception $exception) {
+            return null;
+        }
+
     }
 
     public function fetchSmoker($query) {
-        return $this->fetchData($query, true, true);
+        return $this->fetchData($query, true);
     }
 
-    public function fetchData($query, $isJson, $limitOne) {
+    public function fetchData($query, $limitOne) {
         $title = strtolower(trim($query));
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
 
@@ -74,63 +132,7 @@ class CrawlerController extends Controller
             $content = $request->getBody()->getContents();
             $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
             if(sizeof($results) == 1 || ($limitOne && sizeof($results) > 1)) {
-                $link = $this->get_string_between($results[0], "href=\"", "\">");
-                $request = $client->get('www.ema.europa.eu/ema/'.$link);
-                $content = $request -> getBody() -> getContents();
-                $text = $this->get_string_between($content, "<dl class=\"toggle-list\">", "</dl>");
-                $approved = false;
-
-                if(strpos($content, "status Authorised") !== false) {
-                    $approved = true;
-                }
-
-                $headers = $this->get_tagged_strings($text, "<a title=\"Link title\" href=\"#\">", "</a>");
-                preg_match("/docs\/en_GB\/document_library\/EPAR_-_Product_Information\/human\/[0-9]+\/WC[0-9]+/", $content, $matches);
-                $link = $matches[0].".pdf";
-
-                if($approved) {
-                    $add_info =  $this -> fetchRecord($link, $title);
-                } else {
-                    $add_info = "Not available";
-                }
-
-
-                $side_effect_pos = 0;
-                $how_does_pos = 0;
-                $what_benefits_pos = 0;
-
-                foreach($headers as $key=>$header) {
-                    if ((strpos($header, 'What is the risk associated') !== false) || (strpos($header, 'What are the risks associated') !== false)) {
-                        $side_effect_pos = $key;
-                    } else if(strpos($header, 'How does') !== false) {
-                        $how_does_pos = $key;
-                    } else if(strpos($header, 'What benefit') !== false) {
-                        $what_benefits_pos = $key;
-                    }
-                }
-
-                $status = "withdrawn";
-
-                if($approved) {
-                    $status = "approved";
-                }
-
-                $response = [
-                    'title' => $query,
-                    'status' => $status,
-                    'elderly' => $add_info,
-                    'description' => $this->get_string_between($content, "<dd>", "</dd>"),
-                    'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos+1),
-                    'how_does_it' => $this->get_string_between($content, "<dd>", "</dd>", $how_does_pos+1),
-                    'benefits' => $this->get_string_between($content, "<dd>", "</dd>", $what_benefits_pos+1),
-                    'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
-                ];
-
-                if($isJson) {
-                    return response()->json($response);
-                } else {
-                    return $response;
-                }
+                return $this->fetchDrugsFromPage($results[0], $client, $query);
             } else if(sizeof($results) > 0) {
                 $final_results = [];
                 foreach ($results as $value) {
@@ -148,36 +150,81 @@ class CrawlerController extends Controller
 
     }
 
+    public function fetchDrugsFromPage($result, $client, $query) {
+        $title = strtolower(trim($query));
+        $link = $this->get_string_between($result, "href=\"", "\">");
+        $request = $client->get('www.ema.europa.eu/ema/'.$link);
+        $content = $request -> getBody() -> getContents();
+        $text = $this->get_string_between($content, "<dl class=\"toggle-list\">", "</dl>");
+        $approved = false;
 
-
-    public function fetchRecord($link, $title) {
-        // Parse pdf file and build necessary objects.
-        $parser = new \Smalot\PdfParser\Parser();
-        $pdf = $parser->parseFile("http://www.ema.europa.eu/".$link);
-
-        if($pdf->getPages() == null || $pdf->getPages() == 0) {
-            return "Wrong request";
+        if(strpos($content, "status Authorised") !== false) {
+            $approved = true;
         }
 
-        $text = $pdf->getText();
+        $headers = $this->get_tagged_strings($text, "<a title=\"Link title\" href=\"#\">", "</a>");
+        preg_match("/docs\/en_GB\/document_library\/EPAR_-_Product_Information\/human\/[0-9]+\/WC[0-9]+/", $content, $matches);
 
-        //$text = nl2br($text, false);
-        //$text = trim(preg_replace('/\t+/', ' ', $text));
 
-        //$text = str_replace("  ", " ", $text);
-        //$text = str_replace("4.  Possible side effects", "4.Possible side effects", $text);
-        //$text = str_replace("4. Possible side effects", "4.Possible side effects", $text);
-        //$text = str_replace("2.  What you need to know before you", "2.What you need to know before you", $text);
-        //$text = str_replace("2. What you need to know before you", "2.What you need to know before you", $text);
+        if ($approved && (sizeof($matches) > 0)) {
+            $link = $matches[0] . ".pdf";
+            $add_info = $this->fetchEPAR($link, $title);
+        } else {
+            $add_info = "";
+        }
 
-        /*return response()->json([
-            'title' => $title,
-            'smoker' => $this->fetchSmokerStatus($text)
-            //'side_effects' => $this->fetchSideEffects($text),
-            //'description' => $this->fetchBenefits($text),
-            //'barcodes' => implode(",", $this->fetchBarcodes($title))
-        ]);*/
-        return $this->fetchElderlyStatus($text);
+
+        $side_effect_pos = 0;
+        $how_does_pos = 0;
+        $what_benefits_pos = 0;
+
+        foreach ($headers as $key => $header) {
+            if ((strpos($header, 'What is the risk associated') !== false) || (strpos($header, 'What are the risks associated') !== false)) {
+                $side_effect_pos = $key;
+            } else if (strpos($header, 'How does') !== false) {
+                $how_does_pos = $key;
+            } else if (strpos($header, 'What benefit') !== false) {
+                $what_benefits_pos = $key;
+            }
+        }
+
+        $status = "withdrawn";
+
+        if ($approved) {
+            $status = "approved";
+        }
+
+        $response = [
+            'title' => $query,
+            'status' => $status,
+            'elderly' => $add_info,
+            'description' => $this->get_string_between($content, "<dd>", "</dd>"),
+            'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos + 1),
+            'how_does_it' => $this->get_string_between($content, "<dd>", "</dd>", $how_does_pos + 1),
+            'benefits' => $this->get_string_between($content, "<dd>", "</dd>", $what_benefits_pos + 1),
+            'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
+        ];
+
+        return $response;
+    }
+
+
+
+    public function fetchEPAR($link, $title) {
+        try {
+            // Parse pdf file and build necessary objects.
+            $parser = new \Smalot\PdfParser\Parser();
+            $pdf = $parser->parseFile("http://www.ema.europa.eu/" . $link);
+
+            if ($pdf->getText() == null || $pdf->getText() == "") {
+                return "Wrong request";
+            }
+
+            $text = $pdf->getText();
+            return $this->fetchElderlyStatus($text);
+        } catch (\Exception $exception) {
+            return null;
+        }
 
     }
 
@@ -189,15 +236,7 @@ class CrawlerController extends Controller
         return $elderly;
     }
 
-    public function fetchSideEffects($text) {
-        $side_effects = $this->get_string_between($text, "4.Possible side effects", "Reporting of side effects", 2);
-        return $side_effects;
-    }
 
-    public function fetchBenefits($text) {
-        $benefits = $this->get_string_between($text, "what it is used for", "2.What you need to know before you", 2);
-        return $benefits;
-    }
 
     public function fetchBarcodesByTitle($body) {
         $results = $this->get_tagged_strings($body, "<td class=\"views-field views-field-title\" >", "</td>");
@@ -235,12 +274,18 @@ class CrawlerController extends Controller
     }
 
     public function fetchBarcodes($query) {
-        $client = new Client(['base_url' => "http://www.itembarcode.com"]);
-        $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
+        try {
+            $client = new Client(['base_url' => "http://www.itembarcode.com"]);
+            $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
 
-        $body = $request->getBody()->getContents();
+            $body = $request->getBody()->getContents();
 
-        return $body;
+            return $body;
+        } catch (\Exception $exception) {
+            return null;
+        }
+
+
     }
 
 
