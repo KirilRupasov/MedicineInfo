@@ -54,7 +54,7 @@ class SearchController extends Controller
                 return $result;
             }
         }
-        return null;
+        return [];
     }
 
 }
