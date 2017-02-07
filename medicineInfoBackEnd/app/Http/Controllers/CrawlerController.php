@@ -118,10 +118,6 @@ class CrawlerController extends Controller
 
     }
 
-    public function fetchSmoker($query) {
-        return $this->fetchData($query, true);
-    }
-
     public function fetchData($query, $limitOne) {
         $title = strtolower(trim($query));
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
@@ -235,7 +231,6 @@ class CrawlerController extends Controller
         }
         return $elderly;
     }
-
 
 
     public function fetchBarcodesByTitle($body) {
