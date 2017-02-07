@@ -16,7 +16,11 @@ use League\Flysystem\Exception;
 
 class CrawlerController extends Controller
 {
+
     public function fetchBestSellingDrugs() {
+        //authorize user
+
+
         set_time_limit(300);
 
         $client = new Client(['base_url' => "https://www.drugs.com"]);
