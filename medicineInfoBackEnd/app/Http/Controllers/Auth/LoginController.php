@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -27,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/verify';
 
     /**
      * Create a new controller instance.
@@ -36,21 +38,30 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        //$this->middleware('guest', ['except' => 'logout']);
     }
 
     public function getLoginForm() {
         return view('login');
     }
 
-    public function verifyUser(Request $request) {
-        $input = $request->all();
-        $user = User::where([['email', '=', $input['email']], ['password', '=', $input['password']]]) -> first();
+    public function createUser() {
+        User::create([
+            'email' => 'kirilrupasov@gmail.com',
+            'password' => bcrypt('6688846993'),
+        ]);
+    }
 
-        if($user != null && $user != "") {
-            return "Success!";
+
+    public function verifyUser(Request $request) {
+
+
+        $input = $request->all();
+
+        if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']])) {
+            return view("adminPanel");
         } else {
-            return "fail";
+            return "Login Failed!";
         }
     }
 }

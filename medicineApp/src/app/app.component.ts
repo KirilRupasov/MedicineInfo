@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-
 import { Auth } from '@ionic/cloud-angular';
 import { MainMenu } from '../pages/mainmenu/mainmenu';
 import { Login } from '../pages/login/login';
@@ -10,6 +9,9 @@ import { MyProfile } from '../pages/myprofile/myprofile';
 import { EditProfile } from '../pages/editprofile/editprofile';
 import { Logout } from '../pages/logout/logout';
 import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
+
+declare var navigator: any;
+declare var Connection: any;
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +23,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public auth: Auth) {
+  constructor(public platform: Platform, public auth: Auth, public alertCtrl: AlertController) {
     this.initializeApp();
 
     if(this.auth.isAuthenticated()) {
@@ -39,10 +41,36 @@ export class MyApp {
         ];
     }
 
+    this.checkNetwork();
+
     // used for an example of ngFor and navigation
 
 
   }
+
+    checkNetwork() {
+        this.platform.ready().then(() => {
+            var networkState = navigator.connection.type;
+            var states = {};
+            states[Connection.UNKNOWN]  = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI]     = 'WiFi connection';
+            states[Connection.CELL_2G]  = 'Cell 2G connection';
+            states[Connection.CELL_3G]  = 'Cell 3G connection';
+            states[Connection.CELL_4G]  = 'Cell 4G connection';
+            states[Connection.CELL]     = 'Cell generic connection';
+            states[Connection.NONE]     = 'No network connection';
+
+            if(states[networkState] == "No network connection") {
+                let alert = this.alertCtrl.create({
+                    title: "Warning!",
+                    subTitle: "Please turn on network connection on device, otherwise the app will not work properly!",
+                    buttons: ["OK"]
+                });
+                alert.present();
+            }
+        });
+    }
 
   initializeApp() {
     this.platform.ready().then(() => {

@@ -1,12 +1,14 @@
 import { Component, ElementRef } from '@angular/core';
 import { Barcodescanner } from '../barcodescanner/barcodescanner';
-import { ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
+import { ModalController, ViewController, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { MyProfile } from '../myprofile/myprofile';
-import { ModalContentPage } from '../modal/modalcontentpage';
+import { ModalContentPage } from '../searchModal/modalcontentpage';
+
+
 
 @Component({
   selector: 'page-mainmenu',
@@ -19,6 +21,7 @@ export class MainMenu {
   intro_sugg: string;
 
   constructor(public modalCtrl: ModalController, public navCtrl: NavController, private http: Http, public viewCtrl: ViewController) {
+
     this.suggestions = [];
   }
 

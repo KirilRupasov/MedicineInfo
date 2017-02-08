@@ -10,7 +10,8 @@ import { EditProfile } from '../pages/editprofile/editprofile';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
-import { ModalContentPage } from '../pages/modal/modalcontentpage';
+import { ModalContentPage } from '../pages/searchModal/modalcontentpage';
+import { ReviewModal } from '../pages/reviewModal/reviewModal';
 import { Logout } from '../pages/logout/logout';
 import { Auth, User, UserDetails } from '@ionic/cloud-angular';
 import { HttpModule } from '@angular/http';
@@ -35,6 +36,7 @@ const cloudSettings: CloudSettings = {
     MyProfile,
     Barcodescanner,
     ModalContentPage,
+    ReviewModal,
     Logout
   ],
   imports: [
@@ -53,6 +55,7 @@ const cloudSettings: CloudSettings = {
     MyProfile,
     ModalContentPage,
     Barcodescanner,
+    ReviewModal,
     Logout
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]

@@ -11,16 +11,20 @@ namespace App\Http\Controllers;
 use App\Medicine;
 use ClientException;
 use GuzzleHttp\Client;
-use League\Flysystem\Exception;
+
+
 
 
 class CrawlerController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function fetchBestSellingDrugs() {
         //authorize user
-
-
         set_time_limit(300);
 
         $client = new Client(['base_url' => "https://www.drugs.com"]);

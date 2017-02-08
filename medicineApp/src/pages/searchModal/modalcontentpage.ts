@@ -13,7 +13,6 @@ import { MyProfile } from '../myprofile/myprofile';
 
 @Component({
   templateUrl: 'modal.html',
-
 })
 
 export class ModalContentPage {

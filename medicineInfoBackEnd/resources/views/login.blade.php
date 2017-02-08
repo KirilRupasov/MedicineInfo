@@ -2,7 +2,7 @@
 <html lang="en">
     <head></head>
     <body>
-        <form method="POST" action="{{ url('user/verify') }}">
+        <form method="POST" action="{{ url('verify') }}">
             {{ csrf_field() }}
             Email:<br>
             <input type="text" name="email" id="email"><br>

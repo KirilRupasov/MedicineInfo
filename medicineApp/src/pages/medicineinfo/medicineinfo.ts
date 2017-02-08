@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Auth, User} from '@ionic/cloud-angular';
-import { NavController, NavParams } from 'ionic-angular';
+import { ModalController, NavController, NavParams } from 'ionic-angular';
+import { ReviewModal } from '../reviewModal/reviewModal';
 
 import {
  GoogleMap,
@@ -11,12 +12,11 @@ import {
  GoogleMapsMarker
 } from 'ionic-native';
 
-
-
 @Component({
   selector: 'page-medicineinfo',
   templateUrl: 'medicineinfo.html'
 })
+
 export class MedicineInfo {
   title: any;
   description: any;
@@ -25,7 +25,7 @@ export class MedicineInfo {
   how_does_it: any;
   elderly: any;
 
-  constructor(private navCtrl: NavController, navParams: NavParams, public auth: Auth, public user: User) {
+  constructor(private navCtrl: NavController, navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController) {
     this.title = navParams.get("title");
     this.description = navParams.get("description");
     this.side_effects = navParams.get("side_effects");
@@ -41,10 +41,15 @@ export class MedicineInfo {
         let ageDif = Date.now() - date.getTime();
         let ageDate = new Date(ageDif);
         let age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        if(age > 65) {
-          this.elderly = navParams.get("elderly");
+        if(age > 65 && navParams.get("elderly") != "" && navParams.get("elderly") != null) {
+          this.elderly = '<div class="alert alert-warning card"><div class="card-block"><strong>Elderly patients </strong>' + navParams.get("elderly") + '</div></div>';
         }
       }
     }
+  }
+
+  openModal() {
+    let modal = this.modalCtrl.create(ReviewModal, {"root" : this});
+    modal.present();
   }
 }

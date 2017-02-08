@@ -23,10 +23,15 @@ export class Barcodescanner {
   getItem(code: any) {
 
       if (code && code.trim() != '') {
-
-
         this.http.get('http://medicineappbackend.me/barcode/'+ code).map(res => res.json()).subscribe(data => {
-            if(data.title) {
+            if(data == "" || data == null) {
+              alert("Barcode not recognized!");
+                          location.reload();
+                          this.navCtrl.push(MainMenu).then(() => {
+                            const index = this.viewCtrl.index;
+                            this.navCtrl.remove(index);
+              });
+            } else if(data.title) {
                         this.navCtrl.push(MedicineInfo, {
                                    "title":  data.title,
                                     "description": data.description,
@@ -37,6 +42,7 @@ export class Barcodescanner {
                                              });
             } else {
               alert("Barcode not recognized!");
+              location.reload();
               this.navCtrl.push(MainMenu).then(() => {
                 const index = this.viewCtrl.index;
                 this.navCtrl.remove(index);
@@ -47,6 +53,7 @@ export class Barcodescanner {
         });
       } else {
         alert("No barcode provided!");
+        location.reload();
       }
     }
 }
