@@ -22,3 +22,5 @@ Route::get('/crawler/fetchRandomDrugs', 'CrawlerController@fetchRandomDrugs');
 
 Route::get('/login', 'Auth\LoginController@getLoginForm');
 Route::post('/verify', 'Auth\LoginController@verifyUser');
+
+Route::post('/storereview', 'ReviewController@leaveReview');
