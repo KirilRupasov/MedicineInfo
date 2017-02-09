@@ -21,7 +21,6 @@ export class ModalContentPage {
 
   @ViewChild('searchbar') searchbar:Searchbar;
 
-
   constructor(private navCtrl: NavController, private http: Http, public platform: Platform, public params: NavParams, public viewCtrl: ViewController, private _el: ElementRef, private renderer: Renderer, public appCtrl: App) {
     this.items = [];
   }

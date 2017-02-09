@@ -18,9 +18,11 @@
         <span class="large" [innerHTML]="elderly"></span>
     </ion-row>
     <ion-row class="ion-row-bordered">
-      <button (click)="openModal()" ion-button block full>Leave Review</button>
+      <button (click)="openLeaveReviewModal()" ion-button block full>Leave Review</button>
     </ion-row>
-
+    <ion-row class="ion-row-bordered">
+      <button (click)="openReadReviewsModal()" ion-button block full>Read Reviews</button>
+    </ion-row>
     <ion-row class="ion-row-bordered">
       <div class="div-card card"><div class="card-block">
         <div style="text-align: center; width: 100%;"><h2>Overview</h2></div>

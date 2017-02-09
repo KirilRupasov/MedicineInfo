@@ -2,15 +2,7 @@ import { Component } from '@angular/core';
 import { Auth, User} from '@ionic/cloud-angular';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { ReviewModal } from '../reviewModal/reviewModal';
-
-import {
- GoogleMap,
- GoogleMapsEvent,
- GoogleMapsLatLng,
- CameraPosition,
- GoogleMapsMarkerOptions,
- GoogleMapsMarker
-} from 'ionic-native';
+import { ReadReviewsModal } from '../readReviewsModal/readReviewsModal';
 
 @Component({
   selector: 'page-medicineinfo',
@@ -48,8 +40,21 @@ export class MedicineInfo {
     }
   }
 
-  openModal() {
-    let modal = this.modalCtrl.create(ReviewModal, {"root" : this});
+  getTitle() {
+    return this.title;
+  }
+
+  openLeaveReviewModal() {
+    if(this.auth.isAuthenticated()) {
+      let modal = this.modalCtrl.create(ReviewModal, {"root" : this});
+      modal.present();
+    } else {
+      alert("You are not logged in!");
+    }
+  }
+
+  openReadReviewsModal() {
+    let modal = this.modalCtrl.create(ReadReviewsModal, {"root" : this});
     modal.present();
   }
 }
