@@ -16,14 +16,15 @@ class ReviewController extends Controller
 {
     public function leaveReview(Request $request) {
         $input = $request->all();
-        if($input['user_email'] && $input['review_content'] && $input['medicine_name']) {
+        if($input['user_email'] && $input['review_content'] && $input['medicine_name'] && $input['rating'] {
             //get medicine id
             //return $input['medicine_name'];
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
             Review::create([
                 'medicine_id' => $medicine->id,
                 'review_content' => $input['review_content'],
-                'user_email' => $input['user_email']
+                'user_email' => $input['user_email'],
+                'rating' => $input['rating']
             ]);
             return "Success";
         } else {
