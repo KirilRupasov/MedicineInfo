@@ -16,7 +16,7 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->bigInteger('medicine_id');
+            $table->integer('medicine_id')->unsigned();
             $table->string('review_content');
             $table->enum('rating', ['1', '2', '3', '4', '5'])->default('1');
             $table->timestamps();
@@ -32,6 +32,6 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reviews');
+        Schema::dropIfExists('reviews');
     }
 }
