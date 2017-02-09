@@ -26,7 +26,7 @@ class ReviewController extends Controller
             ]);
             return "Success";
         } else {
-            return "Failure";
+            return $input['user_email'] . ";". $input['review_content'] . ";" . $input['medicine_name'];
         }
     }
 }
