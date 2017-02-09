@@ -18,6 +18,7 @@ class ReviewController extends Controller
         $input = $request->all();
         if($input['user_email'] && $input['review_content'] && $input['medicine_name']) {
             //get medicine id
+            return $input['medicine_name'];
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
             Review::create([
                 'medicine_id' => $medicine->id,
