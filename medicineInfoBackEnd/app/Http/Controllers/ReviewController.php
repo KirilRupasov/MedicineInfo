@@ -22,6 +22,8 @@ class ReviewController extends Controller
             //get medicine id
             //return $input['medicine_name'];
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
+
+
         
             Review::create([
                 'medicine_id' => $medicine->id,
@@ -29,7 +31,7 @@ class ReviewController extends Controller
                 'user_email' => $input['user_email'],
                 'rating' => $input['rating']
             ]);
-            return "Success";
+            return $input['rating'];
         } else {
             return $input['user_email'] . ";". $input['review_content'] . ";" . $input['medicine_name'];
         }
