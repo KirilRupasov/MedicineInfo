@@ -15,7 +15,7 @@ class Review extends Model
      * @var array
      */
     protected $fillable = [
-        'user_email', 'review_content', 'medicine_id'
+        'user_email', 'review_content', 'medicine_id', 'rating'
     ];
 
     protected $hidden = [
