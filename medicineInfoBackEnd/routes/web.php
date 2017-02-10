@@ -25,3 +25,4 @@ Route::post('/verify', 'Auth\LoginController@verifyUser');
 Route::get('/setuser', 'Auth\LoginController@createUser');
 
 Route::post('/storereview', 'ReviewController@leaveReview');
+Route::get('/getreviews/{title}', 'ReviewController@getReviews');
