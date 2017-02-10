@@ -18,7 +18,7 @@ class CreateReviewsTable extends Migration
             $table->string('user_email');
             $table->integer('medicine_id')->unsigned();
             $table->string('review_content');
-            $table->enum('rating', ['0', '1', '2', '3', '4', '5'])->default('1');
+            $table->enum('rating', [0, 1, 2, 3, 4, 5])->default(1);
             $table->timestamps();
             $table->foreign('medicine_id')->references('id')->on('medicines')
                 ->onDelete('cascade');
