@@ -33,10 +33,13 @@ export class ReviewModal {
       'http://medicineappbackend.me/storereview',
        { user_email, medicine_name, review_content, rating },
        options).subscribe(data => {
-             alert('ok');
+             alert("Review Submitted!");
+             this.dismiss();
        }, error => {
            console.log(JSON.stringify(error.json()));
        });
+    } else {
+      alert("No review is written!");
     }
    }
 

@@ -3,6 +3,7 @@ import { Auth, User} from '@ionic/cloud-angular';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { ReviewModal } from '../reviewModal/reviewModal';
 import { ReadReviewsModal } from '../readReviewsModal/readReviewsModal';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'page-medicineinfo',
@@ -17,7 +18,7 @@ export class MedicineInfo {
   how_does_it: any;
   elderly: any;
 
-  constructor(private navCtrl: NavController, navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController) {
+  constructor(private navCtrl: NavController, navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController, private http: Http) {
     this.title = navParams.get("title");
     this.description = navParams.get("description");
     this.side_effects = navParams.get("side_effects");
@@ -46,8 +47,20 @@ export class MedicineInfo {
 
   openLeaveReviewModal() {
     if(this.auth.isAuthenticated()) {
-      let modal = this.modalCtrl.create(ReviewModal, {"root" : this});
-      modal.present();
+      this.http.get('http://medicineappbackend.me/checkifreviewexists/'+ this.user.details.email).map(res => res).subscribe(
+              data => {
+                if(data.text().toString() == "false") {
+                  let modal = this.modalCtrl.create(ReviewModal, {"root" : this});
+                  modal.present();
+                } else {
+                  alert("You have already reviewed this medicine!");
+                }
+              },
+              err => {
+                  console.log(err);
+              }
+            );
+
     } else {
       alert("You are not logged in!");
     }

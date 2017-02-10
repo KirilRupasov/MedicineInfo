@@ -1,0 +1,28 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Reviews - {{ medicine_title }}
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngFor="let review of reviews">
+    <ion-row>
+      <div class="div-card card"><div class="card-block">
+          <ion-item style="background-color: #5b5f66 !important; padding: 0; display: inline-block; width: 4rem;" *ngFor="let star of review.rating_number">
+            <ion-icon name="star" color="bright"></ion-icon>
+          </ion-item>
+          <div class="card-title"><h2>{{ review.user_email }}</h2></div>
+          <p>{{ review.review_content }}</p>
+      </div></div>
+    </ion-row>
+  </ion-item>
+</ion-content>

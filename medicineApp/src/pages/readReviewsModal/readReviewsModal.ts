@@ -10,21 +10,36 @@ import { Headers, RequestOptions } from '@angular/http';
 
 export class ReadReviewsModal {
    reviews: string[];
-   medicine_title: string'
+   medicine_title: string;
 
    constructor(public user: User, public viewCtrl: ViewController, public params: NavParams, private http: Http) {
     this.reviews = [];
     this.medicine_title = this.params.get('root').getTitle();
-    loadReviews();
+    this.loadReviews();
    }
 
    loadReviews() {
-     this.http.get('http://medicineappbackend.me/reviews/'+ this.medicine_title).map(res => res.json()).subscribe(
+     this.http.get('http://medicineappbackend.me/getreviews/'+ this.medicine_title).map(res => res.json()).subscribe(
         data => {
           if(data != null && data.length) {
+          let rating: number;
             for (let review of data) {
-               reviews.push('<p>' + review.user_email + ":" + review.review_content + '</p>');
+               let ratingHTML = "<ion-row>";
+               rating = review.rating;
+
+               review.rating_number = [];
+
+                for (let i = 0; i < review.rating; i++) {
+                   review.rating_number.push(i);
+               }
+
+               for(let i=0; i<3; i++) {
+                 ratingHTML += '<ion-col><ion-icon name="star" color="bright"></ion-icon></ion-col>';
+               }
+
+               ratingHTML += "</ion-row>";
             }
+            this.reviews = data;
           }
         },
         err => {

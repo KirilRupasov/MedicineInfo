@@ -16,6 +16,7 @@ import { Logout } from '../pages/logout/logout';
 import { Auth, User, UserDetails } from '@ionic/cloud-angular';
 import { HttpModule } from '@angular/http';
 import { MagicBall } from '../providers/magic-ball';
+import { ReadReviewsModal } from '../pages/readReviewsModal/readReviewsModal';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -37,6 +38,7 @@ const cloudSettings: CloudSettings = {
     Barcodescanner,
     ModalContentPage,
     ReviewModal,
+    ReadReviewsModal,
     Logout
   ],
   imports: [
@@ -56,6 +58,7 @@ const cloudSettings: CloudSettings = {
     ModalContentPage,
     Barcodescanner,
     ReviewModal,
+    ReadReviewsModal,
     Logout
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]
