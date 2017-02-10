@@ -43,9 +43,9 @@ class ReviewController extends Controller
         $review = Review::where("user_email", $username) -> first();
 
         if($review) {
-            return true;
+            return "true";
         } else {
-            return false;
+            return "false";
         }
     }
 
