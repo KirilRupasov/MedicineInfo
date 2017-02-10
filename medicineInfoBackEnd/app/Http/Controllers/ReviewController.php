@@ -20,7 +20,8 @@ class ReviewController extends Controller
         $input = $request->all();
         if($input['user_email'] && $input['review_content'] && $input['medicine_name'] && $input['rating']) {
             //get medicine id
-            //return $input['medicine_name'];
+
+
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
 
 
@@ -35,6 +36,16 @@ class ReviewController extends Controller
             return $input['rating'];
         } else {
             return "Failure";
+        }
+    }
+
+    public function checkIfReviewExists($username) {
+        $review = Review::where("user_email", $username) -> first();
+
+        if($review) {
+            return true;
+        } else {
+            return false;
         }
     }
 

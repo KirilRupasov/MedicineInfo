@@ -26,3 +26,4 @@ Route::get('/setuser', 'Auth\LoginController@createUser');
 
 Route::post('/storereview', 'ReviewController@leaveReview');
 Route::get('/getreviews/{title}', 'ReviewController@getReviews');
+Route::get('/checkifreviewexists/{username}', 'ReviewController@checkIfReviewExists');
