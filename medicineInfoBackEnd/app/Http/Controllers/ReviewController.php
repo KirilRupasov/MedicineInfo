@@ -29,11 +29,12 @@ class ReviewController extends Controller
                 'medicine_id' => $medicine->id,
                 'review_content' => $input['review_content'],
                 'user_email' => $input['user_email'],
-                'rating' => $input['rating']
+                'rating' => 3
             ]);
+
             return $input['rating'];
         } else {
-            return $input['user_email'] . ";". $input['review_content'] . ";" . $input['medicine_name'];
+            return "Failure";
         }
     }
 
