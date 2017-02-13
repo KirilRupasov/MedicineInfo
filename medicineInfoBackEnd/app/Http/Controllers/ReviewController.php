@@ -39,8 +39,9 @@ class ReviewController extends Controller
         }
     }
 
-    public function checkIfReviewExists($username) {
-        $review = Review::where("user_email", $username) -> first();
+    public function checkIfReviewExists($username, $medicinename) {
+        $medicine = Medicine::where("title", $medicinename)->first();
+        $review = Review::where([["user_email", '=', $username], ["medicine_id", "=", $medicine->id] ]) -> first();
 
         if($review) {
             return "true";
