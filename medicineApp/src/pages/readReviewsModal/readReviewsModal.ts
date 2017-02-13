@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
-import { App, ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
+import { User } from '@ionic/cloud-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
-import { Headers, RequestOptions } from '@angular/http';
 
 @Component({
   templateUrl: 'readReviewsModal.html',

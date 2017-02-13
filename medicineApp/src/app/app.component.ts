@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-import { Auth } from '@ionic/cloud-angular';
+import { Auth, User } from '@ionic/cloud-angular';
 import { MainMenu } from '../pages/mainmenu/mainmenu';
 import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
@@ -19,14 +19,17 @@ declare var Connection: any;
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
+  username: string;
+
   rootPage: any = MainMenu;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public auth: Auth, public alertCtrl: AlertController) {
+  constructor(public platform: Platform, public auth: Auth, public alertCtrl: AlertController, public user: User) {
     this.initializeApp();
 
     if(this.auth.isAuthenticated()) {
+        this.username = " (" + this.user.details.email + ")";
         this.pages = [
               { title: 'Main Menu', component: MainMenu },
               { title: 'Log Out', component: Logout },
@@ -34,6 +37,7 @@ export class MyApp {
               { title: 'Edit Profile', component: EditProfile }
       ];
     } else {
+    this.username = "";
     this.pages = [
           { title: 'Main Menu', component: MainMenu },
           { title: 'Log In', component: Login },

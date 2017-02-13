@@ -20,17 +20,21 @@ export class Barcodescanner {
     });
   }
 
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+
   getItem(code: any) {
 
       if (code && code.trim() != '') {
         this.http.get('http://medicineappbackend.me/barcode/'+ code).map(res => res.json()).subscribe(data => {
             if(data == "" || data == null) {
               alert("Barcode not recognized!");
-                          location.reload();
-                          this.navCtrl.push(MainMenu).then(() => {
-                            const index = this.viewCtrl.index;
-                            this.navCtrl.remove(index);
-              });
+              this.dismiss();
+              /*this.navCtrl.push(MainMenu).then(() => {
+                const index = this.viewCtrl.index;
+                this.navCtrl.remove(index);
+              });*/
             } else if(data.title) {
                         this.navCtrl.push(MedicineInfo, {
                                    "title":  data.title,
@@ -42,18 +46,19 @@ export class Barcodescanner {
                                              });
             } else {
               alert("Barcode not recognized!");
-              location.reload();
-              this.navCtrl.push(MainMenu).then(() => {
+              this.dismiss();
+              /*this.navCtrl.push(MainMenu).then(() => {
                 const index = this.viewCtrl.index;
                 this.navCtrl.remove(index);
-              });
+              });*/
             }
 
 
         });
       } else {
         alert("No barcode provided!");
-        location.reload();
+        this.dismiss();
+        //location.reload();
       }
     }
 }

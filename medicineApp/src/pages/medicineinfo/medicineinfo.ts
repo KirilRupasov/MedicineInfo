@@ -47,7 +47,7 @@ export class MedicineInfo {
 
   openLeaveReviewModal() {
     if(this.auth.isAuthenticated()) {
-      this.http.get('http://medicineappbackend.me/checkifreviewexists/'+ this.user.details.email).map(res => res).subscribe(
+      this.http.get('http://medicineappbackend.me/checkifreviewexists/'+ this.user.details.email + '/' + this.title).map(res => res).subscribe(
               data => {
                 if(data.text().toString() == "false") {
                   let modal = this.modalCtrl.create(ReviewModal, {"root" : this});

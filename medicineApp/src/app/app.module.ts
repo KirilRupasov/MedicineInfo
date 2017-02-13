@@ -13,7 +13,6 @@ import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
 import { ModalContentPage } from '../pages/searchModal/modalcontentpage';
 import { ReviewModal } from '../pages/reviewModal/reviewModal';
 import { Logout } from '../pages/logout/logout';
-import { Auth, User, UserDetails } from '@ionic/cloud-angular';
 import { HttpModule } from '@angular/http';
 import { MagicBall } from '../providers/magic-ball';
 import { ReadReviewsModal } from '../pages/readReviewsModal/readReviewsModal';

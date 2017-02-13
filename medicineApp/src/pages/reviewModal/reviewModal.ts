@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
-import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
-import { App, ModalController, ViewController, NavController, NavParams, Platform } from 'ionic-angular';
+import { Auth, User } from '@ionic/cloud-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 
@@ -13,9 +13,13 @@ export class ReviewModal {
    review: string;
    rating: number;
 
-   constructor(public user: User, public viewCtrl: ViewController, public params: NavParams, private http: Http) {
-    this.review = "";
-    this.rating = 1;
+   constructor(public user: User, public viewCtrl: ViewController, public params: NavParams, private http: Http, public auth: Auth) {
+    if(!this.auth.isAuthenticated()) {
+      location.reload();
+    } else {
+      this.review = "";
+      this.rating = 1;
+    }
    }
 
    leaveReview() {
