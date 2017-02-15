@@ -39,6 +39,8 @@ class CrawlerController extends Controller
                 if ($formatted != "Start tag not found") {
                     $data = $this->fetchData($formatted, true);
                     if ($data != "Wrong request" && (array_keys($data) !== range(0, count($data) - 1))) {
+
+
                         $medicine = Medicine::create([
                             'title' => $data['title'],
                             'description' => $data['description'],
@@ -47,7 +49,8 @@ class CrawlerController extends Controller
                             'how_does_it' => $data['how_does_it'],
                             'benefits' => $data['benefits'],
                             'elderly' => $data['elderly'],
-                            'status' => $data['status']
+                            'status' => $data['status'],
+                            'stores' => $data['stores']
                         ]);
                         $medicine->addToIndex();
 
@@ -128,6 +131,8 @@ class CrawlerController extends Controller
 
     public function fetchData($query, $limitOne) {
         $title = strtolower(trim($query));
+
+
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
 
         $request = $client->get('www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');
@@ -140,7 +145,9 @@ class CrawlerController extends Controller
             } else if(sizeof($results) > 0) {
                 $final_results = [];
                 foreach ($results as $value) {
+
                     $final_results[]['title'] = $this->get_string_between($value, "\">", "</a>");
+
                 }
 
                 return $final_results;
@@ -198,6 +205,13 @@ class CrawlerController extends Controller
             $status = "approved";
         }
 
+        $stores = "";
+        if($this->checkIfAvailableInLloyds($title)) {
+            $stores .= "lloyds pharmacy";
+        }
+
+
+
         $response = [
             'title' => $query,
             'status' => $status,
@@ -206,7 +220,8 @@ class CrawlerController extends Controller
             'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos + 1),
             'how_does_it' => $this->get_string_between($content, "<dd>", "</dd>", $how_does_pos + 1),
             'benefits' => $this->get_string_between($content, "<dd>", "</dd>", $what_benefits_pos + 1),
-            'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title)))
+            'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title))),
+            'stores' => $stores
         ];
 
         return $response;
@@ -287,8 +302,27 @@ class CrawlerController extends Controller
         } catch (\Exception $exception) {
             return null;
         }
+    }
 
+    public function checkIfAvailableInLloyds($title) {
+        try {
+            $client = new Client(['base_url' => "http://www.lloydspharmacy.com"]);
+            $request = $client->get('http://www.lloydspharmacy.com/SearchDisplay?categoryId=&storeId=10151&catalogId=10152&langId=44&sType=SimpleSearch&resultCatEntryType=2&showResultsPage=true&searchSource=Q&pageView=&beginIndex=0&pageSize=12&searchTerm='.$title.'#tabId:tab2');
 
+            $body = $request->getBody()->getContents();
+
+            if(strpos($body, "Sorry, we didn't find anything for") != false) {
+                return false;
+            } else if(strpos($body, "Prescriptions (") != false) {
+                return true;
+            } else {
+                return false;
+            }
+
+            return $body;
+        } catch (\Exception $exception) {
+            return null;
+        }
     }
 
 
