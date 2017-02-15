@@ -29,6 +29,7 @@ export class MedicineInfo {
   private benefits: string;
   private how_does_it: string;
   private elderly: string;
+  private stores: string;
 
   /**
    * @description 
@@ -43,6 +44,7 @@ export class MedicineInfo {
     this.side_effects = navParams.get("side_effects");
     this.benefits = navParams.get("benefits");
     this.how_does_it = navParams.get("how_does_it");
+    this.stores = navParams.get("stores");
 
     if(this.auth.isAuthenticated()) {
       let date_of_birth = this.user.get("date_of_birth", 0);
@@ -95,7 +97,7 @@ export class MedicineInfo {
   }
 
   openStoreLocatorModal() {
-    let modal = this.modalCtrl.create(StoreLocator, {"medicine_title" : this.getTitle()});
+    let modal = this.modalCtrl.create(StoreLocator, {"medicine_title" : this.getTitle(), "stores": this.stores});
     modal.present();
   }
 }

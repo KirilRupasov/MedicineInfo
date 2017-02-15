@@ -166,7 +166,8 @@ export class MainMenu {
                                      "side_effects": data.side_effects,
                                      "how_does_it": data.how_does_it,
                                     "benefits": data.benefits,
-                                    "elderly": data.elderly
+                                    "elderly": data.elderly,
+                                    "stores": data.stores
                                     } ).then(() => {
                                                const index = this.viewCtrl.index;
                                                this.navCtrl.remove(index);
