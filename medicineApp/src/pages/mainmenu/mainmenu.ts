@@ -1,3 +1,12 @@
+/**
+ * @ngdoc Component
+ * @name MainMenu
+ * 
+ * @description
+ * 
+ * The Main Menu page
+ */
+
 import { Component } from '@angular/core';
 import { Barcodescanner } from '../barcodescanner/barcodescanner';
 import { ModalController, ViewController, NavController } from 'ionic-angular';
@@ -13,10 +22,6 @@ import { BarcodeScanner } from 'ionic-native';
   templateUrl: 'mainmenu.html'
 })
 
-/**
- * This class represents the Main Menu page
- * in the app.
- */
 export class MainMenu {
   suggestions: string[];
   intro_sugg: string;
@@ -26,6 +31,8 @@ export class MainMenu {
   }
 
   /**
+   * @ngdoc method
+   * @name getSuggestions
    * @returns this.suggestions list of medicine names that matches search
    */
   getSuggestions() {
@@ -33,9 +40,14 @@ export class MainMenu {
   }
 
   /**
+   * @ngdoc method
+   * @name setSuggestions
+   * @param {any[]} suggestions list of medicine names that matches search
+   * 
+   * @description
+   * 
    * This method gets 10 suggestions that matched search criteria and 
    * stores them in array which is displayed in Main Menu
-   * @param suggestions list of medicine names that matches search
    */
   setSuggestions(suggestions: any[]) {
     let new_suggestions_formatted: any[];
@@ -60,10 +72,15 @@ export class MainMenu {
   }
 
   /**
+   * @ngdoc method
+   * @name goToItem
+   * @param {object} item medicine which has title, description, benefits, and other general information
+   * 
+   * @description
+   * 
    * This method takes medicine as argument and goes to MedicineInfo object
    * with medicine being displayed.
    * Error message is displayed if incorrect data is provided
-   * @param item medicine which has title, description, benefits, and other general information
    */
   goToItem(item: any) {
     if(item.title && item.description && item.side_effects && item.how_does_it && item.benefits) {
@@ -84,14 +101,24 @@ export class MainMenu {
   }
 
   /**
+   * @ngdoc method
+   * @name fetchItems
+   * @param {string} title title of medicine
+   * 
+   * @description
+   * 
    * This method fetches medicines from backend by keyword as JSON data
-   * @param title of drug
    */
   fetchItems(title: string) {
     return this.http.get('http://medicineappbackend.me/title/'+ title).map(res => res.json());
   }
 
   /**
+   * @ngdoc method
+   * @name openModal
+   * 
+   * @description
+   * 
    * This method opens Modal for Medicine keyword search
    */
   openModal() {
@@ -100,27 +127,46 @@ export class MainMenu {
   }
 
   /**
-   * This method opens Barcodescanner page
+   * @ngdoc method
+   * @name barcodescan
+   * @param {event} ev
+   * @description
+   * 
+   * This method opens launches BarcodeScanner plugin and scans barcode
    */
   barcodescan(ev: any) {
     BarcodeScanner.scan().then((barcodeData) => {
-      this.getItem(barcodeData.text);
+      this.getItemByBarcode(barcodeData.text);
     }, (err) => {
         alert(err.message);
     });
   }
 
-  getItem(code: any) {
-
-      if (code && code.trim() != '') {
-        this.http.get('http://medicineappbackend.me/barcode/'+ code).map(res => res.json()).subscribe(data => {
+  /**
+   * @ngdoc method
+   * @name getItemByBarcode
+   * @param {string} barcode string with barcode
+   * 
+   * @description
+   * 
+   * This method uses barocde provided in order to
+   * find the medicine from back-end by barcode.
+   * If medicine is found -> MedicineInfo page is loaded with information
+   * Otherwise -> alert the user
+   */
+  getItemByBarcode(barcode: string) {
+      if (barcode && barcode.trim() != '') {
+        this.http.get('http://medicineappbackend.me/barcode/'+ barcode).map(res => res.json()).subscribe(data => {
             if(data == "" || data == null) {
               alert("Barcode not recognized!");
-            } else if(data.title) {
+            } else if(data.title && data.description && data.how_does_it && data.benefits) {
                         this.navCtrl.push(MedicineInfo, {
                                    "title":  data.title,
                                     "description": data.description,
-                                     "side_effects": data.side_effects
+                                     "side_effects": data.side_effects,
+                                     "how_does_it": data.how_does_it,
+                                    "benefits": data.benefits,
+                                    "elderly": data.elderly
                                     } ).then(() => {
                                                const index = this.viewCtrl.index;
                                                this.navCtrl.remove(index);
@@ -128,14 +174,11 @@ export class MainMenu {
             } else {
               alert("Barcode not recognized!");
             }
-
-
         });
       } else {
         alert("No barcode provided!");
       }
     }
-
 }
 
 

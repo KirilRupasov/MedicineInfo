@@ -4,18 +4,17 @@ import { MyApp } from './app.component';
 import { MainMenu } from '../pages/mainmenu/mainmenu';
 import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
-
 import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 import { EditProfile } from '../pages/editprofile/editprofile';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
-import { Barcodescanner } from '../pages/barcodescanner/barcodescanner';
 import { ModalContentPage } from '../pages/searchModal/modalcontentpage';
 import { ReviewModal } from '../pages/reviewModal/reviewModal';
 import { Logout } from '../pages/logout/logout';
 import { HttpModule } from '@angular/http';
 import { MagicBall } from '../providers/magic-ball';
 import { ReadReviewsModal } from '../pages/readReviewsModal/readReviewsModal';
+import { StoreLocator } from '../pages/storelocator/storelocator';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -34,10 +33,10 @@ const cloudSettings: CloudSettings = {
     MedicineInfo,
     EditProfile,
     MyProfile,
-    Barcodescanner,
     ModalContentPage,
     ReviewModal,
     ReadReviewsModal,
+    StoreLocator,
     Logout
   ],
   imports: [
@@ -55,9 +54,9 @@ const cloudSettings: CloudSettings = {
     EditProfile,
     MyProfile,
     ModalContentPage,
-    Barcodescanner,
     ReviewModal,
     ReadReviewsModal,
+    StoreLocator,
     Logout
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]
