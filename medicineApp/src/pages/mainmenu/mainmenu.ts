@@ -90,7 +90,8 @@ export class MainMenu {
         "side_effects": item.side_effects,
         "how_does_it": item.how_does_it,
         "benefits": item.benefits,
-        "elderly": item.elderly
+        "elderly": item.elderly,
+        "stores": item.stores
       }).then(() => {
         const index = this.viewCtrl.index;
         this.navCtrl.remove(index);
@@ -160,6 +161,7 @@ export class MainMenu {
             if(data == "" || data == null) {
               alert("Barcode not recognized!");
             } else if(data.title && data.description && data.how_does_it && data.benefits) {
+                        
                         this.navCtrl.push(MedicineInfo, {
                                    "title":  data.title,
                                     "description": data.description,

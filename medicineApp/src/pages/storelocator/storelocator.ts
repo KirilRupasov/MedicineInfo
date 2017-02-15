@@ -46,20 +46,25 @@ export class StoreLocator {
 
   loadStores(position) {
       let storeArr: string[];
-      storeArr = this.stores.split(",");
-      for(let entry in storeArr) {
-        this.http.get(
-                  'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyD1WoIDgKeQvWoCTC0xGebny7BGYyNnRo4&location='+ position.coords.latitude + ',' + position.coords.longitude +'&radius=3000&keyword=' + entry.replace(" ", "+")
-                  ).map(res => res.json()).subscribe(
-                    data => {
-                      this.displayStores(data.results);
-                    },
-                    err => {
-                        console.log(err);
-                    }
-          );
+      if(this.stores && this.stores != "") {
+        storeArr = this.stores.split(",");
+              alert(storeArr[0]);
+              for(let i=0; i<storeArr.length; i++) {
+                alert(storeArr[i]);
+                this.http.get(
+                          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyD1WoIDgKeQvWoCTC0xGebny7BGYyNnRo4&location='+ position.coords.latitude + ',' + position.coords.longitude +'&radius=3000&keyword=' + storeArr[i].replace(" ", "+")
+                          ).map(res => res.json()).subscribe(
+                            data => {
+                              this.displayStores(data.results);
+                            },
+                            err => {
+                                console.log(err);
+                            }
+                  );
+        } 
+      } else {
+          alert("Sorry, no stores found!");
       }
-     
   }
 
 
