@@ -12,9 +12,11 @@ import { AlertController } from 'ionic-angular';
 
 
 export class Signup {
-  email_value: any;
-  username_value: any;
-  password_value: any;
+  email_value: string;
+  password_value: string;
+  email_confirm_value: string;
+  password_confirm_value: string;
+
 
   constructor(private navCtrl: NavController, public alertCtrl: AlertController, public auth: Auth, public user: User, private viewCtrl: ViewController) {
 
@@ -27,12 +29,36 @@ export class Signup {
     let errors : string = "";
 
 
-    let details: UserDetails = { 'username' : this.username_value, 'email': this.email_value, 'password': this.password_value};
+    let details: UserDetails = { 'email': this.email_value, 'password': this.password_value};
+
+    if(this.email_value != this.email_confirm_value) {
+      let alert = this.alertCtrl.create({
+           title: 'Error(s)!',
+           subTitle: "Emails do not match!",
+           buttons: ['OK']
+         });
+       alert.present();
+    } else if(this.password_value != this.password_confirm_value) {
+      let alert = this.alertCtrl.create({
+           title: 'Error(s)!',
+           subTitle: "Passwords do not match!",
+           buttons: ['OK']
+         });
+       alert.present();
+    }
 
     this.auth.signup(details).then(() => {
-        location.reload();
+        this.auth.login('basic', details).then(() => {
+          location.reload();
+        }, () => {
+          let alert = this.alertCtrl.create({
+              title: 'Error!',
+              subTitle: "Incorrect email/password combination!",
+              buttons: ['OK']
+            });
+          alert.present();
+        });
     }, (err: IDetailedError<string[]>) => {
-      alert("fail");
       for (let e of err.details) {
         if (e === 'required_password') {
           errors = "Password is required!<br>";

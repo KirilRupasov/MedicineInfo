@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
+import { MainMenu } from '../mainmenu/mainmenu';
 
 @Component({
   selector: 'page-logout',
@@ -16,5 +17,7 @@ export class Logout {
       location.reload();
     }
   }
+
+
 
 }

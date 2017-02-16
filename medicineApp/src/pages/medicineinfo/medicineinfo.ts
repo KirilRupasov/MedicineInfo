@@ -5,6 +5,7 @@ import { ReviewModal } from '../reviewModal/reviewModal';
 import { ReadReviewsModal } from '../readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../storelocator/storelocator';
 import { Http } from '@angular/http';
+import { AlertController } from 'ionic-angular';
 
 declare var google;
 
@@ -38,7 +39,7 @@ export class MedicineInfo {
    * will might be displayed
    */
   
-  constructor(private navCtrl: NavController, navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController, private http: Http) {
+  constructor(private navCtrl: NavController, navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController, private http: Http, public alertCtrl: AlertController) {
     this.title = navParams.get("title");
     this.description = navParams.get("description");
     this.side_effects = navParams.get("side_effects");
@@ -78,7 +79,12 @@ export class MedicineInfo {
                   let modal = this.modalCtrl.create(ReviewModal, {"root" : this});
                   modal.present();
                 } else {
-                  alert("You have already reviewed this medicine!");
+                  let alert = this.alertCtrl.create({
+                      title: 'Error(s)!',
+                      subTitle: "You have already reviewed this medicine!",
+                      buttons: ['OK']
+                    });
+                  alert.present();
                 }
               },
               err => {
@@ -87,7 +93,12 @@ export class MedicineInfo {
             );
 
     } else {
-      alert("You are not logged in!");
+       let alert = this.alertCtrl.create({
+           title: 'Error(s)!',
+           subTitle: "You are not logged in!",
+           buttons: ['OK']
+         });
+       alert.present();
     }
   }
 

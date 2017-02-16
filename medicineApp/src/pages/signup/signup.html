@@ -9,12 +9,6 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
-        <ion-item>
-          <ion-label floating>Username</ion-label>
-          <ion-input type="text" name="username" id="username" [(ngModel)]="username_value"></ion-input>
-        </ion-item>
-    </ion-row>
-    <ion-row>
       <ion-item>
         <ion-label floating>Email</ion-label>
         <ion-input #email type="text" name="email" id="email" [(ngModel)]="email_value"></ion-input>
@@ -23,7 +17,7 @@
     <ion-row>
       <ion-item>
         <ion-label floating>Confirm Email</ion-label>
-        <ion-input type="text" name="email_confirm" id="email_confirm"></ion-input>
+        <ion-input type="text" name="email_confirm" id="email_confirm" [(ngModel)]="email_confirm_value"></ion-input>
       </ion-item>
     </ion-row>
     <ion-row>
@@ -35,7 +29,7 @@
     <ion-row>
       <ion-item>
         <ion-label floating>Confirm Password</ion-label>
-        <ion-input type="password" name="password_confirm" id="password_confirm" block full></ion-input>
+        <ion-input type="password" name="password_confirm" id="password_confirm" [(ngModel)]="password_confirm_value" block full></ion-input>
       </ion-item>
     </ion-row>
     <ion-row>
