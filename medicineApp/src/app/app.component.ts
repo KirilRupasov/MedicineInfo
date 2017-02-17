@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Inject } from '@angular/core';
 import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { Auth, User } from '@ionic/cloud-angular';
@@ -9,14 +9,18 @@ import { MyProfile } from '../pages/myprofile/myprofile';
 import { EditProfile } from '../pages/editprofile/editprofile';
 import { Logout } from '../pages/logout/logout';
 import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
+import { PagesService } from './pages.service';
+import { iMyApp } from './app.interface';
 
 declare var navigator: any;
 declare var Connection: any;
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [PagesService]
 })
-export class MyApp {
+
+export class MyApp implements iMyApp {
   @ViewChild(Nav) nav: Nav;
 
   username: string;
@@ -25,10 +29,14 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public auth: Auth, public alertCtrl: AlertController, public user: User) {
-    this.initializeApp();
+  constructor(public platform: Platform, public auth: Auth, public alertCtrl: AlertController, public user: User, private pagesService: PagesService) {
 
-    if(this.auth.isAuthenticated()) {
+    this.initializeApp();
+    this.pagesService.register(this);
+
+   
+
+   /*if(this.auth.isAuthenticated()) {
         this.username = " (" + this.user.details.email + ")";
         this.pages = [
               { title: 'Main Menu', component: MainMenu },
@@ -43,13 +51,41 @@ export class MyApp {
           { title: 'Log In', component: Login },
           { title: 'Sign Up', component: Signup }
         ];
-    }
+    }*/
 
     this.checkNetwork();
 
     // used for an example of ngFor and navigation
 
 
+  }
+
+  showLoggedMenu() {
+    this.username = " (" + this.user.details.email + ")";
+        this.pages = [
+              { title: 'Main Menu', component: MainMenu },
+              { title: 'Log Out', component: Logout },
+              { title: 'My Profile', component: MyProfile },
+              { title: 'Edit Profile', component: EditProfile }
+      ];
+  }
+
+  showNonLoggedMenu() {
+
+    this.username = "";
+    this.pages = [
+          { title: 'Main Menu', component: MainMenu },
+          { title: 'Log In', component: Login },
+          { title: 'Sign Up', component: Signup }
+        ];    
+  }
+
+  setUsername(username: string) {
+    this.username = username;
+  }
+
+  setPages(pages: any[]) {
+    this.pages = pages;
   }
 
     checkNetwork() {
@@ -88,6 +124,6 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component, {"app_component" : this});
   }
 }

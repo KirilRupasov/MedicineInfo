@@ -7,29 +7,49 @@
  * The Main Menu page
  */
 
-import { Component } from '@angular/core';
+import { Component,Inject } from '@angular/core';
 import { Barcodescanner } from '../barcodescanner/barcodescanner';
-import { ModalController, ViewController, NavController } from 'ionic-angular';
+import { ModalController, ViewController, NavController, NavParams } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ModalContentPage } from '../searchModal/modalcontentpage';
 import { BarcodeScanner } from 'ionic-native';
-
+import { MyProfile } from '../myprofile/myprofile';
+import { EditProfile } from '../editprofile/editprofile';
+import { Logout } from '../logout/logout';
+import { Auth, User } from '@ionic/cloud-angular';
+import { Login } from '../login/login';
+import { Signup } from '../signup/signup';
+import { PagesService } from '../../app/pages.service';
 
 @Component({
   selector: 'page-mainmenu',
-  templateUrl: 'mainmenu.html'
+  templateUrl: 'mainmenu.html',
+  providers: [{ provide: 'PagesService', useClass: PagesService }]
 })
 
 export class MainMenu {
   suggestions: string[];
   intro_sugg: string;
 
-  constructor(public modalCtrl: ModalController, public navCtrl: NavController, private http: Http, public viewCtrl: ViewController) {
+  constructor(
+    private pagesService: PagesService,
+    public modalCtrl: ModalController, public navCtrl: NavController,
+     private param: NavParams, private http: Http, public viewCtrl: ViewController,
+      public user: User, public auth: Auth
+  ) {
     this.suggestions = [];
   }
 
+
+  ngAfterViewInit() {
+    if(this.auth.isAuthenticated()) {
+      this.pagesService.logged();
+    } else {
+      this.pagesService.nonLogged();
+    }
+  }
   /**
    * @ngdoc method
    * @name getSuggestions

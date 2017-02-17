@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
 import { Auth, User, UserDetails } from '@ionic/cloud-angular';
 import { AlertController } from 'ionic-angular';
+import { MainMenu } from '../mainmenu/mainmenu';
 
 @Component({
   selector: 'page-login',
@@ -22,7 +23,8 @@ export class Login {
     let details: UserDetails = {'email': this.email_value, 'password': this.password_value};
 
     this.auth.login('basic', details).then(() => {
-      location.reload();
+      //location.reload();
+      this.navCtrl.setRoot(MainMenu);
     }, () => {
       let alert = this.alertCtrl.create({
           title: 'Error!',

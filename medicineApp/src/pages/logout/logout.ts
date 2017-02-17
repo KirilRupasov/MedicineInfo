@@ -14,8 +14,13 @@ export class Logout {
   constructor(private navCtrl: NavController, private viewCtrl: ViewController, public auth: Auth, public user: User) {
     if(this.auth.isAuthenticated()) {
       this.auth.logout();
-      location.reload();
+      //location.reload();
+      
     }
+  }
+
+  ngAfterViewInit() {
+    this.navCtrl.setRoot(MainMenu);
   }
 
 

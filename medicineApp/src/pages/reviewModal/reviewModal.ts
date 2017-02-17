@@ -39,7 +39,7 @@ export class ReviewModal {
        { user_email, medicine_name, review_content, rating },
        options).subscribe(data => {
               let alert = this.alertCtrl.create({
-                      title: 'Error(s)!',
+                      title: 'Success!',
                       subTitle: "Review submitted!",
                       buttons: ['OK']
                     });

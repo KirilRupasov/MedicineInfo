@@ -15,6 +15,7 @@ import { HttpModule } from '@angular/http';
 import { MagicBall } from '../providers/magic-ball';
 import { ReadReviewsModal } from '../pages/readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../pages/storelocator/storelocator';
+import { PagesService } from './pages.service';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -59,6 +60,6 @@ const cloudSettings: CloudSettings = {
     StoreLocator,
     Logout
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]
+  providers: [PagesService, {provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]
 })
 export class AppModule {}

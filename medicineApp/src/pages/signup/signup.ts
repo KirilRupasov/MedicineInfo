@@ -33,57 +33,59 @@ export class Signup {
 
     if(this.email_value != this.email_confirm_value) {
       let alert = this.alertCtrl.create({
-           title: 'Error(s)!',
+           title: 'Error!',
            subTitle: "Emails do not match!",
            buttons: ['OK']
          });
        alert.present();
     } else if(this.password_value != this.password_confirm_value) {
       let alert = this.alertCtrl.create({
-           title: 'Error(s)!',
+           title: 'Error!',
            subTitle: "Passwords do not match!",
            buttons: ['OK']
          });
        alert.present();
+    } else {
+          this.auth.signup(details).then(() => {
+          this.auth.login('basic', details).then(() => {
+            location.reload();
+          }, () => {
+            let alert = this.alertCtrl.create({
+                title: 'Error!',
+                subTitle: "Incorrect email/password combination!",
+                buttons: ['OK']
+              });
+            alert.present();
+          });
+          }, (err: IDetailedError<string[]>) => {
+            for (let e of err.details) {
+              if (e === 'required_password') {
+                errors = "Password is required!<br>";
+              } else if (e === 'required_email') {
+                errors = "Email is required!<br>";
+              } else if (e === 'conflict_email') {
+                errors = "Email already exists!<br>";
+              } else if (e === 'invalid_email') {
+                errors = "Email is invalid!<br>";
+              } else if (e === 'conflict_username') {
+                errors = "Username is taken!<br>";
+              } else {
+                errors = "Unknown error...<br>";
+              }
+              }
+
+              if(errors != "") {
+              let alert = this.alertCtrl.create({
+                title: 'Error!',
+                subTitle: errors,
+                buttons: ['OK']
+              });
+              alert.present();
+              }
+            });
+          }
     }
 
-    this.auth.signup(details).then(() => {
-        this.auth.login('basic', details).then(() => {
-          location.reload();
-        }, () => {
-          let alert = this.alertCtrl.create({
-              title: 'Error!',
-              subTitle: "Incorrect email/password combination!",
-              buttons: ['OK']
-            });
-          alert.present();
-        });
-    }, (err: IDetailedError<string[]>) => {
-      for (let e of err.details) {
-        if (e === 'required_password') {
-          errors = "Password is required!<br>";
-        } else if (e === 'required_email') {
-          errors = "Email is required!<br>";
-        } else if (e === 'conflict_email') {
-          errors = "Email already exists!<br>";
-        } else if (e === 'invalid_email') {
-          errors = "Email is invalid!<br>";
-        } else if (e === 'conflict_username') {
-          errors = "Username is taken!<br>";
-        } else {
-          errors = "Unknown error...<br>";
-        }
-      }
-
-      if(errors != "") {
-       let alert = this.alertCtrl.create({
-           title: 'Error(s)!',
-           subTitle: errors,
-           buttons: ['OK']
-         });
-       alert.present();
-      }
-    });
-  }
+ 
 }
 
