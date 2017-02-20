@@ -34,10 +34,10 @@ class SearchController extends Controller
 
             } else if(sizeof($posts) > 0) {
                 return $posts;
-            } else {
+            } /*else {
                 $cc = new CrawlerController();
                 return response()->json($cc -> fetchData($query, false));
-            }
+            }*/
 
         }
 
