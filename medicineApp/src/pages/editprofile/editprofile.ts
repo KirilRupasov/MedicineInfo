@@ -33,12 +33,7 @@ export class EditProfile {
     }
 
     if(!this.auth.isAuthenticated()) {
-      this.navCtrl.push(MainMenu).then(() => {
-        // first we find the index of the current view controller:
-        const index = this.viewCtrl.index;
-        // then we remove it from the navigation stack
-        this.navCtrl.remove(index);
-      });
+      this.navCtrl.push(MainMenu);
     }
   }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ViewController, NavController } from 'ionic-angular';
 import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
 import { AlertController } from 'ionic-angular';
+import { MainMenu } from '../mainmenu/mainmenu';
 
 @Component({
   selector: 'page-signup',
@@ -48,7 +49,7 @@ export class Signup {
     } else {
           this.auth.signup(details).then(() => {
           this.auth.login('basic', details).then(() => {
-            location.reload();
+          this.navCtrl.setRoot(MainMenu);
           }, () => {
             let alert = this.alertCtrl.create({
                 title: 'Error!',

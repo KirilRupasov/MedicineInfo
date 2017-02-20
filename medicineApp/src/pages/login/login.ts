@@ -23,7 +23,6 @@ export class Login {
     let details: UserDetails = {'email': this.email_value, 'password': this.password_value};
 
     this.auth.login('basic', details).then(() => {
-      //location.reload();
       this.navCtrl.setRoot(MainMenu);
     }, () => {
       let alert = this.alertCtrl.create({

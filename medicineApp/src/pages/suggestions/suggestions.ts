@@ -23,14 +23,13 @@ import { Login } from '../login/login';
 import { Signup } from '../signup/signup';
 import { PagesService } from '../../app/pages.service';
 import { AlertController } from 'ionic-angular';
+import { Searchbar } from '../searchbar/searchbar';
 
 @Component({
-  selector: 'page-mainmenu',
-  templateUrl: 'mainmenu.html',
-  providers: [{ provide: 'PagesService', useClass: PagesService }]
+  templateUrl: 'suggestions.html'
 })
 
-export class MainMenu {
+export class Suggestions {
   suggestions: string[];
   intro_sugg: string;
 
@@ -40,7 +39,7 @@ export class MainMenu {
      private param: NavParams, private http: Http, public viewCtrl: ViewController,
       public user: User, public auth: Auth, public alertCtrl: AlertController
   ) {
-    this.suggestions = [];
+    this.setSuggestions(param.get('data'));
   }
 
 
@@ -94,75 +93,31 @@ export class MainMenu {
 
   /**
    * @ngdoc method
-   * @name openModal
+   * @name goToItem
+   * @param {object} item medicine which has title, description, benefits, and other general information
    * 
    * @description
    * 
-   * This method opens Modal for Medicine keyword search
+   * This method takes medicine as argument and goes to MedicineInfo object
+   * with medicine being displayed.
+   * Error message is displayed if incorrect data is provided
    */
-  openModal() {
-    let modal = this.modalCtrl.create(ModalContentPage, {"root" : this});
-    modal.present();
-  }
-
-  /**
-   * @ngdoc method
-   * @name barcodescan
-   * @param {event} ev
-   * @description
-   * 
-   * This method opens launches BarcodeScanner plugin and scans barcode
-   */
-  barcodescan(ev: any) {
-    BarcodeScanner.scan().then((barcodeData) => {
-      this.getItemByBarcode(barcodeData.text);
-    }, (err) => {
-        alert(err.message);
-    });
-  }
-
-  /**
-   * @ngdoc method
-   * @name getItemByBarcode
-   * @param {string} barcode string with barcode
-   * 
-   * @description
-   * 
-   * This method uses barocde provided in order to
-   * find the medicine from back-end by barcode.
-   * If medicine is found -> MedicineInfo page is loaded with information
-   * Otherwise -> alert the user
-   */
-  getItemByBarcode(barcode: string) {
-      if (barcode && barcode.trim() != '') {
-        this.http.get('http://medicineappbackend.me/barcode/'+ barcode).map(res => res.json()).subscribe(data => {
-            if(data == "" || data == null) {
-              alert("Barcode not recognized!");
-            } else if(data.title && data.description && data.how_does_it && data.benefits) {
-                        
-                        this.navCtrl.push(MedicineInfo, {
-                                   "title":  data.title,
-                                    "description": data.description,
-                                     "side_effects": data.side_effects,
-                                     "how_does_it": data.how_does_it,
-                                    "benefits": data.benefits,
-                                    "elderly": data.elderly,
-                                    "stores": data.stores
-                                    } ).then(() => {
-                                               const index = this.viewCtrl.index;
-                                               this.navCtrl.remove(index);
-                                             });
-            } else {
-              let alert = this.alertCtrl.create({
-                  title: 'Error(s)!',
-                  subTitle: "Barcode not recognized!",
-                  buttons: ['OK']
-                });
-              alert.present();
-            }
-        });
-      }
+  goToItem(item: any) {
+    if(item.title && item.description && item.side_effects && item.how_does_it && item.benefits) {
+      this.navCtrl.push(MedicineInfo, {
+        "title":  item.title,
+        "description": item.description,
+        "side_effects": item.side_effects,
+        "how_does_it": item.how_does_it,
+        "benefits": item.benefits,
+        "elderly": item.elderly,
+        "stores": item.stores
+      }).then(() => {
+        //const index = this.viewCtrl.index;
+        //this.navCtrl.remove(index);
+      });
     }
+  }
 }
 
 

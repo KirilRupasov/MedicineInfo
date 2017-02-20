@@ -33,26 +33,6 @@ export class MyApp implements iMyApp {
 
     this.initializeApp();
     this.pagesService.register(this);
-
-   
-
-   /*if(this.auth.isAuthenticated()) {
-        this.username = " (" + this.user.details.email + ")";
-        this.pages = [
-              { title: 'Main Menu', component: MainMenu },
-              { title: 'Log Out', component: Logout },
-              { title: 'My Profile', component: MyProfile },
-              { title: 'Edit Profile', component: EditProfile }
-      ];
-    } else {
-    this.username = "";
-    this.pages = [
-          { title: 'Main Menu', component: MainMenu },
-          { title: 'Log In', component: Login },
-          { title: 'Sign Up', component: Signup }
-        ];
-    }*/
-
     this.checkNetwork();
 
     // used for an example of ngFor and navigation
@@ -71,7 +51,6 @@ export class MyApp implements iMyApp {
   }
 
   showNonLoggedMenu() {
-
     this.username = "";
     this.pages = [
           { title: 'Main Menu', component: MainMenu },
@@ -118,7 +97,38 @@ export class MyApp implements iMyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+
+      // Confirm exit if user decides to quit the app
+        this.platform.registerBackButtonAction(() => {
+            if (this.nav.length() == 1) {
+              this.confirmExit();
+            }
+
+            this.nav.pop();
+        });
     });
+  }
+
+  confirmExit() {
+     let alert = this.alertCtrl.create({
+        title: "Quit",
+        message: "Are you sure you want ot exit the app?",
+        buttons: [
+            {
+                text: 'No',
+                handler: () => {
+                    alert.dismiss();
+                }
+            },
+            {
+                text: 'Yes',
+                handler: () => {
+                    this.platform.exitApp();
+                }
+            }
+        ]
+    });
+    alert.present();
   }
 
   openPage(page) {

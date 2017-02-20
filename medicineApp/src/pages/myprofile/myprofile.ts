@@ -54,10 +54,7 @@ export class MyProfile {
     if(!this.auth.isAuthenticated()) {
       location.reload();
     } else {
-      this.navCtrl.push(EditProfile).then(() => {
-        const index = this.viewCtrl.index;
-        this.navCtrl.remove(index);
-      });
+      this.navCtrl.push(EditProfile);
     }
   }
 

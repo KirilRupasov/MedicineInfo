@@ -48,9 +48,7 @@ export class StoreLocator {
       let storeArr: string[];
       if(this.stores && this.stores != "") {
         storeArr = this.stores.split(",");
-              alert(storeArr[0]);
               for(let i=0; i<storeArr.length; i++) {
-                alert(storeArr[i]);
                 this.http.get(
                           'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyD1WoIDgKeQvWoCTC0xGebny7BGYyNnRo4&location='+ position.coords.latitude + ',' + position.coords.longitude +'&radius=3000&keyword=' + storeArr[i].replace(" ", "+")
                           ).map(res => res.json()).subscribe(

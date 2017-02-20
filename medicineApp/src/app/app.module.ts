@@ -16,14 +16,14 @@ import { MagicBall } from '../providers/magic-ball';
 import { ReadReviewsModal } from '../pages/readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../pages/storelocator/storelocator';
 import { PagesService } from './pages.service';
+import { Searchbar } from '../pages/searchbar/searchbar';
+import { Suggestions } from '../pages/suggestions/suggestions';
 
 const cloudSettings: CloudSettings = {
   'core': {
     'app_id': 'c9dcf35e'
   }
 };
-
-
 
 @NgModule({
   declarations: [
@@ -38,7 +38,9 @@ const cloudSettings: CloudSettings = {
     ReviewModal,
     ReadReviewsModal,
     StoreLocator,
-    Logout
+    Logout,
+    Searchbar,
+    Suggestions
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -58,7 +60,8 @@ const cloudSettings: CloudSettings = {
     ReviewModal,
     ReadReviewsModal,
     StoreLocator,
-    Logout
+    Logout,
+    Suggestions
   ],
   providers: [PagesService, {provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]
 })
