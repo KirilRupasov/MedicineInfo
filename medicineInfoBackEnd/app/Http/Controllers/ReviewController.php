@@ -28,7 +28,7 @@ class ReviewController extends Controller
                 'rating' => $input['rating']
             ]);
 
-            return $input['rating'];
+            return "Success";
         } else {
             return "Failure";
         }
