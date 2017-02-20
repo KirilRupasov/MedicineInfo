@@ -14,7 +14,7 @@
     <search-bar></search-bar>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <ion-grid>
     <ion-row>
         <ion-item>
@@ -22,7 +22,8 @@
           <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="date_of_birth"></ion-datetime>
         </ion-item>
     </ion-row>
-    <ion-row>
+        <ion-row>
+      
       <ion-col width-50>
       <ion-list radio-group [(ngModel)]="gender_value">
         <ion-list-header>
