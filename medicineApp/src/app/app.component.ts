@@ -112,7 +112,7 @@ export class MyApp implements iMyApp {
   confirmExit() {
      let alert = this.alertCtrl.create({
         title: "Quit",
-        message: "Are you sure you want ot exit the app?",
+        message: "Are you sure you want to exit the app?",
         buttons: [
             {
                 text: 'No',

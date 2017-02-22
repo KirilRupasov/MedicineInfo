@@ -8,7 +8,6 @@
  */
 
 import { Component,Inject } from '@angular/core';
-import { Barcodescanner } from '../barcodescanner/barcodescanner';
 import { ModalController, ViewController, NavController, NavParams } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
@@ -34,16 +33,31 @@ export class MainMenu {
   suggestions: string[];
   intro_sugg: string;
 
+  /**
+   * @name constructor
+   * @param {PagesService} pagesService Service which holds navigation pages
+   * @param {ModalController} modalCtrl Modal Controller
+   * @param {NavController} navCtrl Navigation Controller
+   * @param {Http} http Controller for HTTP requests
+   * @param {AlertController} alertCtrl Alert Controller
+   * @param {Auth} auth Authentication Controller
+   * 
+   */
   constructor(
-    private pagesService: PagesService,
-    public modalCtrl: ModalController, public navCtrl: NavController,
-     private param: NavParams, private http: Http, public viewCtrl: ViewController,
-      public user: User, public auth: Auth, public alertCtrl: AlertController
+    private pagesService: PagesService, private modalCtrl: ModalController,
+    private navCtrl: NavController, private http: Http,
+    private alertCtrl: AlertController, private auth: Auth
   ) {
     this.suggestions = [];
   }
 
-
+  /**
+   * @name ngAfterViewInit
+   * 
+   * @description
+   * 
+   * checks if user is authenticated and sets navigation pages appropriately.
+   */
   ngAfterViewInit() {
     if(this.auth.isAuthenticated()) {
       this.pagesService.logged();
@@ -51,8 +65,9 @@ export class MainMenu {
       this.pagesService.nonLogged();
     }
   }
+
+
   /**
-   * @ngdoc method
    * @name getSuggestions
    * @returns this.suggestions list of medicine names that matches search
    */
@@ -61,7 +76,6 @@ export class MainMenu {
   }
 
   /**
-   * @ngdoc method
    * @name setSuggestions
    * @param {any[]} suggestions list of medicine names that matches search
    * 
@@ -93,7 +107,6 @@ export class MainMenu {
   }
 
   /**
-   * @ngdoc method
    * @name openModal
    * 
    * @description
@@ -106,12 +119,11 @@ export class MainMenu {
   }
 
   /**
-   * @ngdoc method
    * @name barcodescan
    * @param {event} ev
    * @description
    * 
-   * This method opens launches BarcodeScanner plugin and scans barcode
+   * This method launches BarcodeScanner plugin and scans barcode
    */
   barcodescan(ev: any) {
     BarcodeScanner.scan().then((barcodeData) => {
@@ -122,7 +134,6 @@ export class MainMenu {
   }
 
   /**
-   * @ngdoc method
    * @name getItemByBarcode
    * @param {string} barcode string with barcode
    * 
@@ -137,9 +148,13 @@ export class MainMenu {
       if (barcode && barcode.trim() != '') {
         this.http.get('http://medicineappbackend.me/barcode/'+ barcode).map(res => res.json()).subscribe(data => {
             if(data == "" || data == null) {
-              alert("Barcode not recognized!");
-            } else if(data.title && data.description && data.how_does_it && data.benefits) {
-                        
+              let alert = this.alertCtrl.create({
+                  title: 'Error(s)!',
+                  subTitle: "Barcode not recognized!",
+                  buttons: ['OK']
+                });
+              alert.present();
+            } else if(data.title && data.description && data.how_does_it && data.benefits) {     
                         this.navCtrl.push(MedicineInfo, {
                                    "title":  data.title,
                                     "description": data.description,
@@ -148,10 +163,7 @@ export class MainMenu {
                                     "benefits": data.benefits,
                                     "elderly": data.elderly,
                                     "stores": data.stores
-                                    } ).then(() => {
-                                               const index = this.viewCtrl.index;
-                                               this.navCtrl.remove(index);
-                                             });
+                                    } );
             } else {
               let alert = this.alertCtrl.create({
                   title: 'Error(s)!',

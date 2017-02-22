@@ -8,7 +8,6 @@
  */
 
 import { Component,Inject } from '@angular/core';
-import { Barcodescanner } from '../barcodescanner/barcodescanner';
 import { ModalController, ViewController, NavController, NavParams } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';

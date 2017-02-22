@@ -1,3 +1,11 @@
+/**
+ * @name EditProfile
+ * 
+ * @description
+ * 
+ * Edit Profile page.
+ */
+
 import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
 import { MainMenu } from '../mainmenu/mainmenu';
@@ -15,7 +23,19 @@ export class EditProfile {
   smoker_value: any;
   gender_value: any;
 
-  constructor(private navCtrl: NavController, private viewCtrl: ViewController, public auth: Auth, public user: User) {
+  /**
+   * @name constructor
+   * @param navCtrl Navigation NavController
+   * @param viewCtrl View Controller
+   * @param auth Authentication Controller
+   * @param user Storage ofr user data
+   * 
+   * @description
+   * 
+   * Intializes the page with User Profile values. 
+   * If user is not authenticated -> forward him to MainMenu
+   */
+  constructor(private navCtrl: NavController, private viewCtrl: ViewController, private auth: Auth, private user: User) {
     if(this.user.get("date_of_birth", 0) != 0) {
       this.date_of_birth = this.user.get("date_of_birth", 0);
     }
@@ -28,23 +48,21 @@ export class EditProfile {
       this.smoker_value = this.user.get("smoker", 0);
     }
 
-    if(this.user.get("add_info", 0) != 0) {
-      this.add_info_value = this.user.get("add_info", 0);
-    }
-
     if(!this.auth.isAuthenticated()) {
       this.navCtrl.push(MainMenu);
     }
   }
 
+  /**
+   * @name save
+   * 
+   * @description
+   * 
+   * Saves new values provided by user and transfers him to MyProfile page.
+   */
   public save() {
     if(this.date_of_birth !== "") {
       this.user.set("date_of_birth", this.date_of_birth);
-      this.user.save();
-    }
-
-    if((this.add_info_value != "") && (this.add_info_value != null)) {
-      this.user.set("add_info", this.add_info_value);
       this.user.save();
     }
 
@@ -58,12 +76,6 @@ export class EditProfile {
       this.user.save();
     }
 
-    this.navCtrl.push(MyProfile).then(() => {
-       // first we find the index of the current view controller:
-       const index = this.viewCtrl.index;
-       // then we remove it from the navigation stack
-       this.navCtrl.remove(index);
-     });
+    this.navCtrl.push(MyProfile);
   }
-
 }

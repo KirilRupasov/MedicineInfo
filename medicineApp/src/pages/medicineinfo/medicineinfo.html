@@ -10,12 +10,20 @@
         <ion-title>Medicine Info</ion-title>
       </ion-col> 
     </ion-row>
-    
     <search-bar></search-bar>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
   <ion-grid>
+    <ion-row class="ion-row-bordered">
+      <button (click)="openLeaveReviewModal()" ion-button block full>Leave Review</button>
+    </ion-row>
+    <ion-row class="ion-row-bordered">
+      <button (click)="openReadReviewsModal()" ion-button block full>Read Reviews</button>
+    </ion-row>
+    <ion-row class="ion-row-bordered">
+      <button (click)="openStoreLocatorModal()" ion-button block full>Store Locator</button>
+    </ion-row> 
     <ion-row>
       <img src="images/mockMedicine.jpg">
     </ion-row>
@@ -25,28 +33,13 @@
     <ion-row>
         <span class="large" [innerHTML]="elderly"></span>
     </ion-row>
-    <ion-row class="ion-row-bordered">
-      <button (click)="openLeaveReviewModal()" ion-button block full>Leave Review</button>
-    </ion-row>
-    <ion-row class="ion-row-bordered">
-      <button (click)="openReadReviewsModal()" ion-button block full>Read Reviews</button>
-    </ion-row>
-    <ion-row class="ion-row-bordered">
-      <button (click)="openStoreLocatorModal()" ion-button block full>Find Nearest Store</button>
-    </ion-row>
+
     <ion-row class="ion-row-bordered">
       <div class="div-card card"><div class="card-block">
         <div class="card-title"><h2>Overview</h2></div>
         <span class="large" [innerHTML]="description"></span>
       </div>
     </div></ion-row>
-
-    <ion-row class="ion-row-bordered">
-      <div class="div-card card"><div class="card-block">
-        <div class="card-title"><h2>How does it</h2></div>
-        <span class="large" [innerHTML]="how_does_it"></span>
-      </div>
-      </div></ion-row>
 
     <ion-row class="ion-row-bordered">
       <div class="div-card card"><div class="card-block">
