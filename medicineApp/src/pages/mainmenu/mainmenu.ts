@@ -1,5 +1,4 @@
 /**
- * @ngdoc Component
  * @name MainMenu
  * 
  * @description

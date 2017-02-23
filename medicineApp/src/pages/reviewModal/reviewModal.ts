@@ -1,10 +1,18 @@
+/**
+ * @name ReviewModal
+ * 
+ * @description
+ * 
+ * Modal for leaving Review 
+ */
 
 import { Component } from '@angular/core';
 import { Auth, User } from '@ionic/cloud-angular';
-import { ViewController, NavParams } from 'ionic-angular';
+import { NavController, ViewController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { AlertController } from 'ionic-angular';
+import { MainMenu } from '../mainmenu/mainmenu';
 
 @Component({
   templateUrl: 'reviewModal.html',
@@ -14,15 +22,44 @@ export class ReviewModal {
    review: string;
    rating: number;
 
-   constructor(public user: User, public viewCtrl: ViewController, public params: NavParams, private http: Http, public auth: Auth, public alertCtrl: AlertController) {
+   /**
+    * @name constructor
+    * @param {User} user User Data storage
+    * @param {ViewController} viewCtrl View Controller
+    * @param {NavParams} navParams Navigation Parameters, used for getting medicine title
+    * @param {Http} http HTTP Request Handler
+    * @param {Auth} auth Authentication Controller
+    * @param {AlertController} alertCtrl Alert Controller
+    * @param {NavController} navCtrl Navigation Controller
+    *
+    * @description
+    *
+    * If user authenticated -> this function initializes Modal for leaving reviews,
+    * Otherwise -> forward him to Main Menu
+    */ 
+   constructor(
+     private user: User, private viewCtrl: ViewController,
+     private params: NavParams, private http: Http,
+     private auth: Auth, private alertCtrl: AlertController,
+     private navCtrl: NavController
+    ) {
     if(!this.auth.isAuthenticated()) {
-      location.reload();
+      this.navCtrl.push(MainMenu);
     } else {
       this.review = "";
       this.rating = 1;
     }
    }
 
+   /**
+    * @name leaveReview
+    *
+    * @description
+    *
+    * using HTTP requests this function validates and sends review to back-end
+    * If Review is written -> write appropriate message and close Modal
+    * Otherwise -> Output error message 
+    */
    leaveReview() {
     if(this.review && this.review.trim() != "") {
       //store data on backend
@@ -58,6 +95,11 @@ export class ReviewModal {
     }
    }
 
+   /**
+    * @description
+    *
+    * Closes Modal.
+    */
    dismiss() {
      this.viewCtrl.dismiss();
    }

@@ -1,6 +1,13 @@
+/**
+ * @name Signup
+ * 
+ * @description
+ * 
+ * Signup page.
+ */
 import { Component } from '@angular/core';
-import { ViewController, NavController } from 'ionic-angular';
-import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
+import { NavController } from 'ionic-angular';
+import { Auth, UserDetails, IDetailedError } from '@ionic/cloud-angular';
 import { AlertController } from 'ionic-angular';
 import { MainMenu } from '../mainmenu/mainmenu';
 
@@ -9,27 +16,39 @@ import { MainMenu } from '../mainmenu/mainmenu';
   templateUrl: 'signup.html'
 })
 
-
-
-
 export class Signup {
   email_value: string;
   password_value: string;
   email_confirm_value: string;
   password_confirm_value: string;
 
-
-  constructor(private navCtrl: NavController, public alertCtrl: AlertController, public auth: Auth, public user: User, private viewCtrl: ViewController) {
+  /**
+   * @name constructor
+   * @param {NavController} navCtrl Navigation Controller
+   * @param {AlertController} alertCtrl Alert Controller
+   * @param {Auth} auth Authentication Controller
+   * 
+   * @description
+   * 
+   * Empty constructor
+   */
+  constructor(private navCtrl: NavController, public alertCtrl: AlertController, public auth: Auth) {
 
   }
 
 
-
+  /**
+   * @name register
+   * @param {any} ev event that triggers this function
+   * 
+   * @description
+   * 
+   * Firstly, this method checks for if email and password are matching with confirmations.
+   * Afterwards, if everything goes well (all fields are provided, email is not taken, email is valid) -> create new user.
+   * Otherwise -> display Error message(s)
+   */
   public register(ev: any) {
-
     let errors : string = "";
-
-
     let details: UserDetails = { 'email': this.email_value, 'password': this.password_value};
 
     if(this.email_value != this.email_confirm_value) {
@@ -68,8 +87,6 @@ export class Signup {
                 errors = "Email already exists!<br>";
               } else if (e === 'invalid_email') {
                 errors = "Email is invalid!<br>";
-              } else if (e === 'conflict_username') {
-                errors = "Username is taken!<br>";
               } else {
                 errors = "Unknown error...<br>";
               }
@@ -84,7 +101,7 @@ export class Signup {
               alert.present();
               }
             });
-          }
+        }
     }
 
  

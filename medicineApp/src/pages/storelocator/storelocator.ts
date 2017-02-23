@@ -1,5 +1,13 @@
+/**
+ * @name StoreLocator
+ * 
+ * @description
+ * 
+ * Store Locator modal
+ */
+
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { ViewController, NavController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Geolocation } from 'ionic-native';
  
@@ -16,15 +24,34 @@ export class StoreLocator {
   medicine_title: string;
   stores: string;
  
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public params: NavParams, public http: Http) {
+  /**
+   * @name constructor
+   * @param {ViewController} viewCtrl View Controller
+   * @param {NavParams} navParams Navigation Parameters, used to get medicine title and available stores list
+   */
+  constructor(private viewCtrl: ViewController, private params: NavParams, private http: Http) {
     this.medicine_title = this.params.get('medicine_title');
     this.stores = this.params.get('stores');
   }
  
+ /**
+  * @name ngAfterViewInit
+  *
+  * @description
+  *
+  * initializes GoogleMaps after Page is loaded
+  */
   ngAfterViewInit() {
     this.loadMap();
   }
  
+  /**
+   * @name loadMap
+   *  
+   * @description
+   * 
+   * This function intializes Google Maps using user's coordinates and loads nearby stores. 
+   */ 
   loadMap() {
     Geolocation.getCurrentPosition().then((position) => {
  
@@ -44,7 +71,15 @@ export class StoreLocator {
     });
   }
 
-  loadStores(position) {
+  /**
+   * @name loadStores
+   * @param {any} position user's coordinates
+   * 
+   * @description
+   * 
+   * Loads list of stores that sell this drug from back-end and displays nearest ones on Map.
+   */
+  loadStores(position: any) {
       let storeArr: string[];
       if(this.stores && this.stores != "") {
         storeArr = this.stores.split(",");
@@ -66,7 +101,14 @@ export class StoreLocator {
   }
 
 
-
+  /**
+   * @name displayStores
+   * @param {any[]} stores objects representing stores
+   * 
+   * @description
+   * 
+   * This function loops through list of objects representing store coordinates and puts them on Map.
+   */
   displayStores(stores: any[]) {
     for(let entry of stores) {
       let latLng = new google.maps.LatLng(entry.geometry.location.lat, entry.geometry.location.lng);
@@ -85,7 +127,14 @@ export class StoreLocator {
     }
   }
 
-    dismiss() {
-        this.viewCtrl.dismiss();
-    }
+  /**
+   * @name dismiss
+   * 
+   * @description
+   * 
+   * Closes modal
+   */
+  dismiss() {
+      this.viewCtrl.dismiss();
+  }
 }

@@ -1,5 +1,4 @@
 /**
- * @ngdoc Component
  * @name MainMenu
  * 
  * @description
@@ -20,7 +19,6 @@ import { Logout } from '../logout/logout';
 import { Auth, User } from '@ionic/cloud-angular';
 import { Login } from '../login/login';
 import { Signup } from '../signup/signup';
-import { PagesService } from '../../app/pages.service';
 import { Suggestions } from '../suggestions/suggestions';
 
 @Component({
@@ -30,16 +28,20 @@ import { Suggestions } from '../suggestions/suggestions';
 
 export class Searchbar {
 
-  constructor(
-    private pagesService: PagesService,
-    public modalCtrl: ModalController, public navCtrl: NavController,
-     private param: NavParams, private http: Http, public viewCtrl: ViewController,
-      public user: User, public auth: Auth
-  ) {
+  /**
+   * @name constructor
+   * @param {ModalController} modalCtrl Modal Controller
+   * @param {NavController} navCtrl Navigation Controller
+   * @param {Http} http HTTP request handler
+   * 
+   * @description
+   * 
+   * Empty constructor
+   */
+  constructor(public modalCtrl: ModalController, public navCtrl: NavController, private http: Http) {
   }
 
   /**
-   * @ngdoc method
    * @name goToItem
    * @param {object} item medicine which has title, description, benefits, and other general information
    * 
@@ -63,6 +65,14 @@ export class Searchbar {
     }
   }
 
+  /**
+   * @name setSuggestions
+   * @param {any[]} data objects containing drug references
+   * 
+   * @description
+   * 
+   * Updates collection of drug references.
+   */
   setSuggestions(data: any[]) {
     this.navCtrl.push(Suggestions, {
         "data":  data,
@@ -70,7 +80,6 @@ export class Searchbar {
   }
 
   /**
-   * @ngdoc method
    * @name fetchItems
    * @param {string} title title of medicine
    * 
@@ -83,7 +92,6 @@ export class Searchbar {
   }
 
   /**
-   * @ngdoc method
    * @name openModal
    * 
    * @description
