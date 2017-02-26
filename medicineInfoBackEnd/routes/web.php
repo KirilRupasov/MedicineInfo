@@ -25,4 +25,4 @@ Route::post('/storereview', 'ReviewController@leaveReview');
 Route::get('/getreviews/{title}', 'ReviewController@getReviews');
 Route::get('/checkifreviewexists/{username}/{medicinename}', 'ReviewController@checkIfReviewExists');
 Route::get('/getreview/{username}/{medicinename}', 'ReviewController@getReview');
-Route::post('/editreview', 'ReviewController@editReview');
+Route::post('/editreview', 'ReviewController@leaveReview');
