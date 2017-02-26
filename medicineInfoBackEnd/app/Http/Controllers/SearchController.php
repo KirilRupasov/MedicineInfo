@@ -10,15 +10,26 @@ namespace App\Http\Controllers;
 
 
 use App\Medicine;
-use Illuminate\Support\Facades\Log;
 
-class SearchController extends Controller
-{
+class SearchController extends Controller {
 
+    /*
+    |--------------------------------------------------------------------------
+    | Search Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles search requests for medicines.
+    |
+    */
+
+    /**
+     * This method searches medicines by title letters and returns matching results
+     *
+     * @param $query medicine title letters
+     * @return \Elasticquent\ElasticquentResultCollection|mixed|null collection of Medicines if more than one are found, one Medicine if only one match, null if nothing found
+     */
     public function searchByTitle($query) {
-
         if($query != "") {
-
             $posts = \App\Medicine::searchByQuery([
                 "query" => [
                     "multi_match" => [
@@ -29,23 +40,26 @@ class SearchController extends Controller
                 ]], null, null, 5, null, null);
 
             if(sizeof($posts) == 1) {
-
                 return $posts[0];
-
             } else if(sizeof($posts) > 0) {
                 return $posts;
-            } /*else {
-                $cc = new CrawlerController();
-                return response()->json($cc -> fetchData($query, false));
-            }*/
-
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
 
-        return null;
+
     }
 
 
-
+    /**
+     * This method returns medicine that exactly matches the barcode sequence provided.
+     *
+     * @param $query the barcode consisting of digits
+     * @return array medicine that has that barcode assigned
+     */
     public function searchByBarcode($query) {
         if($query != "") {
             $result = Medicine::where('barcodes','like', '%'.$query.'%')->first();

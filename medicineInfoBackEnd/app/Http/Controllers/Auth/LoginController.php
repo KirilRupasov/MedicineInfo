@@ -7,7 +7,6 @@ use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -41,10 +40,18 @@ class LoginController extends Controller
         //$this->middleware('guest', ['except' => 'logout']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View Login UI
+     */
     public function getLoginForm() {
         return view('login');
     }
 
+    /**
+     * This method creates user for database management and then redirects user to Login UI
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector redirects to Login UI
+     */
     public function createUser() {
         if(!(User::where("email", "kirilrupasov@gmail.com") -> first())) {
             User::create([
@@ -56,9 +63,15 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * This method check user login/password combination.
+     * If it matches records -> returns admin panel for database management
+     * Otherwise -> return "Login Failed!" message
+     *
+     * @param Request $request HTTP POST request containing email and password
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
+     */
     public function verifyUser(Request $request) {
-
-
         $input = $request->all();
 
         if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']])) {
