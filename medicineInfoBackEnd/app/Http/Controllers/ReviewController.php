@@ -54,6 +54,8 @@ class ReviewController extends Controller
         $ratingCount = 0;
 
         if(sizeof($reviews) > 0) {
+
+            return 10;
             for($x=0; $x<sizeof($reviews); $x++) {
                 $ratingCount++;
                 $ratingSum += $reviews[$x] -> rating;
