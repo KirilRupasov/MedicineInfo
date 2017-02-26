@@ -16,6 +16,10 @@ class ReviewController extends Controller
     |
     */
 
+    public function __construct()
+    {
+    }
+
     /**
      * This method stores new review if all parameters are found and user jas not
      * left review before
