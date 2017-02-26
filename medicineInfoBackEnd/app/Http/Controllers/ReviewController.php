@@ -58,8 +58,7 @@ class ReviewController extends Controller
             $input['user_email'] &&
             $input['review_content'] &&
             $input['medicine_name'] &&
-            $input['rating'] &&
-            $this->checkIfReviewExists($input['user_email'], $input['medicine_name']) == "true"
+            $input['rating']
         ) {
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
             Review::where([
@@ -74,7 +73,6 @@ class ReviewController extends Controller
         } else {
             return "Failure";
         }
-
     }
 
     public function checkIfReviewExists($username, $medicinename) {
