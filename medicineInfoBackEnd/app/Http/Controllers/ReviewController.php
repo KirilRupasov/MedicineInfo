@@ -55,6 +55,7 @@ class ReviewController extends Controller
         //return $reviews;
 
         $reviews = json_decode($reviews);
+        return $reviews;
 
         if(sizeof($reviews) > 0) {
             for($x=0; $x<sizeof($reviews); $x++) {
