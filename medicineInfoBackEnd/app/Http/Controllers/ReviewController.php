@@ -52,10 +52,6 @@ class ReviewController extends Controller
         $reviews = $this -> getReviews($medicinename);
         $ratingSum = 0;
         $ratingCount = 0;
-        //return $reviews;
-
-        $reviews = json_decode($reviews);
-        return $reviews;
 
         if(sizeof($reviews) > 0) {
             for($x=0; $x<sizeof($reviews); $x++) {
@@ -123,6 +119,9 @@ class ReviewController extends Controller
                 "user_email" => $reviews[$x] -> user_email
             ];
         }
-        return response()->json($reviews_array);
+    }
+
+    public function getReviewsJSON($title) {
+        return response()->json($this -> getReviews($title));
     }
 }

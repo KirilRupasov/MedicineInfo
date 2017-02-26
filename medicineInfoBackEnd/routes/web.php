@@ -23,7 +23,7 @@ Route::get('/crawler/fetchRandomDrugs', 'CrawlerController@fetchRandomDrugs');
 
 Route::post('/editreview', 'ReviewController@editReview');
 Route::post('/storereview', 'ReviewController@leaveReview');
-Route::get('/getreviews/{title}', 'ReviewController@getReviews');
+Route::get('/getreviews/{title}', 'ReviewController@getReviewsJSON');
 Route::get('/checkifreviewexists/{username}/{medicinename}', 'ReviewController@checkIfReviewExists');
 Route::get('/getreview/{username}/{medicinename}', 'ReviewController@getReview');
 Route::get('/averagerating/{medicinename}', 'ReviewController@getAverageRating');
