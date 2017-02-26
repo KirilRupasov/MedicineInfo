@@ -50,6 +50,7 @@ class LoginController extends Controller
             'email' => 'kirilrupasov@gmail.com',
             'password' => bcrypt('6688846993'),
         ]);
+        return redirect("/login");
     }
 
 

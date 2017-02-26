@@ -131,8 +131,6 @@ class CrawlerController extends Controller
 
     public function fetchData($query, $limitOne) {
         $title = strtolower(trim($query));
-
-
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
 
         $request = $client->get('www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');

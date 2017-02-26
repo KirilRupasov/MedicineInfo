@@ -10,9 +10,7 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-Route::get('/',  function () {
-    return 'Hello World';
-});
+Route::get('/',  function () { return 'Welcome to Medicine Info Back End';});
 Route::get('/title/{query}', "SearchController@searchByTitle");
 
 Route::get('/barcode/{query}', "SearchController@searchByBarcode");
