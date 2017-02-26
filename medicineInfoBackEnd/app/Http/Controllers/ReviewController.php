@@ -53,11 +53,18 @@ class ReviewController extends Controller
         $ratingSum = 0;
         $ratingCount = 0;
         $reviews = json_decode($reviews);
-        for($x=0; $x<sizeof($reviews); $x++) {
-            $ratingCount++;
-            $ratingSum += $reviews[$x] -> medicine_name;
+
+        if(sizeof($reviews) > 0) {
+            for($x=0; $x<sizeof($reviews); $x++) {
+                $ratingCount++;
+                $ratingSum += $reviews[$x] -> medicine_name;
+            }
+
+            return $ratingSum/$ratingCount;
+        } else {
+            return 0;
         }
-        return $ratingSum/$ratingCount;
+
     }
 
     public function editReview(Request $request) {
