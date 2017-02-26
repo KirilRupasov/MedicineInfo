@@ -33,6 +33,8 @@ export class MedicineInfo {
   private how_does_it: string;
   private elderly: string;
   private stores: string;
+  private reviewAction: string;
+  private leaveReview: boolean;
 
   /**
    * @param {NavParams} navParams Medicine Parameters
@@ -55,8 +57,22 @@ export class MedicineInfo {
     this.benefits = navParams.get("benefits");
     this.how_does_it = navParams.get("how_does_it");
     this.stores = navParams.get("stores");
-
+    this.leaveReview = true;
+    
     if(this.auth.isAuthenticated()) {
+      this.http.get('http://medicineappbackend.me/checkifreviewexists/'+ this.user.details.email + '/' + this.title).map(res => res).subscribe(
+        data => {
+          if(data.text().toString() == "false") {
+            this.reviewAction = "Leave Review";
+          } else {
+            this.leaveReview = false;
+            this.reviewAction = "Edit Review";
+          }
+        },
+        err => {
+        }
+      );
+
       let date_of_birth = this.user.get("date_of_birth", 0);
       if(date_of_birth != 0) {
         let parts = date_of_birth.split("-")
@@ -93,24 +109,8 @@ export class MedicineInfo {
    */
   openLeaveReviewModal() {
     if(this.auth.isAuthenticated()) {
-      this.http.get('http://medicineappbackend.me/checkifreviewexists/'+ this.user.details.email + '/' + this.title).map(res => res).subscribe(
-              data => {
-                if(data.text().toString() == "false") {
-                  let modal = this.modalCtrl.create(ReviewModal, {"root" : this});
-                  modal.present();
-                } else {
-                  let alert = this.alertCtrl.create({
-                      title: 'Error(s)!',
-                      subTitle: "You have already reviewed this medicine!",
-                      buttons: ['OK']
-                    });
-                  alert.present();
-                }
-              },
-              err => {
-                  console.log(err);
-              }
-            );
+        let modal = this.modalCtrl.create(ReviewModal, {"title" : this.getTitle(), "leaveReview" : this.leaveReview});
+        modal.present();
     } else {
        let alert = this.alertCtrl.create({
            title: 'Error(s)!',

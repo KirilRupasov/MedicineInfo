@@ -21,6 +21,8 @@ import { MainMenu } from '../mainmenu/mainmenu';
 export class ReviewModal {
    review: string;
    rating: number;
+   user_email: string;
+   medicine_name: string;
 
    /**
     * @name constructor
@@ -46,8 +48,24 @@ export class ReviewModal {
     if(!this.auth.isAuthenticated()) {
       this.navCtrl.push(MainMenu);
     } else {
-      this.review = "";
-      this.rating = 1;
+      let leaveReview = this.params.get("leaveReview");
+      this.medicine_name = this.params.get('title');
+      this.user_email = this.user.details.email;
+
+      if(leaveReview) {
+        this.review = "";
+        this.rating = 1;
+      } else {
+        this.http.get( 'http://medicineappbackend.me/getreview/' + this.user_email + "/"+ this.medicine_name).map(res => res.json()).subscribe(
+          data => {
+            this.rating = data.rating;
+            this.review = data.review_content;
+          },
+          err => {
+          }
+        );
+      }
+      
     }
    }
 
@@ -63,25 +81,28 @@ export class ReviewModal {
    leaveReview() {
     if(this.review && this.review.trim() != "") {
       //store data on backend
-      let user_email = this.user.details.email;
-      let medicine_name = this.params.get('root').getTitle();
       let review_content = this.review;
       let rating = this.rating;
+      let user_email = this.user_email;
+      let medicine_name = this.medicine_name;
 
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      this.http.post(
-      'http://medicineappbackend.me/storereview',
-       { user_email, medicine_name, review_content, rating },
-       options).subscribe(data => {
-              let alert = this.alertCtrl.create({
-                      title: 'Success!',
-                      subTitle: "Review submitted!",
-                      buttons: ['OK']
-                    });
-                  alert.present();
-             this.dismiss();
+      let url = 'http://medicineappbackend.me/storereview';
+
+      if(!this.leaveReview) {
+        url = 'http://medicineappbackend.me/editreview';
+      }
+
+      this.http.post(url, { user_email, medicine_name, review_content, rating }, options).subscribe(data => {
+        let alert = this.alertCtrl.create({
+                title: 'Success!',
+                subTitle: "Review submitted!",
+                buttons: ['OK']
+              });
+            alert.present();
+        this.dismiss();
        }, error => {
            console.log(JSON.stringify(error.json()));
        });
