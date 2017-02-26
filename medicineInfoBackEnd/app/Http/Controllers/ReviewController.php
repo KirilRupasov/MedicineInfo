@@ -52,6 +52,8 @@ class ReviewController extends Controller
         $reviews = $this -> getReviews($medicinename);
         $ratingSum = 0;
         $ratingCount = 0;
+        return $reviews;
+
         $reviews = json_decode($reviews);
 
         if(sizeof($reviews) > 0) {
