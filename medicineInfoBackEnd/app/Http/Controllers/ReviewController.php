@@ -53,14 +53,12 @@ class ReviewController extends Controller
     }
 
     public function getAverageRating($medicinename) {
-        $reviews = $this -> getReviewsJSON($medicinename);
-        return $reviews;
-        $ratingSum = 0;
-        $ratingCount = 0;
+        $medicine = Medicine::where('title', $title)->first();
+        $reviews = Review::where('medicine_id', $medicine->id)->get();
 
         if(count($reviews) > 0) {
-
-            return 10;
+            $ratingSum = 0;
+            $ratingCount = 0;
             for($x=0; $x<count($reviews); $x++) {
                 $ratingCount++;
                 $ratingSum += $reviews[$x] -> rating;
@@ -70,6 +68,9 @@ class ReviewController extends Controller
         } else {
             return 0;
         }
+
+
+
 
     }
 
@@ -114,7 +115,7 @@ class ReviewController extends Controller
     }
 
 
-    public static function getReviews($title) {
+    public function getReviews($title) {
         $medicine = Medicine::where('title', $title)->first();
         $reviews = Review::where('medicine_id', $medicine->id)->get();
         $reviews_array = [];
