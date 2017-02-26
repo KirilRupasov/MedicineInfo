@@ -49,7 +49,7 @@ class ReviewController extends Controller
     }
 
     public function getAverageRating($medicinename) {
-        $reviews = Review::where("medicine_name", $medicinename)->get();
+        $reviews = $this -> getReviews($medicinename);
         $ratingSum = 0;
         $ratingCount = 0;
         for($x=0; $x<sizeof($reviews); $x++) {
