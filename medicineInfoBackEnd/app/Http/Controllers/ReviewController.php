@@ -50,6 +50,7 @@ class ReviewController extends Controller
 
     public function getAverageRating($medicinename) {
         $reviews = $this -> getReviews($medicinename);
+        return $reviews;
         $ratingSum = 0;
         $ratingCount = 0;
 
