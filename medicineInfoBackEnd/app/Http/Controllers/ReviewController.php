@@ -49,7 +49,8 @@ class ReviewController extends Controller
     }
 
     public function getAverageRating($medicinename) {
-        $reviews = $this -> getReviews($medicinename);
+        $reviews = $this -> getReviewsJSON($medicinename);
+        return $reviews;
         $ratingSum = 0;
         $ratingCount = 0;
 
