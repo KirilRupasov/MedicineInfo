@@ -46,10 +46,12 @@ class LoginController extends Controller
     }
 
     public function createUser() {
-        User::create([
-            'email' => 'kirilrupasov@gmail.com',
-            'password' => bcrypt('6688846993'),
-        ]);
+        if(!(User::where("email", "kirilrupasov@gmail.com") -> first())) {
+            User::create([
+                'email' => 'kirilrupasov@gmail.com',
+                'password' => bcrypt('6688846993'),
+            ]);
+        }
         return redirect("/login");
     }
 
