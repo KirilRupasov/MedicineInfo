@@ -114,7 +114,7 @@ class ReviewController extends Controller
     }
 
 
-    public function getReviews($title) {
+    public static function getReviews($title) {
         $medicine = Medicine::where('title', $title)->first();
         $reviews = Review::where('medicine_id', $medicine->id)->get();
         $reviews_array = [];
