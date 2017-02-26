@@ -48,7 +48,7 @@ class ReviewController extends Controller
         }
     }
 
-    public function averageRating($medicinename) {
+    public function getAverageRating($medicinename) {
         $reviews = Review::where("medicine_name", $medicinename)->get();
         $ratingSum = 0;
         $ratingCount = 0;
