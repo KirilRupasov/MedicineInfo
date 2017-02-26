@@ -52,14 +52,14 @@ class ReviewController extends Controller
         $reviews = $this -> getReviews($medicinename);
         $ratingSum = 0;
         $ratingCount = 0;
-        return $reviews;
+        //return $reviews;
 
         $reviews = json_decode($reviews);
 
         if(sizeof($reviews) > 0) {
             for($x=0; $x<sizeof($reviews); $x++) {
                 $ratingCount++;
-                $ratingSum += $reviews[$x] -> medicine_name;
+                $ratingSum += $reviews[$x] -> rating;
             }
 
             return $ratingSum/$ratingCount;
