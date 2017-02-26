@@ -126,9 +126,7 @@ class ReviewController extends Controller
                 "user_email" => $reviews[$x] -> user_email
             ];
         }
-    }
 
-    public function getReviewsJSON($title) {
-        return response()->json($this -> getReviews($title));
+        return response()->json($reviews_array);
     }
 }
