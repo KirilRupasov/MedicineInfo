@@ -52,6 +52,7 @@ class ReviewController extends Controller
         $reviews = $this -> getReviews($medicinename);
         $ratingSum = 0;
         $ratingCount = 0;
+        $reviews = \GuzzleHttp\json_decode($reviews);
         for($x=0; $x<sizeof($reviews); $x++) {
             $ratingCount++;
             $ratingSum += $reviews[$x] -> medicine_name;
