@@ -52,7 +52,7 @@ class ReviewController extends Controller
         }
     }
 
-    public function getAverageRating($medicinename) {
+    public static function getAverageRating($medicinename) {
         $medicine = Medicine::where('title', $medicinename)->first();
         $reviews = Review::where('medicine_id', $medicine->id)->get();
 

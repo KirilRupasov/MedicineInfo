@@ -40,6 +40,7 @@ class SearchController extends Controller {
                 ]], null, null, 5, null, null);
 
             if(sizeof($posts) == 1) {
+                $posts[0]->rating = ReviewController::getAverageRating($posts[0]->title);
                 return $posts[0];
             } else if(sizeof($posts) > 0) {
                 return $posts;
