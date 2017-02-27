@@ -49,6 +49,13 @@ export class ReadReviewsModal {
         data => {
           if(data != null && data.length > 0) {
             this.reviews = data;
+            for (let review of data) {
+               review.rating_number = [];
+
+                for (let i = 0; i < review.rating; i++) {
+                  review.rating_number.push(i);
+               }
+            }
           } else {
             this.no_reviews = "This medicine has no reviews yet.";
           }
