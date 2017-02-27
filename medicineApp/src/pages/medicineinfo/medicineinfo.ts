@@ -37,6 +37,7 @@ export class MedicineInfo {
   private leaveReview: boolean;
   private stars: any[];
   private half_stars: any[];
+  private no_rating: string;
 
   /**
    * @param {NavParams} navParams Medicine Parameters
@@ -62,10 +63,15 @@ export class MedicineInfo {
     this.http.get('http://medicineappbackend.me/averagerating/' + this.title).map(res => res).subscribe(
       data => {
         let rating = +data.text().toString() || 0;
-        this.stars = new Array(Math.floor(rating));
-        if(rating > Math.floor(rating)) {
-          this.half_stars = new Array(1);
+        if(rating == 0) {
+          this.no_rating = "This medicine has not been rated yet."
+        } else {
+          this.stars = new Array(Math.floor(rating));
+          if(rating > Math.floor(rating)) {
+            this.half_stars = new Array(1);
+          }
         }
+        
       }
     );
 

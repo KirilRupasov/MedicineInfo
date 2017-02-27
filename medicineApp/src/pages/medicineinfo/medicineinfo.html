@@ -25,7 +25,6 @@
       <button (click)="openStoreLocatorModal()" ion-button block full>Store Locator</button>
     </ion-row>
     <ion-row class="center">
-      <!--<div [innerHTML]="sanitizer.bypassSecurityTrustHtml(rating)"></div>-->
       <ion-item style="padding: 0; display: inline-block; width: 4rem;" *ngFor="let star of stars">
         <ion-icon name="star" class="no-border" color="bright"></ion-icon>
       </ion-item>
@@ -33,6 +32,7 @@
         <ion-icon name="star-half" class="no-border" color="bright"></ion-icon>
       </ion-item>
     </ion-row> 
+    <ion-row><div class="card-title"><p>{{ no_rating }}</p></div></ion-row>
     <ion-row>
       <img src="images/mockMedicine.jpg">
     </ion-row>
