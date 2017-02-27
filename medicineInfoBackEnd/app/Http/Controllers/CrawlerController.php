@@ -15,29 +15,37 @@ use GuzzleHttp\Client;
 
 
 
-class CrawlerController extends Controller
-{
-
-    public function __construct()
-    {
+class CrawlerController extends Controller {
+    /**
+     * CrawlerController constructor
+     *
+     * constructor is using middleware to restrict its' usage to registered users only
+     */
+    public function __construct() {
         $this->middleware('auth');
     }
 
+    /**
+     * This function tries to get and store information  about 100 best selling durgs according to Drugs.com.
+     *
+     * @return string "Success! (count) drugs are stored" if function connected to Drugs.com and completed the operation,
+     *  Otherwise -> "Resource down" message.
+     *
+     */
     public function fetchBestSellingDrugs() {
         //authorize user
         set_time_limit(300);
 
         $client = new Client(['base_url' => "https://www.drugs.com"]);
         $request = $client->get('https://www.drugs.com/stats/top100/sales');
-
+        $count = 0;
         if($request->getStatusCode() == 200) {
             $content = $request->getBody()->getContents();
             $results = $this -> get_tagged_strings($content, "<b>", "</b>");
-            $formatted_results = [];
             foreach($results as $result) {
                 $formatted = $this->get_string_between($result, "'>", "</a>");
                 if ($formatted != "Start tag not found") {
-                    $data = $this->fetchData($formatted, true);
+                    $data = $this -> fetchData($formatted, true);
                     if ($data != "Wrong request" && (array_keys($data) !== range(0, count($data) - 1))) {
 
 
@@ -53,22 +61,28 @@ class CrawlerController extends Controller
                             'stores' => $data['stores']
                         ]);
                         $medicine->addToIndex();
+                        $count++;
 
                     }
                 }
             }
 
-            return "Success!";
+            return "Success! ".$count." drugs are stored.";
 
         } else {
             return "Resource is down";
         }
     }
 
+    /**
+     * This function populates the database with 5 drugs from each list that correspond to letters of alphabet
+     * There are 32 lists, corresponding to 32 letters A-Z, function fetches first 5 drugs from each list., resultion in 160 overall.
+     *
+     * @return string
+     */
     public function fetchRandomDrugs() {
         set_time_limit(300);
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
-
         $letters = range('A', 'Z');
 
         foreach ($letters as $letter) {
@@ -89,10 +103,8 @@ class CrawlerController extends Controller
                 while($counter_to_complete < $number_to_reach) {
                     $title = $this->get_string_between($results[$counter_to_complete], "\">", "</a>");
                     if(Medicine::where('title', trim($title))->first() == null) {
-                        //return $title;
                         $data = $this->fetchDrugsFromPage($results[$counter_to_complete], $client, $title);
                         if ($data != "Wrong request" && (array_keys($data) !== range(0, count($data) - 1))) {
-                            //return $data;
                             $medicine = Medicine::create([
                                 'title' => $data['title'],
                                 'description' => $data['description'],
@@ -111,28 +123,24 @@ class CrawlerController extends Controller
                     }
                     $counter_to_complete++;
                 }
+                return "Success!";
+            } else {
+                return "Resource down!";
             }
         }
-
-        return "Success!";
-
-
     }
 
-    public function fetchDataByBarcode($query) {
-        try {
-            $client = new Client(['base_url' => "http://www.itembarcode.com"]);
-            $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
-        } catch(\Exception $exception) {
-            return null;
-        }
-
-    }
-
+    /**
+     * This function tries to find drug page by keywords on EMA website.
+     *
+     *
+     * @param $query medicine name
+     * @param $limitOne if true -> functions only loads first result, otherwise -> all results that matches keywords
+     * @return array|string array of result(s) if found, string "Wrong request" otherwise
+     */
     public function fetchData($query, $limitOne) {
         $title = strtolower(trim($query));
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
-
         $request = $client->get('www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=searchByKey&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&keyword='.$title.'&keywordSearch=Submit&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');
 
         if($request->getStatusCode() == 200) {
@@ -143,22 +151,25 @@ class CrawlerController extends Controller
             } else if(sizeof($results) > 0) {
                 $final_results = [];
                 foreach ($results as $value) {
-
                     $final_results[]['title'] = $this->get_string_between($value, "\">", "</a>");
-
                 }
 
                 return $final_results;
             } else {
                 return "Wrong request";
             }
-
         }
-
         return "Wrong request";
-
     }
 
+    /**
+     * This function loads all information about drug from its Page on EMA and EPAR document on that page
+     *
+     * @param $result string containing link to drug page
+     * @param $client client that creates requests to EMA website and loads responses
+     * @param $query medicine title
+     * @return array array containing all needed drug information
+     */
     public function fetchDrugsFromPage($result, $client, $query) {
         $title = strtolower(trim($query));
         $link = $this->get_string_between($result, "href=\"", "\">");
@@ -199,7 +210,7 @@ class CrawlerController extends Controller
 
         $status = "withdrawn";
 
-        if ($approved) {
+        if($approved) {
             $status = "approved";
         }
 
@@ -207,8 +218,6 @@ class CrawlerController extends Controller
         if($this->checkIfAvailableInLloyds($title)) {
             $stores .= "lloyds pharmacy";
         }
-
-
 
         $response = [
             'title' => $query,
@@ -218,16 +227,20 @@ class CrawlerController extends Controller
             'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos + 1),
             'how_does_it' => $this->get_string_between($content, "<dd>", "</dd>", $how_does_pos + 1),
             'benefits' => $this->get_string_between($content, "<dd>", "</dd>", $what_benefits_pos + 1),
-            'barcodes' => implode(",", $this->fetchBarcodesByTitle($this->fetchBarcodes($title))),
+            'barcodes' => implode(",", $this->fetchBarcodesByTitle($title)),
             'stores' => $stores
         ];
 
         return $response;
     }
 
-
-
-    public function fetchEPAR($link, $title) {
+    /**
+     * This function leads text from EPAR document provided
+     *
+     * @param $link link to EPAR document
+     * @return null|string null if document not found/not loaded, otherwise -> string containing text
+     */
+    public function fetchEPAR($link) {
         try {
             // Parse pdf file and build necessary objects.
             $parser = new \Smalot\PdfParser\Parser();
@@ -242,9 +255,14 @@ class CrawlerController extends Controller
         } catch (\Exception $exception) {
             return null;
         }
-
     }
 
+    /**
+     * This function fetches the information for elderly patients
+     *
+     * @param $text string containing all EPAR text
+     * @return null|string string if information for elderly is found, null otherwise
+     */
     public function fetchElderlyStatus($text) {
         $elderly = $this->get_string_between($text, "Elderly patients", ".");
         if(strpos($elderly, "(see") != false) {
@@ -253,55 +271,48 @@ class CrawlerController extends Controller
         return $elderly;
     }
 
-
-    public function fetchBarcodesByTitle($body) {
-        $results = $this->get_tagged_strings($body, "<td class=\"views-field views-field-title\" >", "</td>");
-        $results_formatted = [];
-
-        foreach($results as $result) {
-            preg_match_all('!\d+!', $result, $matches);
-            $results_formatted[] = $matches[0][0];
-        }
-
-
-        return $results_formatted;
-    }
-
-    public function fetchTitleByBarcode($body) {
-        $result = $this->get_string_between($body, "<td class=\"views-field views-field-body\" >", "</td>");
-
-
-        $first_num = -1;
-        $num_loc = 0;
-
-        $result2 = str_split($result);
-
-        foreach ($result2 AS $a_char) {
-            if (is_numeric($a_char)) {
-                $first_num = $num_loc;
-                break;
-            }
-            $num_loc++;
-        }
-
-        $title = substr($result, 0, $first_num-1);
-
-        return trim($title);
-    }
-
-    public function fetchBarcodes($query) {
+    /**
+     * This function gets barcodes by medicine title
+     *
+     * @param $query title of medicine
+     * @return array|null array of barcodes if medcine found, null otherwise
+     */
+    public function fetchBarcodesByTitle($query) {
         try {
             $client = new Client(['base_url' => "http://www.itembarcode.com"]);
             $request = $client->get('http://www.itembarcode.com/search-barcode-data?search_api_views_fulltext='.$query);
 
             $body = $request->getBody()->getContents();
 
-            return $body;
+            $results = $this->get_tagged_strings($body, "<td class=\"views-field views-field-title\" >", "</td>");
+            $results_formatted = [];
+
+            foreach($results as $result) {
+                preg_match_all('!\d+!', $result, $matches);
+                $results_formatted[] = $matches[0][0];
+            }
+
+
+            return $results_formatted;
         } catch (\Exception $exception) {
             return null;
         }
     }
 
+    /**
+     * @param $query
+     * @return null|string
+     */
+    public function fetchBarcodes($query) {
+
+    }
+
+    /**
+     * This function checks if given medicine can be obtained in Lloyds Pharmacy.
+     *
+     * @param $title title of medicine
+     * @return bool true if it can be obtained, false if not or exception happened during the checks
+     */
     public function checkIfAvailableInLloyds($title) {
         try {
             $client = new Client(['base_url' => "http://www.lloydspharmacy.com"]);
@@ -317,13 +328,19 @@ class CrawlerController extends Controller
                 return false;
             }
 
-            return $body;
         } catch (\Exception $exception) {
-            return null;
+            return false;
         }
     }
 
-
+    /**
+     * This function get all occurencies of strings between tags within string
+     *
+     * @param $string string containing search strings
+     * @param $start_tag start tag
+     * @param $end_tag end tag
+     * @return array array of matches
+     */
     public function get_tagged_strings($string, $start_tag, $end_tag) {
         $string = ' ' . $string;
         $results = [];
@@ -340,6 +357,15 @@ class CrawlerController extends Controller
     }
 
 
+    /**
+     * This function returns string betweem tags extracted from larger string.
+     *
+     * @param $string string containing search string
+     * @param $start start tag
+     * @param $end end tag
+     * @param int $occurence number of occurence to be returned, i.e. if value is 3 it is going to look for 3rd occurence (default=1)
+     * @return null|string null if start tag or occurence not found, result string otherwise
+     */
     public function get_string_between($string, $start, $end, $occurence=1){
         $string = ' ' . $string;
         $ini = strpos($string, $start);
@@ -355,7 +381,7 @@ class CrawlerController extends Controller
             }
         }
 
-        if ($ini == 0) return '';
+        if ($ini == 0) return null;
         $ini += strlen($start);
         $len = strpos($string, $end, $ini) - $ini;
         return substr($string, $ini, $len);

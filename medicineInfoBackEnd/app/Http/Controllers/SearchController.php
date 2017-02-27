@@ -54,7 +54,6 @@ class SearchController extends Controller {
 
     }
 
-
     /**
      * This method returns medicine that exactly matches the barcode sequence provided.
      *
