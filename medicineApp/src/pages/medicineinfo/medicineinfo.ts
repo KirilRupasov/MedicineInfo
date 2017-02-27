@@ -75,6 +75,7 @@ export class MedicineInfo {
     this.how_does_it = navParams.get("how_does_it");
     this.stores = navParams.get("stores");
     this.leaveReview = true;
+    this.reviewAction = "Leave Review";
 
     if(this.auth.isAuthenticated()) {
       this.setReviewAction();

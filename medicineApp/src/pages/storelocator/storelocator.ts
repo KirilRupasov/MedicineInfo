@@ -96,9 +96,9 @@ export class StoreLocator {
                   );
         } 
       } else {
-           let alert = this.alertCtrl.create({
-            title: 'Error(s)!',
-            subTitle: "No stores found!",
+        let alert = this.alertCtrl.create({
+            title: 'Sorry!',
+            subTitle: "No stores found.",
             buttons: ['OK']
           });
         alert.present();

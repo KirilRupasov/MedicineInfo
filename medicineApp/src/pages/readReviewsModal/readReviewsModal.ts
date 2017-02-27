@@ -18,6 +18,7 @@ import { Http } from '@angular/http';
 export class ReadReviewsModal {
    reviews: string[];
    medicine_title: string;
+   no_reviews: string;
 
    /**
     * @name constructor
@@ -46,9 +47,10 @@ export class ReadReviewsModal {
    loadReviews() {
      this.http.get('http://medicineappbackend.me/getreviews/'+ this.medicine_title).map(res => res.json()).subscribe(
         data => {
-          if(data != null && data.length) {
-            let rating: number;
+          if(data != null && data.length > 0) {
             this.reviews = data;
+          } else {
+            this.no_reviews = "This medicine has no reviews yet.";
           }
         },
         err => {

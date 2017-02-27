@@ -8,7 +8,7 @@ import { MedicineInfo } from '../pages/medicineinfo/medicineinfo';
 import { EditProfile } from '../pages/editprofile/editprofile';
 import { MyProfile } from '../pages/myprofile/myprofile';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
-import { ModalContentPage } from '../pages/searchModal/modalcontentpage';
+import { SearchModal } from '../pages/searchModal/searchModal';
 import { ReviewModal } from '../pages/reviewModal/reviewModal';
 import { Logout } from '../pages/logout/logout';
 import { HttpModule } from '@angular/http';
@@ -34,7 +34,7 @@ const cloudSettings: CloudSettings = {
     MedicineInfo,
     EditProfile,
     MyProfile,
-    ModalContentPage,
+    SearchModal,
     ReviewModal,
     ReadReviewsModal,
     StoreLocator,
@@ -56,7 +56,7 @@ const cloudSettings: CloudSettings = {
     MedicineInfo,
     EditProfile,
     MyProfile,
-    ModalContentPage,
+    SearchModal,
     ReviewModal,
     ReadReviewsModal,
     StoreLocator,

@@ -3,7 +3,7 @@
  * 
  * @description
  * 
- * The Main Menu page
+ * Searchbar modal
  */
 
 import { Component,Inject } from '@angular/core';
