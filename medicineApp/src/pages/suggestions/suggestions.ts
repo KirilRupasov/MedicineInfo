@@ -8,7 +8,7 @@
  */
 
 import { Component,Inject } from '@angular/core';
-import { ModalController, ViewController, NavController, NavParams } from 'ionic-angular';
+import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -17,11 +17,10 @@ import { BarcodeScanner } from 'ionic-native';
 import { MyProfile } from '../myprofile/myprofile';
 import { EditProfile } from '../editprofile/editprofile';
 import { Logout } from '../logout/logout';
-import { Auth, User } from '@ionic/cloud-angular';
+import { Auth } from '@ionic/cloud-angular';
 import { Login } from '../login/login';
 import { Signup } from '../signup/signup';
 import { PagesService } from '../../app/pages.service';
-import { AlertController } from 'ionic-angular';
 import { Searchbar } from '../searchbar/searchbar';
 
 @Component({
@@ -32,23 +31,20 @@ export class Suggestions {
   suggestions: string[];
   intro_sugg: string;
 
+  /**
+   * @name constructor
+   * 
+   * @description
+   * 
+   * This function loads page with suggestions and displays them.
+   */
   constructor(
-    private pagesService: PagesService,
-    public modalCtrl: ModalController, public navCtrl: NavController,
-     private param: NavParams, private http: Http, public viewCtrl: ViewController,
-      public user: User, public auth: Auth, public alertCtrl: AlertController,
+    private pagesService: PagesService, private modalCtrl: ModalController, private navCtrl: NavController,
+    private param: NavParams, private http: Http, private auth: Auth
   ) {
     this.setSuggestions(param.get('data'));
   }
 
-
-  ngAfterViewInit() {
-    if(this.auth.isAuthenticated()) {
-      this.pagesService.logged();
-    } else {
-      this.pagesService.nonLogged();
-    }
-  }
   /**
    * @ngdoc method
    * @name getSuggestions
@@ -106,7 +102,6 @@ export class Suggestions {
       this.http.get('http://medicineappbackend.me/averagerating/' + item.title).map(res => res).subscribe(
         data => {
           let rating = +data.text().toString() || 0;
-          alert(rating);
           this.navCtrl.push(MedicineInfo, {
             "title":  item.title,
             "description": item.description,
@@ -121,10 +116,6 @@ export class Suggestions {
       );
     }
   }
-
-  
-
-
 }
 
 

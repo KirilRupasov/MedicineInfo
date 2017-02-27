@@ -3,7 +3,7 @@
  * 
  * @description
  * 
- * Logout
+ * Logout page.
  */
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -14,7 +14,6 @@ import { ReadReviewsModal } from '../readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../storelocator/storelocator';
 import { Http } from '@angular/http';
 import { AlertController } from 'ionic-angular';
-import { DomSanitizer } from '@angular/platform-browser';
 
 declare var google;
 
@@ -45,7 +44,7 @@ export class MedicineInfo {
    * @param {User} user Storage for User data
    * @param {ModalController} modalCtrl Modal Controller
    * @param {Http} http Controller for HTTP back-end requests
-   * @param {AlertController} alertCtrl Alert Controller
+   * @param {AlertController} alertCtrl Alert 
    * 
    * @description 
    * 
@@ -53,10 +52,13 @@ export class MedicineInfo {
    * and displays it on page. If user is authenticated, additional customized information
    * will might be displayed
    */ 
-  constructor(navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController,
-   private http: Http, public alertCtrl: AlertController, private sanitizer: DomSanitizer) {
+  constructor(
+    private navParams: NavParams, private auth: Auth, private user: User,
+    private modalCtrl: ModalController, private http: Http, private alertCtrl: AlertController
+  ) {
     this.title = navParams.get("title");
 
+    //display average rating of this medicine
     this.http.get('http://medicineappbackend.me/averagerating/' + this.title).map(res => res).subscribe(
       data => {
         let rating = +data.text().toString() || 0;
@@ -74,10 +76,20 @@ export class MedicineInfo {
     this.stores = navParams.get("stores");
     this.leaveReview = true;
 
-  
-
-    
     if(this.auth.isAuthenticated()) {
+      this.setReviewAction();
+    }
+  }
+
+  /**
+   * @name setReviewAction
+   * 
+   * @description
+   * 
+   * This function sets Review button to be either "Edit Review"" or "Leave Review"
+   * depending on whether user has already created review or not.
+   */
+  setReviewAction() {
       this.http.get('http://medicineappbackend.me/checkifreviewexists/'+ this.user.details.email + '/' + this.title).map(res => res).subscribe(
         data => {
           if(data.text().toString() == "false") {
@@ -98,12 +110,11 @@ export class MedicineInfo {
         let ageDif = Date.now() - date.getTime();
         let ageDate = new Date(ageDif);
         let age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        if(age > 65 && navParams.get("elderly") != "" && navParams.get("elderly") != null) {
+        if(age > 65 && this.navParams.get("elderly") != "" && this.navParams.get("elderly") != null) {
           //if user is authenticated and older than 65 -> display the information for elderly
-          this.elderly = '<div class="alert alert-warning card"><div class="card-block"><strong>Elderly patients </strong>' + navParams.get("elderly") + '</div></div>';
+          this.elderly = '<div class="alert alert-warning card"><div class="card-block"><strong>Elderly patients </strong>' + this.navParams.get("elderly") + '</div></div>';
         }
       }
-    }
   }
 
   /**
@@ -114,29 +125,20 @@ export class MedicineInfo {
     return this.title;
   }
 
-  averageRating(ratingNum: number) {
-    let rating = "";
-    let go = true;
-    let x = 0;
-    while(go) {
-      if(x < ratingNum) {
-        rating += '<i class="fa fa-star" aria-hidden="true"></i>';
-      } else if(x > (ratingNum-1)) {
-        rating += '<i class="fa fa-star-half" aria-hidden="true"></i>';
-        go = false;
-      } else {
-        go = false;
-      }         
-      x++;
-    }
-
-    return rating;
-  }
-
+  /**
+   * @returns leaveReview boolean which corresponds to whether the review button is set on "Leave Review" or "Edit Review"
+   */
   isLeaveReview() {
     return this.leaveReview;
   }
 
+  /**
+   * @name submitted
+   * 
+   * @description
+   * 
+   * This function updates review button once review is submitted
+   */
   submitted() {
     this.leaveReview = false;
     this.reviewAction = "Edit Review";

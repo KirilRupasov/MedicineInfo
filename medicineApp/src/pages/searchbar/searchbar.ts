@@ -11,7 +11,7 @@ import { ModalController, ViewController, NavController, NavParams } from 'ionic
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { ModalContentPage } from '../searchModal/modalcontentpage';
+import { SearchModal } from '../searchModal/searchModal';
 import { BarcodeScanner } from 'ionic-native';
 import { MyProfile } from '../myprofile/myprofile';
 import { EditProfile } from '../editprofile/editprofile';
@@ -100,7 +100,7 @@ export class Searchbar {
    * This method opens Modal for Medicine keyword search
    */
   openModal() {
-    let modal = this.modalCtrl.create(ModalContentPage, {"root" : this});
+    let modal = this.modalCtrl.create(SearchModal, {"root" : this});
     modal.present();
   }
 }

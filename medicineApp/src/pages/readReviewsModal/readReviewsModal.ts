@@ -47,23 +47,7 @@ export class ReadReviewsModal {
      this.http.get('http://medicineappbackend.me/getreviews/'+ this.medicine_title).map(res => res.json()).subscribe(
         data => {
           if(data != null && data.length) {
-          let rating: number;
-            /*for (let review of data) {
-               let ratingHTML = "<ion-row>";
-               rating = review.rating;
-
-               review.rating_number = [];
-
-                for (let i = 0; i < review.rating; i++) {
-                   review.rating_number.push(i);
-               }
-
-               for(let i=0; i<3; i++) {
-                 ratingHTML += '<ion-icon name="star" color="bright"></ion-icon>';
-               }
-
-               ratingHTML += "</ion-row>";
-            }*/
+            let rating: number;
             this.reviews = data;
           }
         },
