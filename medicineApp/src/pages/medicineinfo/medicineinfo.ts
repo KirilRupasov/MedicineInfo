@@ -14,6 +14,7 @@ import { ReadReviewsModal } from '../readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../storelocator/storelocator';
 import { Http } from '@angular/http';
 import { AlertController } from 'ionic-angular';
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var google;
 
@@ -35,6 +36,8 @@ export class MedicineInfo {
   private stores: string;
   private reviewAction: string;
   private leaveReview: boolean;
+  private stars: any[];
+  private half_stars: any[];
 
   /**
    * @param {NavParams} navParams Medicine Parameters
@@ -50,14 +53,29 @@ export class MedicineInfo {
    * and displays it on page. If user is authenticated, additional customized information
    * will might be displayed
    */ 
-  constructor(navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController, private http: Http, public alertCtrl: AlertController) {
+  constructor(navParams: NavParams, public auth: Auth, public user: User, public modalCtrl: ModalController,
+   private http: Http, public alertCtrl: AlertController, private sanitizer: DomSanitizer) {
     this.title = navParams.get("title");
+
+    this.http.get('http://medicineappbackend.me/averagerating/' + this.title).map(res => res).subscribe(
+      data => {
+        let rating = +data.text().toString() || 0;
+        this.stars = new Array(Math.floor(rating));
+        if(rating > Math.floor(rating)) {
+          this.half_stars = new Array(1);
+        }
+      }
+    );
+
     this.description = navParams.get("description");
     this.side_effects = navParams.get("side_effects");
     this.benefits = navParams.get("benefits");
     this.how_does_it = navParams.get("how_does_it");
     this.stores = navParams.get("stores");
     this.leaveReview = true;
+
+  
+
     
     if(this.auth.isAuthenticated()) {
       this.http.get('http://medicineappbackend.me/checkifreviewexists/'+ this.user.details.email + '/' + this.title).map(res => res).subscribe(
@@ -96,6 +114,34 @@ export class MedicineInfo {
     return this.title;
   }
 
+  averageRating(ratingNum: number) {
+    let rating = "";
+    let go = true;
+    let x = 0;
+    while(go) {
+      if(x < ratingNum) {
+        rating += '<i class="fa fa-star" aria-hidden="true"></i>';
+      } else if(x > (ratingNum-1)) {
+        rating += '<i class="fa fa-star-half" aria-hidden="true"></i>';
+        go = false;
+      } else {
+        go = false;
+      }         
+      x++;
+    }
+
+    return rating;
+  }
+
+  isLeaveReview() {
+    return this.leaveReview;
+  }
+
+  submitted() {
+    this.leaveReview = false;
+    this.reviewAction = "Edit Review";
+  }
+
   /**
    * @name openLeaveReviewModal
    * 
@@ -109,7 +155,7 @@ export class MedicineInfo {
    */
   openLeaveReviewModal() {
     if(this.auth.isAuthenticated()) {
-        let modal = this.modalCtrl.create(ReviewModal, {"title" : this.getTitle(), "leaveReview" : this.leaveReview});
+        let modal = this.modalCtrl.create(ReviewModal, {"root" : this });
         modal.present();
     } else {
        let alert = this.alertCtrl.create({

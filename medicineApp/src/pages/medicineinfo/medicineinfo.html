@@ -16,13 +16,22 @@
 <ion-content padding>
   <ion-grid>
     <ion-row class="ion-row-bordered">
-      <button (click)="openLeaveReviewModal()" ion-button block full>Leave Review</button>
+      <button (click)="openLeaveReviewModal()" ion-button block full>{{ reviewAction }}</button>
     </ion-row>
     <ion-row class="ion-row-bordered">
       <button (click)="openReadReviewsModal()" ion-button block full>Read Reviews</button>
     </ion-row>
     <ion-row class="ion-row-bordered">
       <button (click)="openStoreLocatorModal()" ion-button block full>Store Locator</button>
+    </ion-row>
+    <ion-row class="center">
+      <!--<div [innerHTML]="sanitizer.bypassSecurityTrustHtml(rating)"></div>-->
+      <ion-item style="padding: 0; display: inline-block; width: 4rem;" *ngFor="let star of stars">
+        <ion-icon name="star" class="no-border" color="bright"></ion-icon>
+      </ion-item>
+      <ion-item style="padding: 0; display: inline-block; width: 4rem;" *ngFor="let half_star of half_stars">
+        <ion-icon name="star-half" class="no-border" color="bright"></ion-icon>
+      </ion-item>
     </ion-row> 
     <ion-row>
       <img src="images/mockMedicine.jpg">

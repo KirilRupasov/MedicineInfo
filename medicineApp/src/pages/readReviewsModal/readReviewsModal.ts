@@ -48,7 +48,7 @@ export class ReadReviewsModal {
         data => {
           if(data != null && data.length) {
           let rating: number;
-            for (let review of data) {
+            /*for (let review of data) {
                let ratingHTML = "<ion-row>";
                rating = review.rating;
 
@@ -59,11 +59,11 @@ export class ReadReviewsModal {
                }
 
                for(let i=0; i<3; i++) {
-                 ratingHTML += '<ion-col><ion-icon name="star" color="bright"></ion-icon></ion-col>';
+                 ratingHTML += '<ion-icon name="star" color="bright"></ion-icon>';
                }
 
                ratingHTML += "</ion-row>";
-            }
+            }*/
             this.reviews = data;
           }
         },

@@ -154,15 +154,7 @@ export class MainMenu {
                 });
               alert.present();
             } else if(data.title && data.description && data.how_does_it && data.benefits) {     
-                        this.navCtrl.push(MedicineInfo, {
-                                   "title":  data.title,
-                                    "description": data.description,
-                                     "side_effects": data.side_effects,
-                                     "how_does_it": data.how_does_it,
-                                    "benefits": data.benefits,
-                                    "elderly": data.elderly,
-                                    "stores": data.stores
-                                    } );
+                this.goToItem(data);
             } else {
               let alert = this.alertCtrl.create({
                   title: 'Error(s)!',
@@ -173,6 +165,18 @@ export class MainMenu {
             }
         });
       }
+    }
+
+    goToItem(item: any) {
+          this.navCtrl.push(MedicineInfo, {
+            "title":  item.title,
+            "description": item.description,
+            "side_effects": item.side_effects,
+            "how_does_it": item.how_does_it,
+            "benefits": item.benefits,
+            "elderly": item.elderly,
+            "stores": item.stores,
+          });
     }
 }
 

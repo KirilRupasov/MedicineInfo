@@ -23,6 +23,7 @@ export class ReviewModal {
    rating: number;
    user_email: string;
    medicine_name: string;
+   leave_review: boolean;
 
    /**
     * @name constructor
@@ -48,15 +49,15 @@ export class ReviewModal {
     if(!this.auth.isAuthenticated()) {
       this.navCtrl.push(MainMenu);
     } else {
-      let leaveReview = this.params.get("leaveReview");
-      this.medicine_name = this.params.get('title');
+      this.leave_review = this.params.get("root").isLeaveReview();
+      this.medicine_name = this.params.get("root").getTitle();
       this.user_email = this.user.details.email;
 
-      if(leaveReview) {
+      if(this.leave_review) {
         this.review = "";
         this.rating = 1;
       } else {
-        this.http.get( 'http://medicineappbackend.me/getreview/' + this.user_email + "/"+ this.medicine_name).map(res => res.json()).subscribe(
+        this.http.get('http://medicineappbackend.me/getreview/' + this.user_email + "/"+ this.medicine_name).map(res => res.json()).subscribe(
           data => {
             this.rating = data.rating;
             this.review = data.review_content;
@@ -91,8 +92,8 @@ export class ReviewModal {
 
       let url = 'http://medicineappbackend.me/storereview';
 
-      if(!this.leaveReview) {
-        url = 'http://medicineappbackend.me/editreview';
+      if(!this.leave_review) {
+        url =   'http://medicineappbackend.me/editreview';
       }
 
       this.http.post(url, { user_email, medicine_name, review_content, rating }, options).subscribe(data => {
@@ -101,7 +102,8 @@ export class ReviewModal {
                 subTitle: "Review submitted!",
                 buttons: ['OK']
               });
-            alert.present();
+        alert.present();
+        this.params.get("root").submitted();
         this.dismiss();
        }, error => {
            console.log(JSON.stringify(error.json()));

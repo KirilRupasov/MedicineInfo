@@ -36,7 +36,7 @@ export class Suggestions {
     private pagesService: PagesService,
     public modalCtrl: ModalController, public navCtrl: NavController,
      private param: NavParams, private http: Http, public viewCtrl: ViewController,
-      public user: User, public auth: Auth, public alertCtrl: AlertController
+      public user: User, public auth: Auth, public alertCtrl: AlertController,
   ) {
     this.setSuggestions(param.get('data'));
   }
@@ -103,20 +103,28 @@ export class Suggestions {
    */
   goToItem(item: any) {
     if(item.title && item.description && item.side_effects && item.how_does_it && item.benefits) {
-      this.navCtrl.push(MedicineInfo, {
-        "title":  item.title,
-        "description": item.description,
-        "side_effects": item.side_effects,
-        "how_does_it": item.how_does_it,
-        "benefits": item.benefits,
-        "elderly": item.elderly,
-        "stores": item.stores
-      }).then(() => {
-        //const index = this.viewCtrl.index;
-        //this.navCtrl.remove(index);
-      });
+      this.http.get('http://medicineappbackend.me/averagerating/' + item.title).map(res => res).subscribe(
+        data => {
+          let rating = +data.text().toString() || 0;
+          alert(rating);
+          this.navCtrl.push(MedicineInfo, {
+            "title":  item.title,
+            "description": item.description,
+            "side_effects": item.side_effects,
+            "how_does_it": item.how_does_it,
+            "benefits": item.benefits,
+            "elderly": item.elderly,
+            "stores": item.stores,
+            "rating" : rating
+          });
+        }
+      );
     }
   }
+
+  
+
+
 }
 
 

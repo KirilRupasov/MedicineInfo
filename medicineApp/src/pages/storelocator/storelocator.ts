@@ -7,7 +7,7 @@
  */
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { ViewController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Geolocation } from 'ionic-native';
  
@@ -29,7 +29,7 @@ export class StoreLocator {
    * @param {ViewController} viewCtrl View Controller
    * @param {NavParams} navParams Navigation Parameters, used to get medicine title and available stores list
    */
-  constructor(private viewCtrl: ViewController, private params: NavParams, private http: Http) {
+  constructor(private viewCtrl: ViewController, private params: NavParams, private http: Http, private alertCtrl: AlertController) {
     this.medicine_title = this.params.get('medicine_title');
     this.stores = this.params.get('stores');
   }
@@ -96,7 +96,12 @@ export class StoreLocator {
                   );
         } 
       } else {
-          alert("Sorry, no stores found!");
+           let alert = this.alertCtrl.create({
+            title: 'Error(s)!',
+            subTitle: "No stores found!",
+            buttons: ['OK']
+          });
+        alert.present();
       }
   }
 
