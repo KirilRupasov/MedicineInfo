@@ -59,7 +59,7 @@ class LoginController extends Controller
                 'password' => bcrypt('6688846993'),
             ]);
         }
-        return redirect("/login");
+        return redirect("/");
     }
 
 
