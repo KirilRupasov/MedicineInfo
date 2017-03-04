@@ -8,7 +8,7 @@
 
 
 import { Component } from '@angular/core';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
 import { EditProfile } from '../editprofile/editprofile';
 import { MainMenu } from '../mainmenu/mainmenu';
@@ -29,7 +29,6 @@ export class MyProfile {
   /**
    * @name constructor
    * @param {NavController} navCtrl Navigation NavController
-   * @param {ViewController} viewCtrl View Controller
    * @param {Auth} auth Authentication Controller
    * @param {User} user User Data storage
    * 
@@ -39,7 +38,7 @@ export class MyProfile {
    * If user is authenticated -> get his profile data and show it.
    * Otherwise -> forward to Main Menu.
    */
-  constructor(private navCtrl: NavController, private viewCtrl: ViewController, private auth: Auth, private user: User) {
+  constructor(private navCtrl: NavController, private auth: Auth, private user: User) {
     this.content = "";
 
     if(!this.auth.isAuthenticated()) {
@@ -47,7 +46,7 @@ export class MyProfile {
     } else {
       this.date_of_birth = this.user.get("date_of_birth", undefined);
       
-      if(this.date_of_birth !== 0 && this.date_of_birth != undefined) {
+      if(this.date_of_birth != undefined) {
         this.content += "Birthdate: " + this.date_of_birth + "<hr>";
       }
 

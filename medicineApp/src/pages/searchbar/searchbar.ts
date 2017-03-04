@@ -39,6 +39,7 @@ export class Searchbar {
    * Empty constructor
    */
   constructor(public modalCtrl: ModalController, public navCtrl: NavController, private http: Http) {
+    
   }
 
   /**

@@ -51,14 +51,14 @@ export class Signup {
     let errors : string = "";
     let details: UserDetails = { 'email': this.email_value, 'password': this.password_value};
 
-    if(this.email_value != this.email_confirm_value) {
+    if(this.email_value && (this.email_value != this.email_confirm_value)) {
       this.alert = this.alertCtrl.create({
            title: 'Error!',
            subTitle: "Emails do not match!",
            buttons: ['OK']
          });
        this.alert.present();
-    } else if(this.password_value != this.password_confirm_value) {
+    } else if(this.password_value && (this.password_value != this.password_confirm_value)) {
       this.alert = this.alertCtrl.create({
            title: 'Error!',
            subTitle: "Passwords do not match!",
@@ -67,38 +67,39 @@ export class Signup {
        this.alert.present();
     } else {
           this.auth.signup(details).then(() => {
-          this.auth.login('basic', details).then(() => {
-            this.navCtrl.setRoot(MainMenu);
-          }, () => {
-            this.alert = this.alertCtrl.create({
-                title: 'Error!',
-                subTitle: "Incorrect email/password combination!",
-                buttons: ['OK']
-              });
-            this.alert.present();
-          });
+            this.auth.login('basic', details).then(() => {
+              this.navCtrl.setRoot(MainMenu);
+            }, () => {
+              this.alert = this.alertCtrl.create({
+                  title: 'Error!',
+                  subTitle: "Incorrect email/password combination!",
+                  buttons: ['OK']
+                });
+              this.alert.present();
+            });
           }, (err: IDetailedError<string[]>) => {
+              
               for (let e of err.details) {
                 if (e === 'required_password') {
-                  errors = "Password is required!<br>";
+                  errors = "Password is required!";
                 } else if (e === 'required_email') {
-                  errors = "Email is required!<br>";
+                  errors = "Email is required!";
                 } else if (e === 'conflict_email') {
-                  errors = "Email already exists!<br>";
+                  errors = "Email already exists!";
                 } else if (e === 'invalid_email') {
-                  errors = "Email is invalid!<br>";
+                  errors = "Email is invalid!";
                 } else {
-                  errors = "Unknown error...<br>";
+                  errors = "Unknown error...";
                 }
               }
 
-              if(errors != "") {
-              this.alert = this.alertCtrl.create({
-                title: 'Error!',
-                subTitle: errors,
-                buttons: ['OK']
-              });
-              this.alert.present();
+              if(errors != "") {        
+                this.alert = this.alertCtrl.create({
+                  title: 'Error!',
+                  subTitle: errors,
+                  buttons: ['OK']
+                });
+                this.alert.present();
               }
             });
         }

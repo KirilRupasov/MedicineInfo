@@ -12,7 +12,7 @@ import { MainMenu } from '../mainmenu/mainmenu';
 
 let signup = null;
 
-describe('Login Page Tests', () => {
+describe('Signup Page Tests', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,5 +44,56 @@ describe('Login Page Tests', () => {
         signup.password_confirm_value = "123123";
         signup.register();
         expect(signup.getAuth().isAuthenticated()).toBe(true);
+    });
+
+    it('should alert that passwords do not match', () => {
+        const test = TestBed.createComponent(Signup);
+        signup = test.componentInstance;
+        signup.email_value = "abc@abc.com";
+        signup.email_confirm_value = "abc@abc.com";
+        signup.password_value = "123123";
+        signup.password_confirm_value = "123120";
+        signup.register();
+        expect(signup.getAlert().subTitle).toBe("Passwords do not match!");
+    });
+
+    it('should alert that emails do not match', () => {
+        const test = TestBed.createComponent(Signup);
+        signup = test.componentInstance;
+        signup.email_value = "abc@abc.com";
+        signup.email_confirm_value = "abc2@abc.com";
+        signup.password_value = "123123";
+        signup.password_confirm_value = "123123";
+        signup.register();
+        expect(signup.getAlert().subTitle).toBe("Emails do not match!");
+    });
+
+    it('should not let to authenticate because password is not provided', () => {
+        const test = TestBed.createComponent(Signup);
+        signup = test.componentInstance;
+        signup.email_value = "abc@abc.com";
+        signup.email_confirm_value = "abc@abc.com";
+        signup.register();
+        expect(signup.getAuth().isAuthenticated()).toBe(false);
+    });
+
+    it('should not let to authenticate because emails is not provided', () => {
+        const test = TestBed.createComponent(Signup);
+        signup = test.componentInstance;
+        signup.password_value = "123123";
+        signup.password_confirm_value = "123123";
+        signup.register();
+        expect(signup.getAuth().isAuthenticated()).toBe(false);
+    });
+
+    it('should not let to authenticate as email is taken', () => {
+        const test = TestBed.createComponent(Signup);
+        signup = test.componentInstance;
+        signup.email_value = "abc2@abc.com";
+        signup.email_confirm_value = "abc2@abc.com";
+        signup.password_value = "123123";
+        signup.password_confirm_value = "123123";
+        signup.register();
+        expect(signup.getAuth().isAuthenticated()).toBe(false);
     });
 });

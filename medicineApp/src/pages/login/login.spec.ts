@@ -66,7 +66,6 @@ describe('Login Page Tests', () => {
         login = test.componentInstance;
         login.email_value = "abc@abc.com";
         login.password_value = "123123";
-        spyOn(window, "alert").and.callThrough();
         login.login();
         expect(login.getAuth().isAuthenticated()).toBe(true);
     });

@@ -4,17 +4,20 @@ export class AlertCtrlMock {
     }
 
     create(message: any) {
-        return new AlertMock();
+        return new AlertMock(message.title, message.subTitle);
     }
 }
 
 export class AlertMock {
+    title: string;
+    subTitle: string;
 
-    constructor() {
-
+    constructor(title: string, subTitle: string) {
+        this.title = title;
+        this.subTitle = subTitle;
     }
 
     present() {
-
+        
     }
 }

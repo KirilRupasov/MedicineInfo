@@ -37,20 +37,22 @@ export class AuthMock {
         //if user tries to register another account on that email,
         //it will be rejected
         let err: IDetailedError<string[]>;
+        err = { name: "error", message: "message", details: [] };
+        
         return new Promise<AuthMock>((resolve, reject) => {
-            if(userDetails.email == "abc2@abc.com") {
-                this.authenticated = false;
-                err.details = ["conflict_email"];
-                reject(err);
-            } else if(userDetails.email == "" || userDetails.email == null) {
+            if(!userDetails.email) {
                 this.authenticated = false;
                 err.details = ["required_email"];
                 reject(err); 
-            } else if(userDetails.password == "" || userDetails.password == null) {
+            } else if(!userDetails.password) {
                 this.authenticated = false;
                 err.details = ["required_password"];
                 reject(err); 
-            } else if(userDetails.email == "abcdef" || userDetails.email == null) {
+            } else if(userDetails.email == "abc2@abc.com") {
+                this.authenticated = false;
+                err.details = ["conflict_email"];
+                reject(err);
+            } else if(userDetails.email == "abcdef") {
                 this.authenticated = false;
                 err.details = ["invalid_email"];
                 reject(err); 

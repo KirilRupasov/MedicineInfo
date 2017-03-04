@@ -71,7 +71,6 @@ export class MedicineInfo {
             this.half_stars = new Array(1);
           }
         }
-        
       }
     );
 
