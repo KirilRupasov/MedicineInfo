@@ -80,7 +80,7 @@ export class ReviewModal {
     * Otherwise -> Output error message 
     */
    leaveReview() {
-    if(this.review && this.review.trim() != "") {
+    if(this.review && this.review.trim() != "" && this.review.length < 601) {
       //store data on backend
       let review_content = this.review;
       let rating = this.rating;
@@ -108,6 +108,13 @@ export class ReviewModal {
        }, error => {
            console.log(JSON.stringify(error.json()));
        });
+    } else if(this.review.length > 600) {
+      let alert = this.alertCtrl.create({
+            title: 'Error(s)!',
+            subTitle: "Review is longer than 600 characters!",
+            buttons: ['OK']
+          });
+        alert.present();
     } else {
        let alert = this.alertCtrl.create({
             title: 'Error(s)!',

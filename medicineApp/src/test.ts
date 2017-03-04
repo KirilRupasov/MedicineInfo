@@ -12,6 +12,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform } from 'ionic-angular';
 import { ConfigMock } from './mocks';
+import { MagicBall } from './pages/magic-ball/magic-ball';
 
 
 

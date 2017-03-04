@@ -1,11 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Component} from '@angular/core';
+import { AlertController } from 'ionic-angular';
+import { ModalController, NavController } from 'ionic-angular';
 
-@Injectable()
+
+@Component({
+  templateUrl: "magic-ball.html", 
+})
+
 export class MagicBall {
 
   answers: any;
 
-  constructor(){
+  constructor(private navCtrl: NavController){
 
     this.answers = [
       'Yes',

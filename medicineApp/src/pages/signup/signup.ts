@@ -17,6 +17,7 @@ import { MainMenu } from '../mainmenu/mainmenu';
 })
 
 export class Signup {
+  alert: any;
   email_value: string;
   password_value: string;
   email_confirm_value: string;
@@ -39,7 +40,6 @@ export class Signup {
 
   /**
    * @name register
-   * @param {any} ev event that triggers this function
    * 
    * @description
    * 
@@ -47,63 +47,70 @@ export class Signup {
    * Afterwards, if everything goes well (all fields are provided, email is not taken, email is valid) -> create new user.
    * Otherwise -> display Error message(s)
    */
-  public register(ev: any) {
+  public register() {
     let errors : string = "";
     let details: UserDetails = { 'email': this.email_value, 'password': this.password_value};
 
     if(this.email_value != this.email_confirm_value) {
-      let alert = this.alertCtrl.create({
+      this.alert = this.alertCtrl.create({
            title: 'Error!',
            subTitle: "Emails do not match!",
            buttons: ['OK']
          });
-       alert.present();
+       this.alert.present();
     } else if(this.password_value != this.password_confirm_value) {
-      let alert = this.alertCtrl.create({
+      this.alert = this.alertCtrl.create({
            title: 'Error!',
            subTitle: "Passwords do not match!",
            buttons: ['OK']
          });
-       alert.present();
+       this.alert.present();
     } else {
           this.auth.signup(details).then(() => {
           this.auth.login('basic', details).then(() => {
-          this.navCtrl.setRoot(MainMenu);
+            this.navCtrl.setRoot(MainMenu);
           }, () => {
-            let alert = this.alertCtrl.create({
+            this.alert = this.alertCtrl.create({
                 title: 'Error!',
                 subTitle: "Incorrect email/password combination!",
                 buttons: ['OK']
               });
-            alert.present();
+            this.alert.present();
           });
           }, (err: IDetailedError<string[]>) => {
-            for (let e of err.details) {
-              if (e === 'required_password') {
-                errors = "Password is required!<br>";
-              } else if (e === 'required_email') {
-                errors = "Email is required!<br>";
-              } else if (e === 'conflict_email') {
-                errors = "Email already exists!<br>";
-              } else if (e === 'invalid_email') {
-                errors = "Email is invalid!<br>";
-              } else {
-                errors = "Unknown error...<br>";
-              }
+              for (let e of err.details) {
+                if (e === 'required_password') {
+                  errors = "Password is required!<br>";
+                } else if (e === 'required_email') {
+                  errors = "Email is required!<br>";
+                } else if (e === 'conflict_email') {
+                  errors = "Email already exists!<br>";
+                } else if (e === 'invalid_email') {
+                  errors = "Email is invalid!<br>";
+                } else {
+                  errors = "Unknown error...<br>";
+                }
               }
 
               if(errors != "") {
-              let alert = this.alertCtrl.create({
+              this.alert = this.alertCtrl.create({
                 title: 'Error!',
                 subTitle: errors,
                 buttons: ['OK']
               });
-              alert.present();
+              this.alert.present();
               }
             });
         }
     }
 
+    public getAlert() {
+      return this.alert;
+    }
+
+    public getAuth() {
+      return this.auth;
+    }
  
 }
 

@@ -45,19 +45,20 @@ export class MyProfile {
     if(!this.auth.isAuthenticated()) {
       this.navCtrl.push(MainMenu);
     } else {
-      this.date_of_birth = this.user.get("date_of_birth", 0);
+      this.date_of_birth = this.user.get("date_of_birth", undefined);
+      
       if(this.date_of_birth !== 0 && this.date_of_birth != undefined) {
         this.content += "Birthdate: " + this.date_of_birth + "<hr>";
       }
 
-      this.smoker = this.user.get("smoker", 0);
-      if(this.smoker !== 0) {
+      this.smoker = this.user.get("smoker", undefined);
+      if(this.smoker != undefined) {
         this.content += "Smoker: " + this.smoker + '<hr>';
       }
 
       this.gender = this.user.get("gender", 0);
 
-      if(this.gender !== 0) {
+      if(this.gender != undefined) {
         this.content += "Gender: " + this.gender + "<hr>";
       }
 

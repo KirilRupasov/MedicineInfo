@@ -12,7 +12,7 @@ import { SearchModal } from '../pages/searchModal/searchModal';
 import { ReviewModal } from '../pages/reviewModal/reviewModal';
 import { Logout } from '../pages/logout/logout';
 import { HttpModule } from '@angular/http';
-import { MagicBall } from '../providers/magic-ball';
+import { MagicBall } from '../pages/magic-ball/magic-ball';
 import { ReadReviewsModal } from '../pages/readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../pages/storelocator/storelocator';
 import { PagesService } from './pages.service';

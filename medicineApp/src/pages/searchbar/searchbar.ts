@@ -1,9 +1,9 @@
 /**
- * @name MainMenu
+ * @name Searchbar
  * 
  * @description
  * 
- * Searchbar modal
+ * Searchbar
  */
 
 import { Component,Inject } from '@angular/core';

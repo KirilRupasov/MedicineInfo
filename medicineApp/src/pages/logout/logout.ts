@@ -46,4 +46,8 @@ export class Logout {
   ngAfterViewInit() {
     this.navCtrl.setRoot(MainMenu);
   }
+
+  getAuth() {
+    return this.auth;
+  }
 }
