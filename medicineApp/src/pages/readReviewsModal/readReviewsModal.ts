@@ -7,7 +7,6 @@
  */
 
 import { Component } from '@angular/core';
-import { User } from '@ionic/cloud-angular';
 import { ViewController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 
@@ -16,13 +15,12 @@ import { Http } from '@angular/http';
 })
 
 export class ReadReviewsModal {
-   reviews: string[];
+   reviews: any[];
    medicine_title: string;
    no_reviews: string;
 
    /**
     * @name constructor
-    * @param {User} user User Data storage
     * @param {ViewController} viewCtrl View Controller
     * @param {NavParams} navParams Navigation parameters, which have the title of medicine
     * @param {Http} http HTTP Request handler, to communicate with back-end
@@ -31,7 +29,7 @@ export class ReadReviewsModal {
     *
     * This constructor creates modal and loads Reviews for specific medicine
     */
-   constructor(private user: User, private viewCtrl: ViewController, private params: NavParams, private http: Http) {
+   constructor(private viewCtrl: ViewController, private params: NavParams, private http: Http) {
     this.reviews = [];
     this.medicine_title = this.params.get('root').getTitle();
     this.loadReviews();

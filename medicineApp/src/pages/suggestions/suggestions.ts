@@ -8,7 +8,7 @@
  */
 
 import { Component,Inject } from '@angular/core';
-import { ModalController, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -17,10 +17,8 @@ import { BarcodeScanner } from 'ionic-native';
 import { MyProfile } from '../myprofile/myprofile';
 import { EditProfile } from '../editprofile/editprofile';
 import { Logout } from '../logout/logout';
-import { Auth } from '@ionic/cloud-angular';
 import { Login } from '../login/login';
 import { Signup } from '../signup/signup';
-import { PagesService } from '../../app/pages.service';
 import { Searchbar } from '../searchbar/searchbar';
 
 @Component({
@@ -28,7 +26,7 @@ import { Searchbar } from '../searchbar/searchbar';
 })
 
 export class Suggestions {
-  suggestions: string[];
+  suggestions: any[];
   intro_sugg: string;
 
   /**
@@ -38,10 +36,7 @@ export class Suggestions {
    * 
    * This function loads page with suggestions and displays them.
    */
-  constructor(
-    private pagesService: PagesService, private modalCtrl: ModalController, private navCtrl: NavController,
-    private param: NavParams, private http: Http, private auth: Auth
-  ) {
+  constructor(private navCtrl: NavController, private param: NavParams, private http: Http) {
     this.setSuggestions(param.get('data'));
   }
 
@@ -71,7 +66,7 @@ export class Suggestions {
       new_suggestions_formatted = [];
       let i = 0;
       for(let entry of suggestions) {
-        if(entry.title && entry.description && entry.side_effects && entry.how_does_it && entry.benefits && i < 10) {
+        if(entry.title && entry.description && entry.side_effects && entry.benefits && i < 10) {
           //format the description of Medicine
           entry.description_short = entry.description.substr(0, 40) + "...";
           entry.description_short = entry.description_short.replace('<p>', '');
@@ -98,7 +93,7 @@ export class Suggestions {
    * Error message is displayed if incorrect data is provided
    */
   goToItem(item: any) {
-    if(item.title && item.description && item.side_effects && item.how_does_it && item.benefits) {
+    if(item.title && item.description && item.side_effects && item.benefits) {
       this.http.get('http://medicineappbackend.me/averagerating/' + item.title).map(res => res).subscribe(
         data => {
           let rating = +data.text().toString() || 0;
@@ -106,7 +101,6 @@ export class Suggestions {
             "title":  item.title,
             "description": item.description,
             "side_effects": item.side_effects,
-            "how_does_it": item.how_does_it,
             "benefits": item.benefits,
             "elderly": item.elderly,
             "stores": item.stores,
@@ -115,6 +109,10 @@ export class Suggestions {
         }
       );
     }
+  }
+
+  getNavCtrl() {
+    return this.navCtrl;
   }
 }
 

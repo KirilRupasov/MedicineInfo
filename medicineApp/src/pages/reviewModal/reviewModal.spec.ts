@@ -1,31 +1,32 @@
-import { MainMenu } from './mainmenu';
+import { ReviewModal } from './reviewModal';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { NavParamsMockModal } from '../../mocks/navParamsMockModal';
+import { ViewCtrlMock } from '../../mocks/viewCtrlMock';
 import { AuthMock } from '../../mocks/authMock';
-import { ModalCtrlMock } from '../../mocks/modalCtrlMock';
-import { NavCtrlMock } from '../../mocks/navCtrlMock';
-import { AlertCtrlMock } from '../../mocks/alertCtrlMock';
 import { UserMock } from '../../mocks/userMock';
-import { Auth } from '@ionic/cloud-angular';
-import { PagesService } from '../../app/pages.service';
-import { NavController, AlertController } from 'ionic-angular';
+import { AlertCtrlMock } from '../../mocks/alertCtrlMock';
+import { NavCtrlMock } from '../../mocks/navCtrlMock';
+import { ViewController, NavParams, AlertController, NavController } from 'ionic-angular';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
-import { MedicineInfo } from '../../pages/medicineinfo/medicineinfo';
+import { Auth, User } from '@ionic/cloud-angular';
+
 
 let mainMenu = null;
 
-describe('MainMenu Page Tests', () => {
-    let fix: ComponentFixture<MainMenu>;
-    let instance: MainMenu;
+describe('Review Modal Page Tests', () => {
+    let fix: ComponentFixture<ReviewModal>;
+    let instance: ReviewModal;
     let injector: any;
 
     beforeEach(() => {
+        const viewControllerStub = new ViewController();
         TestBed.configureTestingModule({
             declarations: [
-                MyApp, MainMenu, Searchbar
+                MyApp, ReviewModal, Searchbar
             ],
             
             imports: [
@@ -41,10 +42,12 @@ describe('MainMenu Page Tests', () => {
                 },
                 deps: [ MockBackend, BaseRequestOptions ]
               },
-              {provide: Auth, useClass: AuthMock },
-              {provide: AlertController, useClass: AlertCtrlMock },
-              {provide: NavController, useClass: NavCtrlMock },
-              PagesService
+              {provide: NavParams, useClass: NavParamsMockModal},
+              {provide: ViewController, useClass: ViewCtrlMock},
+              {provide: User, useClass: UserMock},
+              {provide: Auth, useClass: AuthMock},
+              {provide: AlertController, useClass: AlertCtrlMock},
+              {provide: NavController, useClass: NavCtrlMock}
             ],
         });
     });
@@ -52,22 +55,19 @@ describe('MainMenu Page Tests', () => {
     beforeEach(async(() => {
         TestBed.compileComponents()
           .then(() => {
-            fix = TestBed.createComponent(MainMenu);
-            instance = fix.componentInstance;
+            fix = TestBed.createComponent(ReviewModal);
             injector = fix.debugElement.injector;
           });
     }));
 
-    it('should locate Ibuprofen', async(() => {
+    it('should output empty fields with rating set to 1 by default', async(() => {        
+        instance = fix.componentInstance;    
+        expect(instance.rating).toBe(1);
+    }));
+
+    it('should submit a review successfully', async(() => {
         let backend = injector.get(MockBackend);
-        let responseBody = {
-          title: "Ibuprofen",
-          description: "Painkiller",
-          side_effects: "None",
-          benefits: "None",
-          elderly: "No information",
-          stores: "lloyds",
-        };
+        let responseBody = "Submitted!";
         backend.connections.subscribe(
           (connection: MockConnection) => {
             connection.mockRespond(new Response(
@@ -75,9 +75,11 @@ describe('MainMenu Page Tests', () => {
                   body: responseBody
                 }
               )));
-          });         
-
-        instance.getItemByBarcode("123");
-        expect(instance.getNavCtrl().first()).toBe("Ibuprofen");
+          });
+        
+        instance = fix.componentInstance;  
+        instance.review = "Good Medicine";
+        instance.leaveReview();  
+        expect(instance.getAlert().subTitle).toBe("Review submitted!");
     }));
 });

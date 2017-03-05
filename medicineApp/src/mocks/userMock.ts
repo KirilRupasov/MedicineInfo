@@ -1,10 +1,13 @@
 export class UserMock {
+    details: any;
     date_of_birth: string;
     smoker: string;
     gender: string;
 
     constructor() {
-
+        this.details = {
+            email : "abc@abc.com"
+        };
     }
 
     get(target: string, default_val: any) {

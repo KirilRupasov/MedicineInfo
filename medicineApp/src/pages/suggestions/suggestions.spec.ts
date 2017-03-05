@@ -1,13 +1,11 @@
-import { MainMenu } from './mainmenu';
+import { Suggestions } from './suggestions';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { AuthMock } from '../../mocks/authMock';
-import { ModalCtrlMock } from '../../mocks/modalCtrlMock';
 import { NavCtrlMock } from '../../mocks/navCtrlMock';
 import { AlertCtrlMock } from '../../mocks/alertCtrlMock';
 import { UserMock } from '../../mocks/userMock';
+import { NavParamsMock } from '../../mocks/navParamsMock';
 import { Auth } from '@ionic/cloud-angular';
-import { PagesService } from '../../app/pages.service';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
@@ -17,15 +15,15 @@ import { MedicineInfo } from '../../pages/medicineinfo/medicineinfo';
 
 let mainMenu = null;
 
-describe('MainMenu Page Tests', () => {
-    let fix: ComponentFixture<MainMenu>;
-    let instance: MainMenu;
+describe('Suggestions Page Tests', () => {
+    let fix: ComponentFixture<Suggestions>;
+    let instance: Suggestions;
     let injector: any;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
-                MyApp, MainMenu, Searchbar
+                MyApp, Suggestions, Searchbar
             ],
             
             imports: [
@@ -41,10 +39,8 @@ describe('MainMenu Page Tests', () => {
                 },
                 deps: [ MockBackend, BaseRequestOptions ]
               },
-              {provide: Auth, useClass: AuthMock },
-              {provide: AlertController, useClass: AlertCtrlMock },
               {provide: NavController, useClass: NavCtrlMock },
-              PagesService
+              {provide: NavParams, useClass: NavParamsMock}
             ],
         });
     });
@@ -52,13 +48,31 @@ describe('MainMenu Page Tests', () => {
     beforeEach(async(() => {
         TestBed.compileComponents()
           .then(() => {
-            fix = TestBed.createComponent(MainMenu);
+            fix = TestBed.createComponent(Suggestions);
             instance = fix.componentInstance;
             injector = fix.debugElement.injector;
           });
     }));
 
-    it('should locate Ibuprofen', async(() => {
+    it('should set suggestions to Ibuprofen and Paracetamol', () => {
+        let suggestions = [
+        {
+            title: "Ibuprofen",
+            description: "Painkiller",
+            side_effects: "None",
+            benefits: "None"
+        }, {
+            title: "Paracetamol",
+            description: "Painkiller",
+            side_effects: "None",
+            benefits: "None"
+        }
+        ];
+        instance.setSuggestions(suggestions);
+        expect(instance.getSuggestions()[0].description_short).toBe("Painkiller...");
+    });
+
+    it('should go to Ibuprofen page', async(() => {
         let backend = injector.get(MockBackend);
         let responseBody = {
           title: "Ibuprofen",
@@ -67,17 +81,36 @@ describe('MainMenu Page Tests', () => {
           benefits: "None",
           elderly: "No information",
           stores: "lloyds",
+          rating: "4"
         };
-        backend.connections.subscribe(
-          (connection: MockConnection) => {
-            connection.mockRespond(new Response(
-              new ResponseOptions({
-                  body: responseBody
-                }
-              )));
-          });         
 
-        instance.getItemByBarcode("123");
+        backend.connections.subscribe(
+            (connection: MockConnection) => {
+            connection.mockRespond(new Response(
+                new ResponseOptions({
+                    body: responseBody
+                }
+            )));
+        });  
+
+        let suggestions = [
+            {
+                title: "Ibuprofen",
+                description: "Painkiller",
+                side_effects: "None",
+                benefits: "None"
+            }, {
+                title: "Paracetamol",
+                description: "Painkiller",
+                side_effects: "None",
+                benefits: "None"
+            }
+        ];
+
+        instance.goToItem(responseBody);
         expect(instance.getNavCtrl().first()).toBe("Ibuprofen");
     }));
 });
+  
+  
+  

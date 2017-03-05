@@ -1,31 +1,32 @@
-import { MainMenu } from './mainmenu';
+import { MedicineInfo } from './medicineinfo';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AuthMock } from '../../mocks/authMock';
 import { ModalCtrlMock } from '../../mocks/modalCtrlMock';
 import { NavCtrlMock } from '../../mocks/navCtrlMock';
 import { AlertCtrlMock } from '../../mocks/alertCtrlMock';
 import { UserMock } from '../../mocks/userMock';
-import { Auth } from '@ionic/cloud-angular';
+import { NavParamsMock } from '../../mocks/navParamsMock';
+import { Auth, User } from '@ionic/cloud-angular';
 import { PagesService } from '../../app/pages.service';
-import { NavController, AlertController } from 'ionic-angular';
+import { ModalController, NavController, AlertController, NavParams } from 'ionic-angular';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
-import { MedicineInfo } from '../../pages/medicineinfo/medicineinfo';
+import { ReviewModal } from '../reviewModal/reviewModal';
 
 let mainMenu = null;
 
-describe('MainMenu Page Tests', () => {
-    let fix: ComponentFixture<MainMenu>;
-    let instance: MainMenu;
+describe('Medicine Info Page Tests', () => {
+    let fix: ComponentFixture<MedicineInfo>;
+    let instance: MedicineInfo;
     let injector: any;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
-                MyApp, MainMenu, Searchbar
+                MyApp, MedicineInfo, Searchbar
             ],
             
             imports: [
@@ -44,6 +45,9 @@ describe('MainMenu Page Tests', () => {
               {provide: Auth, useClass: AuthMock },
               {provide: AlertController, useClass: AlertCtrlMock },
               {provide: NavController, useClass: NavCtrlMock },
+              {provide: NavParams, useClass: NavParamsMock},
+              {provide: User, useClass: UserMock},
+              {provide: ModalController, useClass: ModalCtrlMock},
               PagesService
             ],
         });
@@ -52,22 +56,15 @@ describe('MainMenu Page Tests', () => {
     beforeEach(async(() => {
         TestBed.compileComponents()
           .then(() => {
-            fix = TestBed.createComponent(MainMenu);
+            fix = TestBed.createComponent(MedicineInfo);
             instance = fix.componentInstance;
             injector = fix.debugElement.injector;
           });
     }));
 
-    it('should locate Ibuprofen', async(() => {
+    it('should set isLeaveReview to be false', async(() => {
         let backend = injector.get(MockBackend);
-        let responseBody = {
-          title: "Ibuprofen",
-          description: "Painkiller",
-          side_effects: "None",
-          benefits: "None",
-          elderly: "No information",
-          stores: "lloyds",
-        };
+        let responseBody = "true";
         backend.connections.subscribe(
           (connection: MockConnection) => {
             connection.mockRespond(new Response(
@@ -77,7 +74,27 @@ describe('MainMenu Page Tests', () => {
               )));
           });         
 
-        instance.getItemByBarcode("123");
-        expect(instance.getNavCtrl().first()).toBe("Ibuprofen");
+        instance.setReviewAction();
+        expect(instance.isLeaveReview()).toBe(false);
+    }));
+
+    it('should open Leave Review as user is authenticated', () => {
+        instance.openLeaveReviewModal();
+        expect(instance.getModal().NavParams).toEqual(ReviewModal);
+    });
+
+    it('should output rating of 3 starts', async(() => {
+        let backend = injector.get(MockBackend);
+        let responseBody = "3";
+        backend.connections.subscribe(
+          (connection: MockConnection) => {
+            connection.mockRespond(new Response(
+              new ResponseOptions({
+                  body: responseBody
+                }
+              )));
+          });         
+        instance.setRating();
+        expect(instance.stars.length).toBe(3);
     }));
 });

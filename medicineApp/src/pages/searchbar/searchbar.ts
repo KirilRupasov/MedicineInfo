@@ -53,13 +53,12 @@ export class Searchbar {
    * Error message is displayed if incorrect data is provided
    */
   goToItem(item: any) {
-    if(item.title && item.description && item.side_effects && item.how_does_it && item.benefits) {
+    if(item.title && item.description && item.side_effects && item.benefits) {
     
           this.navCtrl.push(MedicineInfo, {
             "title":  item.title,
             "description": item.description,
             "side_effects": item.side_effects,
-            "how_does_it": item.how_does_it,
             "benefits": item.benefits,
             "elderly": item.elderly,
             "stores": item.stores,

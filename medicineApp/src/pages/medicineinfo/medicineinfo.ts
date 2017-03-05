@@ -26,18 +26,18 @@ export class MedicineInfo {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  private title: string;
-  private description: string;
-  private side_effects: string;
-  private benefits: string;
-  private how_does_it: string;
-  private elderly: string;
-  private stores: string;
-  private reviewAction: string;
-  private leaveReview: boolean;
-  private stars: any[];
-  private half_stars: any[];
-  private no_rating: string;
+  modal: any;
+  title: string;
+  description: string;
+  side_effects: string;
+  benefits: string;
+  elderly: string;
+  stores: string;
+  reviewAction: string;
+  leaveReview: boolean;
+  stars: any[];
+  half_stars: any[];
+  no_rating: string;
 
   /**
    * @param {NavParams} navParams Medicine Parameters
@@ -58,7 +58,34 @@ export class MedicineInfo {
     private modalCtrl: ModalController, private http: Http, private alertCtrl: AlertController
   ) {
     this.title = navParams.get("title");
+    this.description = navParams.get("description");
+    this.side_effects = navParams.get("side_effects");
+    this.benefits = navParams.get("benefits");
+    this.stores = navParams.get("stores");
+    this.leaveReview = true;
+    this.reviewAction = "Leave Review";
 
+    this.setRating();
+
+    if(this.auth.isAuthenticated()) {
+      this.setReviewAction();
+    }
+
+    let date_of_birth = this.user.get("date_of_birth", undefined);
+      if(date_of_birth) {
+        let parts = date_of_birth.split("-")
+        let date = new Date(parts[0], parts[1], parts[2]);
+        let ageDif = Date.now() - date.getTime();
+        let ageDate = new Date(ageDif);
+        let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+        if(age > 65 && this.navParams.get("elderly") != "" && this.navParams.get("elderly") != null) {
+          //if user is authenticated and older than 65 -> display the information for elderly
+          this.elderly = '<div class="alert alert-warning card"><div class="card-block"><strong>Elderly patients </strong>' + this.navParams.get("elderly") + '</div></div>';
+        }
+    }
+  }
+
+  setRating() {
     //display average rating of this medicine
     this.http.get('http://medicineappbackend.me/averagerating/' + this.title).map(res => res).subscribe(
       data => {
@@ -73,18 +100,6 @@ export class MedicineInfo {
         }
       }
     );
-
-    this.description = navParams.get("description");
-    this.side_effects = navParams.get("side_effects");
-    this.benefits = navParams.get("benefits");
-    this.how_does_it = navParams.get("how_does_it");
-    this.stores = navParams.get("stores");
-    this.leaveReview = true;
-    this.reviewAction = "Leave Review";
-
-    if(this.auth.isAuthenticated()) {
-      this.setReviewAction();
-    }
   }
 
   /**
@@ -108,19 +123,6 @@ export class MedicineInfo {
         err => {
         }
       );
-
-      let date_of_birth = this.user.get("date_of_birth", 0);
-      if(date_of_birth != 0) {
-        let parts = date_of_birth.split("-")
-        let date = new Date(parts[0], parts[1], parts[2]);
-        let ageDif = Date.now() - date.getTime();
-        let ageDate = new Date(ageDif);
-        let age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        if(age > 65 && this.navParams.get("elderly") != "" && this.navParams.get("elderly") != null) {
-          //if user is authenticated and older than 65 -> display the information for elderly
-          this.elderly = '<div class="alert alert-warning card"><div class="card-block"><strong>Elderly patients </strong>' + this.navParams.get("elderly") + '</div></div>';
-        }
-      }
   }
 
   /**
@@ -163,8 +165,8 @@ export class MedicineInfo {
    */
   openLeaveReviewModal() {
     if(this.auth.isAuthenticated()) {
-        let modal = this.modalCtrl.create(ReviewModal, {"root" : this });
-        modal.present();
+        this.modal = this.modalCtrl.create(ReviewModal, {"root" : this });
+        this.modal.present();
     } else {
        let alert = this.alertCtrl.create({
            title: 'Error(s)!',
@@ -175,6 +177,10 @@ export class MedicineInfo {
     }
   }
 
+  getModal() {
+    return this.modal;
+  }
+
   /**
    * @name openReadReviewsModal
    * 
@@ -183,8 +189,8 @@ export class MedicineInfo {
    * opens Modal for reading reviews (ReadReviewsModal)
    */
   openReadReviewsModal() {
-    let modal = this.modalCtrl.create(ReadReviewsModal, {"root" : this});
-    modal.present();
+    this.modal = this.modalCtrl.create(ReadReviewsModal, {"root" : this});
+    this.modal.present();
   }
 
   /**
@@ -195,7 +201,7 @@ export class MedicineInfo {
    * opens Modal for locating stores (StoreLocator)
    */
   openStoreLocatorModal() {
-    let modal = this.modalCtrl.create(StoreLocator, {"medicine_title" : this.getTitle(), "stores": this.stores});
-    modal.present();
+    this.modal = this.modalCtrl.create(StoreLocator, {"medicine_title" : this.getTitle(), "stores": this.stores});
+    this.modal.present();
   }
 }

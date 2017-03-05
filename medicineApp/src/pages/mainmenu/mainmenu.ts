@@ -28,7 +28,7 @@ import { AlertController } from 'ionic-angular';
 })
 
 export class MainMenu {
-  suggestions: string[];
+  suggestions: any[];
   intro_sugg: string;
 
   /**
@@ -73,37 +73,6 @@ export class MainMenu {
   }
 
   /**
-   * @name setSuggestions
-   * @param {any[]} suggestions list of medicine names that matches search
-   * 
-   * @description
-   * 
-   * This method gets 10 suggestions that matched search criteria and 
-   * stores them in array which is displayed in Main Menu
-   */
-  setSuggestions(suggestions: any[]) {
-    let new_suggestions_formatted: any[];
-    if(suggestions[0]) {
-      this.intro_sugg = "Where you looking for...";
-      new_suggestions_formatted = [];
-      let i = 0;
-      for(let entry of suggestions) {
-        if(entry.title && entry.description && entry.side_effects && entry.how_does_it && entry.benefits && i < 10) {
-          //format the description of Medicine
-          entry.description_short = entry.description.substr(0, 40) + "...";
-          entry.description_short = entry.description_short.replace('<p>', '');
-          entry.description_short = entry.description_short.replace('</p>', '');
-          entry.description_short = entry.description_short.replace('is', '-');
-          new_suggestions_formatted.push(entry);
-        }
-        //restrict number of suggestions to 10
-        i++;
-      }
-      this.suggestions = new_suggestions_formatted;
-    }
-  }
-
-  /**
    * @name openModal
    * 
    * @description
@@ -122,7 +91,7 @@ export class MainMenu {
    * 
    * This method launches BarcodeScanner plugin and scans barcode
    */
-  barcodescan(ev: any) {
+  barcodescan() {
     BarcodeScanner.scan().then((barcodeData) => {
       this.getItemByBarcode(barcodeData.text);
     }, (err) => {
@@ -151,12 +120,11 @@ export class MainMenu {
                   buttons: ['OK']
                 });
               alert.present();
-            } else if(data.title && data.description && data.how_does_it && data.benefits) {     
+            } else if(data.title && data.description && data.benefits) {     
                 this.navCtrl.push(MedicineInfo, {
                   "title": data.title,
                   "description": data.description,
                   "side_effects": data.side_effects,
-                  "how_does_it": data.how_does_it,
                   "benefits": data.benefits,
                   "elderly": data.elderly,
                   "stores": data.stores,
@@ -171,6 +139,10 @@ export class MainMenu {
             }
         });
       }
+    }
+
+    getNavCtrl() {
+      return this.navCtrl;
     }
 }
 

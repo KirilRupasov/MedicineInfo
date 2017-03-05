@@ -24,6 +24,7 @@ export class ReviewModal {
    user_email: string;
    medicine_name: string;
    leave_review: boolean;
+   alert: any;
 
    /**
     * @name constructor
@@ -97,31 +98,31 @@ export class ReviewModal {
       }
 
       this.http.post(url, { user_email, medicine_name, review_content, rating }, options).subscribe(data => {
-        let alert = this.alertCtrl.create({
+        this.alert = this.alertCtrl.create({
                 title: 'Success!',
                 subTitle: "Review submitted!",
                 buttons: ['OK']
               });
-        alert.present();
+        this.alert.present();
         this.params.get("root").submitted();
         this.dismiss();
        }, error => {
            console.log(JSON.stringify(error.json()));
        });
     } else if(this.review.length > 600) {
-      let alert = this.alertCtrl.create({
+        this.alert = this.alertCtrl.create({
             title: 'Error(s)!',
             subTitle: "Review is longer than 600 characters!",
             buttons: ['OK']
           });
-        alert.present();
+        this.alert.present();
     } else {
-       let alert = this.alertCtrl.create({
+       this.alert = this.alertCtrl.create({
             title: 'Error(s)!',
             subTitle: "No review is written!",
             buttons: ['OK']
           });
-        alert.present();
+        this.alert.present();
     }
    }
 
@@ -132,5 +133,9 @@ export class ReviewModal {
     */
    dismiss() {
      this.viewCtrl.dismiss();
+   }
+
+   getAlert() {
+     return this.alert;
    }
 }

@@ -7,10 +7,11 @@ export class PagesService {
     public register(comapp: iMyApp) {
         this.ComApp = comapp;
     }
+
     public logged() {
-            this.ComApp.showLoggedMenu()
-        
+            this.ComApp.showLoggedMenu();    
     }
+
     public nonLogged() {
             this.ComApp.showNonLoggedMenu();
     }   
