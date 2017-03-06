@@ -82,4 +82,39 @@ describe('Review Modal Page Tests', () => {
         instance.leaveReview();  
         expect(instance.getAlert().subTitle).toBe("Review submitted!");
     }));
+
+    it('should NOT let submit a review because it is too long', async(() => {
+        let backend = injector.get(MockBackend);
+        let responseBody = "Submitted!";
+        backend.connections.subscribe(
+          (connection: MockConnection) => {
+            connection.mockRespond(new Response(
+              new ResponseOptions({
+                  body: responseBody
+                }
+              )));
+          });
+        
+        instance = fix.componentInstance;  
+        instance.review = "Lorem ipsum dolor sit amet, sunt ligula sodales, non reprehenderit et pharetra mollis ut, urna integer erat, aliquam phasellus eget ullamcorper tempus nonummy at. Sollicitudin in maecenas maecenas, sed viverra volutpat, imperdiet euismod ligula donec, adipiscing enim          elementum ut praesent nonummy, dolor a non. Quis mauris non ullamcorper lectus non a. Urna justo tortor, elit in tortor eget felis, eu luctus diam. Est nullam vestibulum. Nec enim, curae ornare dolor praesent, hendrerit massa placerat, nunc blandit blandit, at mauris tincidunt nulla         vehicula. Odio nascetur diam euismod tortor leo donec, ac at ornare scelerisque dignissim eget, quisque libero nunc proin eu placerat lobortis, curabitur ut eros vivamus, nec suspendisse lectus arcu. Arcu praesent";
+        instance.leaveReview();  
+        expect(instance.getAlert().subTitle).toBe("Review is longer than 600 characters!");
+    }));
+
+    it('should NOT let submit a review because no review is written', async(() => {
+        let backend = injector.get(MockBackend);
+        let responseBody = "Submitted!";
+        backend.connections.subscribe(
+          (connection: MockConnection) => {
+            connection.mockRespond(new Response(
+              new ResponseOptions({
+                  body: responseBody
+                }
+              )));
+          });
+        
+        instance = fix.componentInstance;  
+        instance.leaveReview();  
+        expect(instance.getAlert().subTitle).toBe("No review is written!");
+    }));
 });

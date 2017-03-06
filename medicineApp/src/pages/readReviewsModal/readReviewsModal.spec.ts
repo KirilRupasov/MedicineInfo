@@ -95,4 +95,49 @@ describe('Read Reviews Modal Page Tests', () => {
         instance.loadReviews();      
         expect(instance.reviews[0].rating).toBe(5);
     }));
+
+    it('should output review with "Good Medicine" content', async(() => {
+        let backend = injector.get(MockBackend);
+        let responseBody = [
+            {
+                user_email: "abc@abc.com",
+                review_content: "Good Medicine",
+                rating: 5
+            }
+        ];
+        backend.connections.subscribe(
+          (connection: MockConnection) => {
+            connection.mockRespond(new Response(
+              new ResponseOptions({
+                  body: responseBody
+                }
+              )));
+          }); 
+        instance = fix.componentInstance; 
+        
+        instance.loadReviews();      
+        expect(instance.reviews[0].review_content).toBe("Good Medicine");
+    }));
+
+    it('should output review written by user with email "abc@abc.com"', async(() => {
+        let backend = injector.get(MockBackend);
+        let responseBody = [
+            {
+                user_email: "abc@abc.com",
+                review_content: "Good Medicine",
+                rating: 5
+            }
+        ];
+        backend.connections.subscribe(
+          (connection: MockConnection) => {
+            connection.mockRespond(new Response(
+              new ResponseOptions({
+                  body: responseBody
+                }
+              )));
+          }); 
+        instance = fix.componentInstance; 
+        instance.loadReviews();      
+        expect(instance.reviews[0].user_email).toBe("abc@abc.com");
+    }));
 });
