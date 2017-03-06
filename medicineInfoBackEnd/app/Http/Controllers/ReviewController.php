@@ -55,7 +55,7 @@ class ReviewController extends Controller
     public static function getAverageRating($medicinename) {
         $medicinename = str_replace("%20", " ", $medicinename);
         $medicine = Medicine::where('title', $medicinename)->first();
-        return $medicine -> id;
+        return $medicinename;
         $reviews = Review::where('medicine_id', $medicine->id)->get();
 
         if(count($reviews) > 0) {
