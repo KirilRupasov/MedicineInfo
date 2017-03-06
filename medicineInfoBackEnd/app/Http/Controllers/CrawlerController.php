@@ -54,7 +54,6 @@ class CrawlerController extends Controller {
                             'description' => $data['description'],
                             'barcodes' => $data['barcodes'],
                             'side_effects' => $data['side_effects'],
-                            'how_does_it' => $data['how_does_it'],
                             'benefits' => $data['benefits'],
                             'elderly' => $data['elderly'],
                             'status' => $data['status'],
@@ -110,7 +109,6 @@ class CrawlerController extends Controller {
                                 'description' => $data['description'],
                                 'barcodes' => $data['barcodes'],
                                 'side_effects' => $data['side_effects'],
-                                'how_does_it' => $data['how_does_it'],
                                 'benefits' => $data['benefits'],
                                 'elderly' => $data['elderly'],
                                 'status' => $data['status']
@@ -195,14 +193,11 @@ class CrawlerController extends Controller {
 
 
         $side_effect_pos = 0;
-        $how_does_pos = 0;
         $what_benefits_pos = 0;
 
         foreach ($headers as $key => $header) {
             if ((strpos($header, 'What is the risk associated') !== false) || (strpos($header, 'What are the risks associated') !== false)) {
                 $side_effect_pos = $key;
-            } else if (strpos($header, 'How does') !== false) {
-                $how_does_pos = $key;
             } else if (strpos($header, 'What benefit') !== false) {
                 $what_benefits_pos = $key;
             }
@@ -225,7 +220,6 @@ class CrawlerController extends Controller {
             'elderly' => $add_info,
             'description' => $this->get_string_between($content, "<dd>", "</dd>"),
             'side_effects' => $this->get_string_between($content, "<dd>", "</dd>", $side_effect_pos + 1),
-            'how_does_it' => $this->get_string_between($content, "<dd>", "</dd>", $how_does_pos + 1),
             'benefits' => $this->get_string_between($content, "<dd>", "</dd>", $what_benefits_pos + 1),
             'barcodes' => implode(",", $this->fetchBarcodesByTitle($title)),
             'stores' => $stores
