@@ -289,7 +289,7 @@ class CrawlerController extends Controller {
 
             return $results_formatted;
         } catch (\Exception $exception) {
-            return null;
+            return [];
         }
     }
 
