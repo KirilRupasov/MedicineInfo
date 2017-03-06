@@ -107,7 +107,7 @@ class CrawlerController extends Controller {
                             $medicine = Medicine::create([
                                 'title' => $data['title'],
                                 'description' => $data['description'],
-                                //'barcodes' => $data['barcodes'],
+                                'barcodes' => $data['barcodes'],
                                 'side_effects' => $data['side_effects'],
                                 'benefits' => $data['benefits'],
                                 'elderly' => $data['elderly'],
@@ -247,7 +247,7 @@ class CrawlerController extends Controller {
             $text = $pdf->getText();
             return $this->fetchElderlyStatus($text);
         } catch (\Exception $exception) {
-            return [];
+            return "";
         }
     }
 
