@@ -101,7 +101,7 @@ class CrawlerController extends Controller {
 
                 while($counter_to_complete < $number_to_reach) {
                     $title = $this->get_string_between($results[$counter_to_complete], "\">", "</a>");
-                    if(Medicine::where('title', trim($title))->first() == null) {
+                    if(!Medicine::where('title', trim($title))->first()) {
                         $data = $this->fetchDrugsFromPage($results[$counter_to_complete], $client, $title);
                         if ($data != "Wrong request" && (array_keys($data) !== range(0, count($data) - 1))) {
                             $medicine = Medicine::create([
