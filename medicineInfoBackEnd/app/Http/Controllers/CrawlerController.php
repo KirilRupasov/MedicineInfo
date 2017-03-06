@@ -83,7 +83,7 @@ class CrawlerController extends Controller {
         set_time_limit(300);
         $client = new Client(['base_url' => "http://www.ema.europa.eu"]);
         $letters = range('A', 'Z');
-
+        $counter_overall = 0;
         foreach ($letters as $letter) {
             $request = $client -> get('http://www.ema.europa.eu/ema/index.jsp?curl=pages%2Fmedicines%2Flanding%2Fepar_search.jsp&mid=WC0b01ac058001d124&searchTab=&alreadyLoaded=true&isNewQuery=true&status=Authorised&status=Withdrawn&status=Suspended&status=Refused&startLetter='.$letter.'&keyword=Enter+keywords&searchType=name&taxonomyPath=&treeNumber=&searchGenericType=generics');
 
@@ -115,17 +115,16 @@ class CrawlerController extends Controller {
                             ]);
 
                             $medicine->addToIndex();
+                            $counter_overall++;
                         }
 
 
                     }
                     $counter_to_complete++;
                 }
-                return "Success!";
-            } else {
-                return "Resource down!";
             }
         }
+        return "Fetched ".$counter_to_complete." drugs";
     }
 
     /**
