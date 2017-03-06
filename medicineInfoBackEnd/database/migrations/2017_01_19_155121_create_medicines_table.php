@@ -20,7 +20,6 @@ class CreateMedicinesTable extends Migration
             $table->text('description')->nullable();
             $table->text('side_effects')->nullable();
             $table->text('benefits')->nullable();
-            $table->text('how_does_it')->nullable();
             $table->text('elderly')->nullable();
             $table->enum('status',['approved','withdrawn'])->default('approved');
             $table->text('stores')->nullable();
