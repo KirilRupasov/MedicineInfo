@@ -247,7 +247,7 @@ class CrawlerController extends Controller {
             $text = $pdf->getText();
             return $this->fetchElderlyStatus($text);
         } catch (\Exception $exception) {
-            return null;
+            return [];
         }
     }
 
