@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Medicine;
 use App\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
