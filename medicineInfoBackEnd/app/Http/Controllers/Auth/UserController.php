@@ -49,11 +49,12 @@ class UserController extends Controller
     public function storeSession(Request $request) {
         $input = $request -> all();
 
-        if(!(User::where("email", $input['email']) -> first())) {
+        if((User::where("email", $input['email']) -> first())) {
             User::where("email", $input['email'])->update(['session_id' => $input['session_id']]);
+            return "Session started";
         }
 
-        return $input['session_id'];
+        return "Session not started";
     }
 
 }
