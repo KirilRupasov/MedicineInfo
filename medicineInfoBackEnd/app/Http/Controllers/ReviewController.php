@@ -37,7 +37,7 @@ class ReviewController extends Controller
             $input['medicine_name'] &&
             $input['rating'] &&
             $this->checkIfReviewExists($input['user_email'], $input['medicine_name']) == "false" &&
-            Auth::attempt(['user_email' => $input['user_email'], 'password' => $input['password'], 'status' => 'basic'])
+            Auth::attempt(['user_email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic'])
         ) {
             //if all parameters are found and user has not left review before -> store review
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
