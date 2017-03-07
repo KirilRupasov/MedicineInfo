@@ -32,7 +32,7 @@ class UserController extends Controller
 
     }
 
-    public function createUser(Request $request) {
+    public function createUser() {
         return "blah";
         $input = $request -> all();
 
