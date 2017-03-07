@@ -52,6 +52,8 @@ class UserController extends Controller
         if(!(User::where("email", $input['email']) -> first())) {
             User::where("email", $input['email'])->update(['session_id' => $input['session_id']]);
         }
+
+        return $input['session_id'];
     }
 
 }
