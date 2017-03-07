@@ -83,7 +83,8 @@ class ReviewController extends Controller
             $input['user_email'] &&
             $input['review_content'] &&
             $input['medicine_name'] &&
-            $input['rating']
+            $input['rating'] &&
+            Auth::attempt(['user_email' => $input['user_email'], 'password' => $input['password'], 'status' => 'basic'])
         ) {
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
             Review::where([
