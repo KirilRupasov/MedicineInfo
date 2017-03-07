@@ -47,9 +47,9 @@ class ReviewController extends Controller
                 'rating' => $input['rating']
             ]);
 
-            return "Success";
+            return "Success!";
         } else {
-            return "Failure";
+            return "Failure!";
         }
     }
 
