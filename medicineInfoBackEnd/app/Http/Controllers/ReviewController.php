@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Medicine;
 use App\Review;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,7 +38,7 @@ class ReviewController extends Controller
             $input['medicine_name'] &&
             $input['rating'] &&
             $this->checkIfReviewExists($input['user_email'], $input['medicine_name']) == "false" &&
-            Auth::attempt(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic'])
+            User::where(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic']) -> first()
         ) {
             //if all parameters are found and user has not left review before -> store review
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
@@ -84,7 +85,7 @@ class ReviewController extends Controller
             $input['review_content'] &&
             $input['medicine_name'] &&
             $input['rating'] &&
-            Auth::attempt(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic'])
+            User::where(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic']) -> first()
         ) {
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
             Review::where([
