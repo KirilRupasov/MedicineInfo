@@ -29,3 +29,4 @@ Route::get('/getreview/{username}/{medicinename}', 'ReviewController@getReview')
 Route::get('/averagerating/{medicinename}', 'ReviewController@getAverageRating');
 
 Route::post('/storeuser', 'Auth\UserController@createUser');
+ROute::post('/storesession', 'Auth\UserController@storeSession');

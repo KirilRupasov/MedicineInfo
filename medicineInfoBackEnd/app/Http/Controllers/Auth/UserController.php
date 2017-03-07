@@ -46,4 +46,12 @@ class UserController extends Controller
         return "Failure";
     }
 
+    public function storeSession(Request $request) {
+        $input = $request -> all();
+
+        if(!(User::where("email", $input['email']) -> first())) {
+            User::where("email", $input['email'])->update(['session_id' => $input['session_id']]);
+        }
+    }
+
 }

@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('session_id')->nullable();
             $table->enum('status', ["admin", "basic"])->default("basic");
             $table->rememberToken();
             $table->timestamps();
