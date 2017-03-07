@@ -12,7 +12,7 @@
 */
 Route::get('/', 'Auth\LoginController@getLoginForm');
 Route::post('/verify', 'Auth\LoginController@verifyUser');
-Route::get('/setuser', 'Auth\LoginController@createUser');
+Route::get('/setuser', 'Auth\LoginController@createAdmin');
 
 Route::get('/title/{query}', "SearchController@searchByTitle");
 Route::get('/barcode/{query}', "SearchController@searchByBarcode");
@@ -27,3 +27,5 @@ Route::get('/getreviews/{title}', 'ReviewController@getReviews');
 Route::get('/checkifreviewexists/{username}/{medicinename}', 'ReviewController@checkIfReviewExists');
 Route::get('/getreview/{username}/{medicinename}', 'ReviewController@getReview');
 Route::get('/averagerating/{medicinename}', 'ReviewController@getAverageRating');
+
+Route::post('/storeuser', 'UserController@createUser');

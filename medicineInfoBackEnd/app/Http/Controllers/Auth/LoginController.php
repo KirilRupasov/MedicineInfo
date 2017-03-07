@@ -52,11 +52,12 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector redirects to Login UI
      */
-    public function createUser() {
+    public function createAdmin() {
         if(!(User::where("email", "kirilrupasov@gmail.com") -> first())) {
             User::create([
                 'email' => 'kirilrupasov@gmail.com',
                 'password' => bcrypt('6688846993'),
+                'status' => 'admin'
             ]);
         }
         return redirect("/");
@@ -74,7 +75,7 @@ class LoginController extends Controller
     public function verifyUser(Request $request) {
         $input = $request->all();
 
-        if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']])) {
+        if (Auth::attempt(['email' => $input['email'], 'password' => $input['password'], 'status' => 'admin'])) {
             return view("adminPanel");
         } else {
             return "Login Failed!";
