@@ -28,13 +28,12 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
 
     }
 
     public function createUser(Request $request) {
-        $input = $request->all();
+        $input = $request -> all();
 
         if(!(User::where("email", $input['email']) -> first())) {
             User::create([
