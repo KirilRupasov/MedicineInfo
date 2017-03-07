@@ -32,8 +32,7 @@ class UserController extends Controller
 
     }
 
-    public function createUser() {
-        return "blah";
+    public function createUser(Request $request) {
         $input = $request -> all();
 
         if(!(User::where("email", $input['email']) -> first())) {

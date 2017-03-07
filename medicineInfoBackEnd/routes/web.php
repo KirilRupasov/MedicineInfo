@@ -28,4 +28,4 @@ Route::get('/checkifreviewexists/{username}/{medicinename}', 'ReviewController@c
 Route::get('/getreview/{username}/{medicinename}', 'ReviewController@getReview');
 Route::get('/averagerating/{medicinename}', 'ReviewController@getAverageRating');
 
-Route::get('/storeuser', 'Auth\UserController@createUser');
+Route::post('/storeuser', 'Auth\UserController@createUser');
