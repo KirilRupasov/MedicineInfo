@@ -143,6 +143,7 @@ class CrawlerController extends Controller {
         if($request->getStatusCode() == 200) {
             $content = $request->getBody()->getContents();
             $results = $this->get_tagged_strings($content, "<th scope=\"row\" class=\"key-detail name word-wrap\">", "</th>");
+
             if(sizeof($results) == 1 || ($limitOne && sizeof($results) > 1)) {
                 return $this->fetchDrugsFromPage($results[0], $client, $query);
             } else if(sizeof($results) > 0) {

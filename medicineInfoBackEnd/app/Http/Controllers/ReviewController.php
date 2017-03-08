@@ -56,22 +56,27 @@ class ReviewController extends Controller
         }
     }
 
-    public static function getAverageRating($medicinename) {
+    public function getAverageRating($medicinename) {
         $medicinename = str_replace("%20", " ", $medicinename);
-        $medicine = Medicine::where('title', $medicinename)->first();
-        $reviews = Review::where('medicine_id', $medicine->id)->get();
 
-        if(count($reviews) > 0) {
-            $ratingSum = 0;
-            $ratingCount = 0;
-            for($x=0; $x<count($reviews); $x++) {
-                $ratingCount++;
-                $ratingSum += $reviews[$x] -> rating;
+        if(Medicine::where('title', $medicinename)->first()) {
+            $medicine = Medicine::where('title', $medicinename)->first();
+            $reviews = Review::where('medicine_id', $medicine->id)->get();
+
+            if(count($reviews) > 0) {
+                $ratingSum = 0;
+                $ratingCount = 0;
+                for($x=0; $x<count($reviews); $x++) {
+                    $ratingCount++;
+                    $ratingSum += $reviews[$x] -> rating;
+                }
+
+                return $ratingSum/$ratingCount;
+            } else {
+                return 0;
             }
-
-            return $ratingSum/$ratingCount;
         } else {
-            return 0;
+            return null;
         }
     }
 

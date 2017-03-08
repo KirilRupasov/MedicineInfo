@@ -115,6 +115,15 @@ class ReviewTest extends TestCase
         $this -> assertEquals($response->getContent(), 3);
     }
 
+    public function testGetAverageRatingNonExistendMedicine() {
+        Medicine::create([
+            'title' => 'Abilify',
+        ]);
+
+        $response = $this->call('GET', '/averagerating/Nicotin');
+        $this -> assertEmpty($response->getContent());
+    }
+
     public function testGetAverageRatingNotRatetYet() {
         Medicine::create([
             'title' => 'Abilify',
