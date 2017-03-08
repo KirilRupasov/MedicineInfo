@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -55,6 +54,22 @@ class UserController extends Controller
         }
 
         return "Session not started";
+    }
+
+    /**
+     * This method creates user for database management and then redirects user to Login UI
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector redirects to Login UI
+     */
+    public function createAdmin() {
+        if(!(User::where("email", "kirilrupasov@gmail.com") -> first())) {
+            User::create([
+                'email' => 'kirilrupasov@gmail.com',
+                'password' => bcrypt('6688846993'),
+                'status' => 'admin'
+            ]);
+        }
+        return redirect("/");
     }
 
 }

@@ -12,7 +12,7 @@
 */
 Route::get('/', 'Auth\LoginController@getLoginForm');
 Route::post('/verify', 'Auth\LoginController@verifyUser');
-Route::get('/setuser', 'Auth\LoginController@createAdmin');
+Route::get('/setuser', 'Auth\UserController@createAdmin');
 
 Route::get('/title/{query}', "SearchController@searchByTitle");
 Route::get('/barcode/{query}', "SearchController@searchByBarcode");

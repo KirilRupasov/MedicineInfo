@@ -46,22 +46,6 @@ class LoginController extends Controller
         return view('login');
     }
 
-    /**
-     * This method creates user for database management and then redirects user to Login UI
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector redirects to Login UI
-     */
-    public function createAdmin() {
-        if(!(User::where("email", "kirilrupasov@gmail.com") -> first())) {
-            User::create([
-                'email' => 'kirilrupasov@gmail.com',
-                'password' => bcrypt('6688846993'),
-                'status' => 'admin'
-            ]);
-        }
-        return redirect("/");
-    }
-
 
     /**
      * This method check user login/password combination.
