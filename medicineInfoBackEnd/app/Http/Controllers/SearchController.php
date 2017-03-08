@@ -50,8 +50,6 @@ class SearchController extends Controller {
         } else {
             return null;
         }
-
-
     }
 
     /**

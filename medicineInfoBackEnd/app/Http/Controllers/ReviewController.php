@@ -38,7 +38,8 @@ class ReviewController extends Controller
             $input['medicine_name'] &&
             $input['rating'] &&
             $this->checkIfReviewExists($input['user_email'], $input['medicine_name']) == "false" &&
-            User::where(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic']) -> first()
+            User::where(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic']) -> first() &&
+            $medicine = Medicine::where('title', trim($input['medicine_name']))->first()
         ) {
             //if all parameters are found and user has not left review before -> store review
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
@@ -72,10 +73,6 @@ class ReviewController extends Controller
         } else {
             return 0;
         }
-
-
-
-
     }
 
     public function editReview(Request $request) {
@@ -85,7 +82,8 @@ class ReviewController extends Controller
             $input['review_content'] &&
             $input['medicine_name'] &&
             $input['rating'] &&
-            User::where(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic']) -> first()
+            User::where(['email' => $input['user_email'], 'session_id' => $input['session_id'], 'status' => 'basic']) -> first() &&
+            $medicine = Medicine::where('title', trim($input['medicine_name']))->first()
         ) {
             $medicine = Medicine::where('title', trim($input['medicine_name']))->first();
             Review::where([
@@ -96,9 +94,9 @@ class ReviewController extends Controller
                 "rating" => $input['rating']
             ]);
 
-            return "Success";
+            return "Success!";
         } else {
-            return "Failure";
+            return "Failure!";
         }
     }
 
@@ -124,6 +122,7 @@ class ReviewController extends Controller
         $medicine = Medicine::where('title', $title)->first();
         $reviews = Review::where('medicine_id', $medicine->id)->get();
         $reviews_array = [];
+
         for($x=0; $x<count($reviews); $x++) {
             $reviews_array[] = [
                 "medicine_name" => $title,

@@ -42,7 +42,7 @@ class UserController extends Controller
             return "Success";
         }
 
-        return "Failure";
+        return "User already exists";
     }
 
     public function storeSession(Request $request) {
@@ -59,7 +59,6 @@ class UserController extends Controller
     /**
      * This method creates user for database management and then redirects user to Login UI
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector redirects to Login UI
      */
     public function createAdmin() {
         if(!(User::where("email", "kirilrupasov@gmail.com") -> first())) {
@@ -68,8 +67,11 @@ class UserController extends Controller
                 'password' => bcrypt('6688846993'),
                 'status' => 'admin'
             ]);
+
+            return redirect("/");
         }
-        return redirect("/");
+
+        return "User already exists";
     }
 
 }

@@ -293,14 +293,6 @@ class CrawlerController extends Controller {
     }
 
     /**
-     * @param $query
-     * @return null|string
-     */
-    public function fetchBarcodes($query) {
-
-    }
-
-    /**
      * This function checks if given medicine can be obtained in Lloyds Pharmacy.
      *
      * @param $title title of medicine
