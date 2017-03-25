@@ -6,19 +6,12 @@
  * Searchbar
  */
 
-import { Component,Inject } from '@angular/core';
-import { ModalController, ViewController, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { ModalController, NavController } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SearchModal } from '../searchModal/searchModal';
-import { BarcodeScanner } from 'ionic-native';
-import { MyProfile } from '../myprofile/myprofile';
-import { EditProfile } from '../editprofile/editprofile';
-import { Logout } from '../logout/logout';
-import { Auth, User } from '@ionic/cloud-angular';
-import { Login } from '../login/login';
-import { Signup } from '../signup/signup';
 import { Suggestions } from '../suggestions/suggestions';
 
 @Component({

@@ -55,7 +55,7 @@ export class MyProfile {
         this.content += "Smoker: " + this.smoker + '<hr>';
       }
 
-      this.gender = this.user.get("gender", 0);
+      this.gender = this.user.get("gender", undefined);
 
       if(this.gender != undefined) {
         this.content += "Gender: " + this.gender + "<hr>";

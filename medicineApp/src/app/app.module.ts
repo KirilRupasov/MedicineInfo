@@ -12,10 +12,10 @@ import { SearchModal } from '../pages/searchModal/searchModal';
 import { ReviewModal } from '../pages/reviewModal/reviewModal';
 import { Logout } from '../pages/logout/logout';
 import { HttpModule } from '@angular/http';
-import { MagicBall } from '../pages/magic-ball/magic-ball';
 import { ReadReviewsModal } from '../pages/readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../pages/storelocator/storelocator';
-import { PagesService } from './pages.service';
+import { PagesService } from '../providers/pages.service';
+import { SessionService } from '../providers/session.service';
 import { Searchbar } from '../pages/searchbar/searchbar';
 import { Suggestions } from '../pages/suggestions/suggestions';
 
@@ -63,6 +63,6 @@ const cloudSettings: CloudSettings = {
     Logout,
     Suggestions
   ],
-  providers: [PagesService, {provide: ErrorHandler, useClass: IonicErrorHandler}, MagicBall]
+  providers: [PagesService, SessionService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

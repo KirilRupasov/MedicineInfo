@@ -5,7 +5,7 @@ import { UserMockPredefined } from '../../mocks/userMockPredefined';
 import { NavCtrlMock } from '../../mocks/navCtrlMock';
 import { Auth, User } from '@ionic/cloud-angular';
 import { NavController } from 'ionic-angular';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicModule } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MainMenu } from '../mainmenu/mainmenu';

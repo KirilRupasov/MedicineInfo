@@ -5,10 +5,13 @@ import { AuthMock } from '../../mocks/authMock';
 import { NavCtrlMock } from '../../mocks/navCtrlMock';
 import { Auth } from '@ionic/cloud-angular';
 import { NavController, AlertController } from 'ionic-angular';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicModule } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MainMenu } from '../mainmenu/mainmenu';
+import { MockBackend } from '@angular/http/testing';
+import { Http } from '@angular/http';
+import { BaseRequestOptions } from '@angular/http';
 
 let signup = null;
 
@@ -24,6 +27,15 @@ describe('Signup Page Tests', () => {
                 IonicModule.forRoot(MyApp)
             ],
             providers: [
+                MockBackend,
+                BaseRequestOptions,
+                {
+                    provide: Http,
+                    useFactory: (backend: MockBackend, options: BaseRequestOptions) => {
+                    return new Http(backend, options);
+                    },
+                    deps: [ MockBackend, BaseRequestOptions ]
+                },
                 {provide: Auth, useClass: AuthMock },
                 {provide: NavController, useClass: NavCtrlMock },
                 {provide: AlertController, useClass: AlertCtrlMock}

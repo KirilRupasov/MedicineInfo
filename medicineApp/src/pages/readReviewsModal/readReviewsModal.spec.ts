@@ -3,14 +3,11 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { NavParamsMockModal } from '../../mocks/navParamsMockModal';
 import { ViewCtrlMock } from '../../mocks/viewCtrlMock';
 import { ViewController, NavParams } from 'ionic-angular';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicModule } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
-import { ReviewModal } from '../reviewModal/reviewModal';
-
-let mainMenu = null;
 
 describe('Read Reviews Modal Page Tests', () => {
     let fix: ComponentFixture<ReadReviewsModal>;
@@ -18,7 +15,6 @@ describe('Read Reviews Modal Page Tests', () => {
     let injector: any;
 
     beforeEach(() => {
-        const viewControllerStub = new ViewController();
         TestBed.configureTestingModule({
             declarations: [
                 MyApp, ReadReviewsModal, Searchbar

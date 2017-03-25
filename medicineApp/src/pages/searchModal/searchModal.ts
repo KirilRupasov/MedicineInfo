@@ -6,7 +6,7 @@
  * Search Modal
  */
 
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { Searchbar } from 'ionic-angular';

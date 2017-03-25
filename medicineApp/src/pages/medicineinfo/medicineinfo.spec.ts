@@ -7,16 +7,14 @@ import { AlertCtrlMock } from '../../mocks/alertCtrlMock';
 import { UserMock } from '../../mocks/userMock';
 import { NavParamsMock } from '../../mocks/navParamsMock';
 import { Auth, User } from '@ionic/cloud-angular';
-import { PagesService } from '../../app/pages.service';
+import { PagesService } from '../../providers/pages.service';
 import { ModalController, NavController, AlertController, NavParams } from 'ionic-angular';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicModule } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 import { ReviewModal } from '../reviewModal/reviewModal';
-
-let mainMenu = null;
 
 describe('Medicine Info Page Tests', () => {
     let fix: ComponentFixture<MedicineInfo>;

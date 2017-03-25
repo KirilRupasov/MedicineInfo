@@ -10,6 +10,8 @@ import { NavController } from 'ionic-angular';
 import { Auth, UserDetails, IDetailedError } from '@ionic/cloud-angular';
 import { AlertController } from 'ionic-angular';
 import { MainMenu } from '../mainmenu/mainmenu';
+import { Http, RequestOptions, Headers } from '@angular/http';
+
 
 @Component({
   selector: 'page-signup',
@@ -33,7 +35,7 @@ export class Signup {
    * 
    * Empty constructor
    */
-  constructor(private navCtrl: NavController, public alertCtrl: AlertController, public auth: Auth) {
+  constructor(private navCtrl: NavController, public alertCtrl: AlertController, public auth: Auth, public http: Http) {
 
   }
 
@@ -68,7 +70,16 @@ export class Signup {
     } else {
           this.auth.signup(details).then(() => {
             this.auth.login('basic', details).then(() => {
-              this.navCtrl.setRoot(MainMenu);
+              let headers = new Headers({ 'Content-Type': 'application/json' });
+              let options = new RequestOptions({ headers: headers });
+              let email = details.email;
+              let password = details.password;
+              //store user on two back-ends
+              this.http.post('http://medicineappbackend.me/storeuser', { email, password }, options).subscribe(data => {
+                  this.navCtrl.setRoot(MainMenu);
+              }, error => {
+                console.log(JSON.stringify(error.json()));
+              });    
             }, () => {
               this.alert = this.alertCtrl.create({
                   title: 'Error!',

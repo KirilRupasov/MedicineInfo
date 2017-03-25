@@ -13,18 +13,19 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SearchModal } from '../searchModal/searchModal';
 import { BarcodeScanner } from 'ionic-native';
-import { EditProfile } from '../editprofile/editprofile';
-import { Logout } from '../logout/logout';
 import { Auth, User } from '@ionic/cloud-angular';
-import { Login } from '../login/login';
-import { Signup } from '../signup/signup';
-import { PagesService } from '../../app/pages.service';
+import { PagesService } from '../../providers/pages.service';
 import { AlertController } from 'ionic-angular';
+import { Headers, RequestOptions } from '@angular/http';
+import { SessionService } from '../../providers/session.service';
 
 @Component({
   selector: 'page-mainmenu',
   templateUrl: 'mainmenu.html',
-  providers: [{ provide: 'PagesService', useClass: PagesService }]
+  providers: [
+    { provide: 'PagesService', useClass: PagesService },
+    { provide: 'SessionService', useClass: SessionService }
+  ]
 })
 
 export class MainMenu {
@@ -44,7 +45,8 @@ export class MainMenu {
   constructor(
     private pagesService: PagesService, private modalCtrl: ModalController,
     private navCtrl: NavController, private http: Http,
-    private alertCtrl: AlertController, private auth: Auth
+    private alertCtrl: AlertController, private auth: Auth,
+    private user: User, private sessionService: SessionService
   ) {
     this.suggestions = [];
   }
@@ -58,6 +60,18 @@ export class MainMenu {
    */
   ngAfterViewInit() {
     if(this.auth.isAuthenticated()) {
+      let email = this.user.details.email;
+      //store session on back end
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+      this.sessionService.makeid();
+      let session_id = this.sessionService.id;
+
+      this.http.post('http://medicineappbackend.me/storesession', { email , session_id }, options).subscribe(data => {
+
+        }, error => {
+            console.log(JSON.stringify(error.json()));
+        });
       this.pagesService.logged();
     } else {
       this.pagesService.nonLogged();

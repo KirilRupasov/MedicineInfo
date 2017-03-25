@@ -13,9 +13,13 @@ import { Http } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { AlertController } from 'ionic-angular';
 import { MainMenu } from '../mainmenu/mainmenu';
+import { SessionService } from '../../providers/session.service';
 
 @Component({
   templateUrl: 'reviewModal.html',
+    providers: [
+    { provide: 'SessionService', useClass: SessionService }
+  ]
 })
 
 export class ReviewModal {
@@ -45,7 +49,7 @@ export class ReviewModal {
      private user: User, private viewCtrl: ViewController,
      private params: NavParams, private http: Http,
      private auth: Auth, private alertCtrl: AlertController,
-     private navCtrl: NavController
+     private navCtrl: NavController, private sessionService: SessionService
     ) {
     if(!this.auth.isAuthenticated()) {
       this.navCtrl.push(MainMenu);
@@ -66,8 +70,7 @@ export class ReviewModal {
           err => {
           }
         );
-      }
-      
+      }   
     }
    }
 
@@ -87,6 +90,7 @@ export class ReviewModal {
       let rating = this.rating;
       let user_email = this.user_email;
       let medicine_name = this.medicine_name;
+      let session_id = this.sessionService.id;
 
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
@@ -97,14 +101,15 @@ export class ReviewModal {
         url =   'http://medicineappbackend.me/editreview';
       }
 
-      this.http.post(url, { user_email, medicine_name, review_content, rating }, options).subscribe(data => {
+      this.http.post(url, { user_email, medicine_name, review_content, rating, session_id }, options).subscribe(data => {
         this.alert = this.alertCtrl.create({
-                title: 'Success!',
+                title: data.text().toString(),
                 subTitle: "Review submitted!",
                 buttons: ['OK']
               });
         this.alert.present();
         this.params.get("root").submitted();
+        this.params.get("root").setRating();
         this.dismiss();
        }, error => {
            console.log(JSON.stringify(error.json()));

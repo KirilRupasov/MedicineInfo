@@ -1,19 +1,13 @@
 import { Suggestions } from './suggestions';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { NavCtrlMock } from '../../mocks/navCtrlMock';
-import { AlertCtrlMock } from '../../mocks/alertCtrlMock';
-import { UserMock } from '../../mocks/userMock';
 import { NavParamsMock } from '../../mocks/navParamsMock';
-import { Auth } from '@ionic/cloud-angular';
 import { NavController, NavParams } from 'ionic-angular';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicModule } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
-import { MedicineInfo } from '../../pages/medicineinfo/medicineinfo';
-
-let mainMenu = null;
 
 describe('Suggestions Page Tests', () => {
     let fix: ComponentFixture<Suggestions>;

@@ -54,6 +54,7 @@ export class ReadReviewsModal {
                   review.rating_number.push(i);
                }
             }
+            this.no_reviews = "";
           } else {
             this.no_reviews = "This medicine has no reviews yet.";
           }

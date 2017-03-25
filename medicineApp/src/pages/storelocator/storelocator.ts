@@ -122,11 +122,6 @@ export class StoreLocator {
       //alert(entry.name);
       if(entry.name.toLowerCase() == keywords.toLowerCase()) {
         let latLng = new google.maps.LatLng(entry.geometry.location.lat, entry.geometry.location.lng);
-              var image = {
-                url: "marker.gif",
-                // This marker is 20 pixels wide by 32 pixels high.
-                size: new google.maps.Size(30, 30),
-              };
 
         let marker = new google.maps.Marker({
             map: this.map,

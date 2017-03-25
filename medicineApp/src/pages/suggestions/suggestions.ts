@@ -7,19 +7,11 @@
  * The Main Menu page
  */
 
-import { Component,Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MedicineInfo } from '../medicineinfo/medicineinfo';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { ModalContentPage } from '../searchModal/modalcontentpage';
-import { BarcodeScanner } from 'ionic-native';
-import { MyProfile } from '../myprofile/myprofile';
-import { EditProfile } from '../editprofile/editprofile';
-import { Logout } from '../logout/logout';
-import { Login } from '../login/login';
-import { Signup } from '../signup/signup';
-import { Searchbar } from '../searchbar/searchbar';
 
 @Component({
   templateUrl: 'suggestions.html'

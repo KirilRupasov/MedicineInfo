@@ -1,6 +1,6 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
+  "name": "MedicineInfo",
+  "author": "Kiril Rupasov",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {

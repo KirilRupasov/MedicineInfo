@@ -1,4 +1,4 @@
-import { ComponentRef, ElementRef, EventEmitter, Renderer } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 export class ViewCtrlMock {
     readReady: EventEmitter<any>;

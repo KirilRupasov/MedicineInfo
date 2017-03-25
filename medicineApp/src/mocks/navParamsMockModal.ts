@@ -16,6 +16,11 @@ export class NavParamsMockModal {
         this.root.submitted = function() {
             
         }
+
+        this.root.setRating = function() {
+
+        }
+        
         return this.root;
     }
 }

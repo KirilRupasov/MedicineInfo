@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { iMyApp } from './app.interface';
+import { iMyApp } from '../app/app.interface';
 
 @Injectable()
 export class PagesService {

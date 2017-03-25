@@ -7,15 +7,13 @@ import { UserMock } from '../../mocks/userMock';
 import { AlertCtrlMock } from '../../mocks/alertCtrlMock';
 import { NavCtrlMock } from '../../mocks/navCtrlMock';
 import { ViewController, NavParams, AlertController, NavController } from 'ionic-angular';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicModule } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { Searchbar } from '../searchbar/searchbar';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 import { Auth, User } from '@ionic/cloud-angular';
-
-
-let mainMenu = null;
+import { SessionService } from '../../providers/session.service';
 
 describe('Review Modal Page Tests', () => {
     let fix: ComponentFixture<ReviewModal>;
@@ -23,7 +21,6 @@ describe('Review Modal Page Tests', () => {
     let injector: any;
 
     beforeEach(() => {
-        const viewControllerStub = new ViewController();
         TestBed.configureTestingModule({
             declarations: [
                 MyApp, ReviewModal, Searchbar
@@ -47,7 +44,8 @@ describe('Review Modal Page Tests', () => {
               {provide: User, useClass: UserMock},
               {provide: Auth, useClass: AuthMock},
               {provide: AlertController, useClass: AlertCtrlMock},
-              {provide: NavController, useClass: NavCtrlMock}
+              {provide: NavController, useClass: NavCtrlMock},
+              SessionService
             ],
         });
     });

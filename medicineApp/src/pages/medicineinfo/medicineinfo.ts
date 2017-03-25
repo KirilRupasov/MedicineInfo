@@ -8,7 +8,7 @@
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Auth, User} from '@ionic/cloud-angular';
-import { ModalController, NavController, NavParams } from 'ionic-angular';
+import { ModalController, NavParams } from 'ionic-angular';
 import { ReviewModal } from '../reviewModal/reviewModal';
 import { ReadReviewsModal } from '../readReviewsModal/readReviewsModal';
 import { StoreLocator } from '../storelocator/storelocator';
@@ -97,6 +97,7 @@ export class MedicineInfo {
           if(rating > Math.floor(rating)) {
             this.half_stars = new Array(1);
           }
+          this.no_rating = "";
         }
       }
     );
