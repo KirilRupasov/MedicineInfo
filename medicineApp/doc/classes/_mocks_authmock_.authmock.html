@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MagicBall | ionic-hello-world</title>
+	<title>AuthMock | MedicineInfo</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ionic-hello-world</a>
+					<a href="../index.html" class="title">MedicineInfo</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_providers_magic_ball_.html">&quot;providers/magic-ball&quot;</a>
+					<a href="../modules/_mocks_authmock_.html">&quot;mocks/authMock&quot;</a>
 				</li>
 				<li>
-					<a href="_providers_magic_ball_.magicball.html">MagicBall</a>
+					<a href="_mocks_authmock_.authmock.html">AuthMock</a>
 				</li>
 			</ul>
-			<h1>Class MagicBall</h1>
+			<h1>Class AuthMock</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">MagicBall</span>
+						<span class="target">AuthMock</span>
 					</li>
 				</ul>
 			</section>
@@ -84,21 +84,23 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_providers_magic_ball_.magicball.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_mocks_authmock_.authmock.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_providers_magic_ball_.magicball.html#answers" class="tsd-kind-icon">answers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_mocks_authmock_.authmock.html#authenticated" class="tsd-kind-icon">authenticated</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_mocks_authmock_.authmock.html#mockuser" class="tsd-kind-icon">mock<wbr>User</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_providers_magic_ball_.magicball.html#getanswers" class="tsd-kind-icon">get<wbr>Answers</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_providers_magic_ball_.magicball.html#getrandomanswer" class="tsd-kind-icon">get<wbr>Random<wbr>Answer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_providers_magic_ball_.magicball.html#getrandomint" class="tsd-kind-icon">get<wbr>Random<wbr>Int</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_mocks_authmock_.authmock.html#isauthenticated" class="tsd-kind-icon">is<wbr>Authenticated</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_mocks_authmock_.authmock.html#login" class="tsd-kind-icon">login</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_mocks_authmock_.authmock.html#logout" class="tsd-kind-icon">logout</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_mocks_authmock_.authmock.html#signup" class="tsd-kind-icon">signup</a></li>
 							</ul>
 						</section>
 					</div>
@@ -110,16 +112,16 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Magic<wbr>Ball<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_providers_magic_ball_.magicball.html" class="tsd-signature-type">MagicBall</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Auth<wbr>Mock<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_mocks_authmock_.authmock.html" class="tsd-signature-type">AuthMock</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/providers/magic-ball.ts#L6">providers/magic-ball.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/mocks/authMock.ts#L5">mocks/authMock.ts:5</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_providers_magic_ball_.magicball.html" class="tsd-signature-type">MagicBall</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_mocks_authmock_.authmock.html" class="tsd-signature-type">AuthMock</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -127,12 +129,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="answers" class="tsd-anchor"></a>
-					<h3>answers</h3>
-					<div class="tsd-signature tsd-kind-icon">answers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="authenticated" class="tsd-anchor"></a>
+					<h3>authenticated</h3>
+					<div class="tsd-signature tsd-kind-icon">authenticated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/providers/magic-ball.ts#L6">providers/magic-ball.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/mocks/authMock.ts#L4">mocks/authMock.ts:4</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="mockuser" class="tsd-anchor"></a>
+					<h3>mock<wbr>User</h3>
+					<div class="tsd-signature tsd-kind-icon">mock<wbr>User<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/mocks/authMock.ts#L5">mocks/authMock.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -140,62 +152,85 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getanswers" class="tsd-anchor"></a>
-					<h3>get<wbr>Answers</h3>
+					<a name="isauthenticated" class="tsd-anchor"></a>
+					<h3>is<wbr>Authenticated</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Answers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Authenticated<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/providers/magic-ball.ts#L24">providers/magic-ball.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/mocks/authMock.ts#L15">mocks/authMock.ts:15</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getrandomanswer" class="tsd-anchor"></a>
-					<h3>get<wbr>Random<wbr>Answer</h3>
+					<a name="login" class="tsd-anchor"></a>
+					<h3>login</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Random<wbr>Answer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">login<span class="tsd-signature-symbol">(</span>mode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userDetails<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UserDetails</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_mocks_authmock_.authmock.html" class="tsd-signature-type">AuthMock</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/providers/magic-ball.ts#L28">providers/magic-ball.ts:28</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getrandomint" class="tsd-anchor"></a>
-					<h3>get<wbr>Random<wbr>Int</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Random<wbr>Int<span class="tsd-signature-symbol">(</span>min<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, max<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/providers/magic-ball.ts#L32">providers/magic-ball.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/mocks/authMock.ts#L23">mocks/authMock.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>min: <span class="tsd-signature-type">any</span></h5>
+									<h5>mode: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>max: <span class="tsd-signature-type">any</span></h5>
+									<h5>userDetails: <span class="tsd-signature-type">UserDetails</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_mocks_authmock_.authmock.html" class="tsd-signature-type">AuthMock</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="logout" class="tsd-anchor"></a>
+					<h3>logout</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">logout<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/mocks/authMock.ts#L19">mocks/authMock.ts:19</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="signup" class="tsd-anchor"></a>
+					<h3>signup</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">signup<span class="tsd-signature-symbol">(</span>userDetails<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UserDetails</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_mocks_authmock_.authmock.html" class="tsd-signature-type">AuthMock</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/mocks/authMock.ts#L35">mocks/authMock.ts:35</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>userDetails: <span class="tsd-signature-type">UserDetails</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_mocks_authmock_.authmock.html" class="tsd-signature-type">AuthMock</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -208,7 +243,7 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_providers_magic_ball_.html">"providers/magic-<wbr>ball"</a>
+						<a href="../modules/_mocks_authmock_.html">"mocks/auth<wbr>Mock"</a>
 					</li>
 				</ul>
 			</nav>
@@ -217,22 +252,28 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_providers_magic_ball_.magicball.html" class="tsd-kind-icon">Magic<wbr>Ball</a>
+						<a href="_mocks_authmock_.authmock.html" class="tsd-kind-icon">Auth<wbr>Mock</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_providers_magic_ball_.magicball.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_mocks_authmock_.authmock.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_providers_magic_ball_.magicball.html#answers" class="tsd-kind-icon">answers</a>
+								<a href="_mocks_authmock_.authmock.html#authenticated" class="tsd-kind-icon">authenticated</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_mocks_authmock_.authmock.html#mockuser" class="tsd-kind-icon">mock<wbr>User</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_providers_magic_ball_.magicball.html#getanswers" class="tsd-kind-icon">get<wbr>Answers</a>
+								<a href="_mocks_authmock_.authmock.html#isauthenticated" class="tsd-kind-icon">is<wbr>Authenticated</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_providers_magic_ball_.magicball.html#getrandomanswer" class="tsd-kind-icon">get<wbr>Random<wbr>Answer</a>
+								<a href="_mocks_authmock_.authmock.html#login" class="tsd-kind-icon">login</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_providers_magic_ball_.magicball.html#getrandomint" class="tsd-kind-icon">get<wbr>Random<wbr>Int</a>
+								<a href="_mocks_authmock_.authmock.html#logout" class="tsd-kind-icon">logout</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_mocks_authmock_.authmock.html#signup" class="tsd-kind-icon">signup</a>
 							</li>
 						</ul>
 					</li>

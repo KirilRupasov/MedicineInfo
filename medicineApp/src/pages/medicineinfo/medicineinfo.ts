@@ -85,6 +85,13 @@ export class MedicineInfo {
     }
   }
 
+  /**
+   * @name setRating
+   * 
+   * @description
+   * 
+   * loads average rating for medicine 
+   */
   setRating() {
     //display average rating of this medicine
     this.http.get('http://medicineappbackend.me/averagerating/' + this.title).map(res => res).subscribe(
@@ -178,6 +185,11 @@ export class MedicineInfo {
     }
   }
 
+  /**
+   * @name getModal
+   * 
+   * @returns modal
+   */
   getModal() {
     return this.modal;
   }

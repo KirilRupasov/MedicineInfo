@@ -99,6 +99,8 @@ describe('Review Modal Page Tests', () => {
         expect(instance.getAlert().subTitle).toBe("Review is longer than 600 characters!");
     }));
 
+
+
     it('should NOT let submit a review because no review is written', async(() => {
         let backend = injector.get(MockBackend);
         let responseBody = "Submitted!";

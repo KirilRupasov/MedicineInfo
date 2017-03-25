@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EditProfile | ionic-hello-world</title>
+	<title>EditProfile | MedicineInfo</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ionic-hello-world</a>
+					<a href="../index.html" class="title">MedicineInfo</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -90,19 +90,18 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#add_info_value" class="tsd-kind-icon">add_<wbr>info_<wbr>value</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#auth" class="tsd-kind-icon">auth</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_editprofile_editprofile_.editprofile.html#auth" class="tsd-kind-icon">auth</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#date_of_birth" class="tsd-kind-icon">date_<wbr>of_<wbr>birth</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#gender_value" class="tsd-kind-icon">gender_<wbr>value</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_editprofile_editprofile_.editprofile.html#navctrl" class="tsd-kind-icon">nav<wbr>Ctrl</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#smoker_value" class="tsd-kind-icon">smoker_<wbr>value</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#user" class="tsd-kind-icon">user</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_editprofile_editprofile_.editprofile.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_editprofile_editprofile_.editprofile.html#user" class="tsd-kind-icon">user</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#getuser" class="tsd-kind-icon">get<wbr>User</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_editprofile_editprofile_.editprofile.html#save" class="tsd-kind-icon">save</a></li>
 							</ul>
 						</section>
@@ -115,28 +114,51 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Edit<wbr>Profile<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, viewCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ViewController</span>, auth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Auth</span>, user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_editprofile_editprofile_.editprofile.html" class="tsd-signature-type">EditProfile</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Edit<wbr>Profile<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, auth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Auth</span>, user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_editprofile_editprofile_.editprofile.html" class="tsd-signature-type">EditProfile</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L16">pages/editprofile/editprofile.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L23">pages/editprofile/editprofile.ts:23</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>constructor</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>Intializes the page with User Profile values.
+										If user is not authenticated -&gt; forward him to MainMenu</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>navCtrl: <span class="tsd-signature-type">NavController</span></h5>
-								</li>
-								<li>
-									<h5>viewCtrl: <span class="tsd-signature-type">ViewController</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Navigation NavController</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>auth: <span class="tsd-signature-type">Auth</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Authentication Controller</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>user: <span class="tsd-signature-type">User</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Storage ofr user data</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_pages_editprofile_editprofile_.editprofile.html" class="tsd-signature-type">EditProfile</a></h4>
@@ -146,25 +168,20 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="add_info_value" class="tsd-anchor"></a>
-					<h3>add_<wbr>info_<wbr>value</h3>
-					<div class="tsd-signature tsd-kind-icon">add_<wbr>info_<wbr>value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L14">pages/editprofile/editprofile.ts:14</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="auth" class="tsd-anchor"></a>
-					<h3>auth</h3>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> auth</h3>
 					<div class="tsd-signature tsd-kind-icon">auth<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Auth</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L18">pages/editprofile/editprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L36">pages/editprofile/editprofile.ts:36</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Authentication Controller</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="date_of_birth" class="tsd-anchor"></a>
@@ -172,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">date_<wbr>of_<wbr>birth<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L13">pages/editprofile/editprofile.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L21">pages/editprofile/editprofile.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -182,7 +199,7 @@
 					<div class="tsd-signature tsd-kind-icon">gender_<wbr>value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L16">pages/editprofile/editprofile.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L23">pages/editprofile/editprofile.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,9 +209,14 @@
 					<div class="tsd-signature tsd-kind-icon">nav<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L18">pages/editprofile/editprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L36">pages/editprofile/editprofile.ts:36</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Navigation NavController</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="smoker_value" class="tsd-anchor"></a>
@@ -202,33 +224,45 @@
 					<div class="tsd-signature tsd-kind-icon">smoker_<wbr>value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L15">pages/editprofile/editprofile.ts:15</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">User</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L18">pages/editprofile/editprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L22">pages/editprofile/editprofile.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="viewctrl" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> view<wbr>Ctrl</h3>
-					<div class="tsd-signature tsd-kind-icon">view<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ViewController</span></div>
+					<a name="user" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> user</h3>
+					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">User</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L18">pages/editprofile/editprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L36">pages/editprofile/editprofile.ts:36</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Storage ofr user data</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getuser" class="tsd-anchor"></a>
+					<h3>get<wbr>User</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>User<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">User</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L80">pages/editprofile/editprofile.ts:80</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">User</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="save" class="tsd-anchor"></a>
 					<h3>save</h3>
@@ -239,9 +273,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/editprofile/editprofile.ts#L36">pages/editprofile/editprofile.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/editprofile/editprofile.ts#L61">pages/editprofile/editprofile.ts:61</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>save</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>Saves new values provided by user and transfers him to MyProfile page.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -269,10 +313,7 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="_pages_editprofile_editprofile_.editprofile.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_pages_editprofile_editprofile_.editprofile.html#add_info_value" class="tsd-kind-icon">add_<wbr>info_<wbr>value</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_pages_editprofile_editprofile_.editprofile.html#auth" class="tsd-kind-icon">auth</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -287,11 +328,11 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_editprofile_editprofile_.editprofile.html#smoker_value" class="tsd-kind-icon">smoker_<wbr>value</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_pages_editprofile_editprofile_.editprofile.html#user" class="tsd-kind-icon">user</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_pages_editprofile_editprofile_.editprofile.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_pages_editprofile_editprofile_.editprofile.html#getuser" class="tsd-kind-icon">get<wbr>User</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_pages_editprofile_editprofile_.editprofile.html#save" class="tsd-kind-icon">save</a>

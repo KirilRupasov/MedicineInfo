@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ReadReviewsModal | ionic-hello-world</title>
+	<title>ReadReviewsModal | MedicineInfo</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ionic-hello-world</a>
+					<a href="../index.html" class="title">MedicineInfo</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -92,10 +92,10 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#http" class="tsd-kind-icon">http</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#medicine_title" class="tsd-kind-icon">medicine_<wbr>title</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#no_reviews" class="tsd-kind-icon">no_<wbr>reviews</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#params" class="tsd-kind-icon">params</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#reviews" class="tsd-kind-icon">reviews</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#user" class="tsd-kind-icon">user</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -114,28 +114,45 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Read<wbr>Reviews<wbr>Modal<span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">User</span>, viewCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ViewController</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavParams</span>, http<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Http</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html" class="tsd-signature-type">ReadReviewsModal</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Read<wbr>Reviews<wbr>Modal<span class="tsd-signature-symbol">(</span>viewCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ViewController</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavParams</span>, http<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Http</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html" class="tsd-signature-type">ReadReviewsModal</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L12">pages/readReviewsModal/readReviewsModal.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L20">pages/readReviewsModal/readReviewsModal.ts:20</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>constructor</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>This constructor creates modal and loads Reviews for specific medicine</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>user: <span class="tsd-signature-type">User</span></h5>
-								</li>
-								<li>
 									<h5>viewCtrl: <span class="tsd-signature-type">ViewController</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>View Controller</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>params: <span class="tsd-signature-type">NavParams</span></h5>
 								</li>
 								<li>
 									<h5>http: <span class="tsd-signature-type">Http</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>HTTP Request handler, to communicate with back-end</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html" class="tsd-signature-type">ReadReviewsModal</a></h4>
@@ -151,9 +168,14 @@
 					<div class="tsd-signature tsd-kind-icon">http<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Http</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L14">pages/readReviewsModal/readReviewsModal.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L32">pages/readReviewsModal/readReviewsModal.ts:32</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>HTTP Request handler, to communicate with back-end</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="medicine_title" class="tsd-anchor"></a>
@@ -161,49 +183,54 @@
 					<div class="tsd-signature tsd-kind-icon">medicine_<wbr>title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L12">pages/readReviewsModal/readReviewsModal.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L19">pages/readReviewsModal/readReviewsModal.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="no_reviews" class="tsd-anchor"></a>
+					<h3>no_<wbr>reviews</h3>
+					<div class="tsd-signature tsd-kind-icon">no_<wbr>reviews<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L20">pages/readReviewsModal/readReviewsModal.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="params" class="tsd-anchor"></a>
-					<h3>params</h3>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> params</h3>
 					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavParams</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L14">pages/readReviewsModal/readReviewsModal.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L32">pages/readReviewsModal/readReviewsModal.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="reviews" class="tsd-anchor"></a>
 					<h3>reviews</h3>
-					<div class="tsd-signature tsd-kind-icon">reviews<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">reviews<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L11">pages/readReviewsModal/readReviewsModal.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L18">pages/readReviewsModal/readReviewsModal.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">User</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L14">pages/readReviewsModal/readReviewsModal.ts:14</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="viewctrl" class="tsd-anchor"></a>
-					<h3>view<wbr>Ctrl</h3>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> view<wbr>Ctrl</h3>
 					<div class="tsd-signature tsd-kind-icon">view<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ViewController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L14">pages/readReviewsModal/readReviewsModal.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L32">pages/readReviewsModal/readReviewsModal.ts:32</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>View Controller</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -218,9 +245,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L50">pages/readReviewsModal/readReviewsModal.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L73">pages/readReviewsModal/readReviewsModal.ts:73</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>description</dt>
+									<dd><p>closes modal</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -235,9 +269,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L20">pages/readReviewsModal/readReviewsModal.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/readReviewsModal/readReviewsModal.ts#L45">pages/readReviewsModal/readReviewsModal.ts:45</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>loadReviews</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>This function loads reviews from back-end, by using medicine title and user email.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -272,15 +316,15 @@
 								<a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#medicine_title" class="tsd-kind-icon">medicine_<wbr>title</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#no_reviews" class="tsd-kind-icon">no_<wbr>reviews</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#params" class="tsd-kind-icon">params</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#reviews" class="tsd-kind-icon">reviews</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#user" class="tsd-kind-icon">user</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_pages_readreviewsmodal_readreviewsmodal_.readreviewsmodal.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">

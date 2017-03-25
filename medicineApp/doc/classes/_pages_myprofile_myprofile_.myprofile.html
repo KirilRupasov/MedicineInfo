@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MyProfile | ionic-hello-world</title>
+	<title>MyProfile | MedicineInfo</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ionic-hello-world</a>
+					<a href="../index.html" class="title">MedicineInfo</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -91,15 +91,14 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#add_info" class="tsd-kind-icon">add_<wbr>info</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#auth" class="tsd-kind-icon">auth</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_myprofile_myprofile_.myprofile.html#auth" class="tsd-kind-icon">auth</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#content" class="tsd-kind-icon">content</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#date_of_birth" class="tsd-kind-icon">date_<wbr>of_<wbr>birth</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#gender" class="tsd-kind-icon">gender</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_myprofile_myprofile_.myprofile.html#navctrl" class="tsd-kind-icon">nav<wbr>Ctrl</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#password_value" class="tsd-kind-icon">password_<wbr>value</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#smoker" class="tsd-kind-icon">smoker</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_myprofile_myprofile_.myprofile.html#user" class="tsd-kind-icon">user</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_myprofile_myprofile_.myprofile.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_myprofile_myprofile_.myprofile.html#user" class="tsd-kind-icon">user</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -117,28 +116,52 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>MyProfile<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, viewCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ViewController</span>, auth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Auth</span>, user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_myprofile_myprofile_.myprofile.html" class="tsd-signature-type">MyProfile</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>MyProfile<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, auth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Auth</span>, user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_myprofile_myprofile_.myprofile.html" class="tsd-signature-type">MyProfile</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L16">pages/myprofile/myprofile.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L27">pages/myprofile/myprofile.ts:27</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>constructor</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>This method initializes My Profile.
+											If user is authenticated -&gt; get his profile data and show it.
+										Otherwise -&gt; forward to Main Menu.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>navCtrl: <span class="tsd-signature-type">NavController</span></h5>
-								</li>
-								<li>
-									<h5>viewCtrl: <span class="tsd-signature-type">ViewController</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Navigation NavController</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>auth: <span class="tsd-signature-type">Auth</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Authentication Controller</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>user: <span class="tsd-signature-type">User</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>User Data storage</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_pages_myprofile_myprofile_.myprofile.html" class="tsd-signature-type">MyProfile</a></h4>
@@ -154,19 +177,24 @@
 					<div class="tsd-signature tsd-kind-icon">add_<wbr>info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L15">pages/myprofile/myprofile.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L26">pages/myprofile/myprofile.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="auth" class="tsd-anchor"></a>
-					<h3>auth</h3>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> auth</h3>
 					<div class="tsd-signature tsd-kind-icon">auth<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Auth</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L18">pages/myprofile/myprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L41">pages/myprofile/myprofile.ts:41</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Authentication Controller</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="content" class="tsd-anchor"></a>
@@ -174,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">content<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L11">pages/myprofile/myprofile.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L22">pages/myprofile/myprofile.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">date_<wbr>of_<wbr>birth<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L12">pages/myprofile/myprofile.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L23">pages/myprofile/myprofile.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -194,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">gender<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L14">pages/myprofile/myprofile.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L25">pages/myprofile/myprofile.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -204,9 +232,14 @@
 					<div class="tsd-signature tsd-kind-icon">nav<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L18">pages/myprofile/myprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L41">pages/myprofile/myprofile.ts:41</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Navigation NavController</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="password_value" class="tsd-anchor"></a>
@@ -214,7 +247,7 @@
 					<div class="tsd-signature tsd-kind-icon">password_<wbr>value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L16">pages/myprofile/myprofile.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L27">pages/myprofile/myprofile.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -224,29 +257,24 @@
 					<div class="tsd-signature tsd-kind-icon">smoker<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L13">pages/myprofile/myprofile.ts:13</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">User</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L18">pages/myprofile/myprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L24">pages/myprofile/myprofile.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="viewctrl" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> view<wbr>Ctrl</h3>
-					<div class="tsd-signature tsd-kind-icon">view<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ViewController</span></div>
+					<a name="user" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> user</h3>
+					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">User</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L18">pages/myprofile/myprofile.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L41">pages/myprofile/myprofile.ts:41</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>User Data storage</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -261,9 +289,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/myprofile/myprofile.ts#L48">pages/myprofile/myprofile.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/myprofile/myprofile.ts#L79">pages/myprofile/myprofile.ts:79</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>edit</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>This method simply forwards user to Edit Profile page after the button was clicked.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -294,7 +332,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_myprofile_myprofile_.myprofile.html#add_info" class="tsd-kind-icon">add_<wbr>info</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_pages_myprofile_myprofile_.myprofile.html#auth" class="tsd-kind-icon">auth</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -315,11 +353,8 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_myprofile_myprofile_.myprofile.html#smoker" class="tsd-kind-icon">smoker</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_pages_myprofile_myprofile_.myprofile.html#user" class="tsd-kind-icon">user</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_pages_myprofile_myprofile_.myprofile.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a>
+								<a href="_pages_myprofile_myprofile_.myprofile.html#user" class="tsd-kind-icon">user</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_pages_myprofile_myprofile_.myprofile.html#edit" class="tsd-kind-icon">edit</a>

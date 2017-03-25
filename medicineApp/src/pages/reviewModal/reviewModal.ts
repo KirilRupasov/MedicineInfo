@@ -140,6 +140,13 @@ export class ReviewModal {
      this.viewCtrl.dismiss();
    }
 
+   /**
+    * @name getAlert
+    * 
+    * @description
+    *
+    * return alert
+    */
    getAlert() {
      return this.alert;
    }

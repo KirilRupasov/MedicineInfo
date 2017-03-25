@@ -155,6 +155,11 @@ export class MainMenu {
       }
     }
 
+    /**
+     * @name getNavCtrl
+     * 
+     * @returns navCtrl Navigation Controller
+     */
     getNavCtrl() {
       return this.navCtrl;
     }

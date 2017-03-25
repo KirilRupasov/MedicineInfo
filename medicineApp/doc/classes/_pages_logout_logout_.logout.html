@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Logout | ionic-hello-world</title>
+	<title>Logout | MedicineInfo</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ionic-hello-world</a>
+					<a href="../index.html" class="title">MedicineInfo</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -90,17 +90,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_logout_logout_.logout.html#auth" class="tsd-kind-icon">auth</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_logout_logout_.logout.html#auth" class="tsd-kind-icon">auth</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_logout_logout_.logout.html#email_value" class="tsd-kind-icon">email_<wbr>value</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_logout_logout_.logout.html#navctrl" class="tsd-kind-icon">nav<wbr>Ctrl</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_logout_logout_.logout.html#password_value" class="tsd-kind-icon">password_<wbr>value</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_logout_logout_.logout.html#user" class="tsd-kind-icon">user</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_pages_logout_logout_.logout.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_logout_logout_.logout.html#getauth" class="tsd-kind-icon">get<wbr>Auth</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_logout_logout_.logout.html#ngafterviewinit" class="tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init</a></li>
 							</ul>
 						</section>
@@ -113,28 +112,42 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Logout<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, viewCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ViewController</span>, auth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Auth</span>, user<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_logout_logout_.logout.html" class="tsd-signature-type">Logout</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Logout<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, auth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Auth</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_logout_logout_.logout.html" class="tsd-signature-type">Logout</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L12">pages/logout/logout.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/logout/logout.ts#L21">pages/logout/logout.ts:21</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>constructor</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>This method initializes page and logs user out if he is authenticated.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>navCtrl: <span class="tsd-signature-type">NavController</span></h5>
-								</li>
-								<li>
-									<h5>viewCtrl: <span class="tsd-signature-type">ViewController</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Navigation Controller</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>auth: <span class="tsd-signature-type">Auth</span></h5>
-								</li>
-								<li>
-									<h5>user: <span class="tsd-signature-type">User</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Authentication Controller</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_pages_logout_logout_.logout.html" class="tsd-signature-type">Logout</a></h4>
@@ -144,15 +157,20 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="auth" class="tsd-anchor"></a>
-					<h3>auth</h3>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> auth</h3>
 					<div class="tsd-signature tsd-kind-icon">auth<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Auth</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L14">pages/logout/logout.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/logout/logout.ts#L32">pages/logout/logout.ts:32</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Authentication Controller</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="email_value" class="tsd-anchor"></a>
@@ -160,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">email_<wbr>value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L11">pages/logout/logout.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/logout/logout.ts#L20">pages/logout/logout.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -170,9 +188,14 @@
 					<div class="tsd-signature tsd-kind-icon">nav<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L14">pages/logout/logout.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/logout/logout.ts#L32">pages/logout/logout.ts:32</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Navigation Controller</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="password_value" class="tsd-anchor"></a>
@@ -180,33 +203,38 @@
 					<div class="tsd-signature tsd-kind-icon">password_<wbr>value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L12">pages/logout/logout.ts:12</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">User</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L14">pages/logout/logout.ts:14</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="viewctrl" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> view<wbr>Ctrl</h3>
-					<div class="tsd-signature tsd-kind-icon">view<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ViewController</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L14">pages/logout/logout.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/logout/logout.ts#L21">pages/logout/logout.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getauth" class="tsd-anchor"></a>
+					<h3>get<wbr>Auth</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Auth<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Auth</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/logout/logout.ts#L55">pages/logout/logout.ts:55</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>getAuth</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Auth</span></h4>
+							<p>auth</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="ngafterviewinit" class="tsd-anchor"></a>
 					<h3>ng<wbr>After<wbr>View<wbr>Init</h3>
@@ -217,9 +245,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/9b3bc10/medicineApp/src/pages/logout/logout.ts#L22">pages/logout/logout.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/Zveket/MedicineInfo/blob/625b3e5/medicineApp/src/pages/logout/logout.ts#L46">pages/logout/logout.ts:46</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>name</dt>
+									<dd><p>ngAfterViewInit</p>
+									</dd>
+									<dt>description</dt>
+									<dd><p>This method is launched once the page is loaded.
+										It forwards users to MainMenu page after he is logged out.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -247,7 +286,7 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="_pages_logout_logout_.logout.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_pages_logout_logout_.logout.html#auth" class="tsd-kind-icon">auth</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -259,11 +298,8 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_logout_logout_.logout.html#password_value" class="tsd-kind-icon">password_<wbr>value</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_pages_logout_logout_.logout.html#user" class="tsd-kind-icon">user</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_pages_logout_logout_.logout.html#viewctrl" class="tsd-kind-icon">view<wbr>Ctrl</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_pages_logout_logout_.logout.html#getauth" class="tsd-kind-icon">get<wbr>Auth</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_pages_logout_logout_.logout.html#ngafterviewinit" class="tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init</a>

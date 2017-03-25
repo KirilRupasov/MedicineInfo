@@ -47,6 +47,11 @@ export class Logout {
     this.navCtrl.setRoot(MainMenu);
   }
 
+  /**
+   * @name getAuth
+   * 
+   * @returns auth
+   */
   getAuth() {
     return this.auth;
   }

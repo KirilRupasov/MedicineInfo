@@ -1,4 +1,4 @@
-export class ConfigMock {
+/*export class ConfigMock {
 
   public get(): any {
     return '';
@@ -25,6 +25,7 @@ export class NavMock {
     return new Promise(function(resolve: Function): void {
       resolve();
     });
+    
   }
 
   public push(): any {
@@ -60,4 +61,4 @@ export class MenuMock {
       resolve();
     });
   }
-}
+}*/
